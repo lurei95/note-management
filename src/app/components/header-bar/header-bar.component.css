@@ -1,0 +1,18 @@
+/* Style the navigation bar */
+.navbar {
+    width: 100%;
+    background-color: var(--themeDarkGray);
+    overflow: auto;
+}
+
+.user {
+    background: transparent;
+    float: right;
+    border: none;
+    font-size: 20px;
+    padding: 8px
+}
+
+.fa-user {
+    color: var(--themeRed);
+}

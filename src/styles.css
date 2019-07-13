@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --themeRed: #e74c3c;
+    --themeDarkGray: #555;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.button {
+    background-color: var(--themeRed);
+    color: #FFFFFF;
+    border: none;
+    padding: 5px 7px;
+    font-size: 15px
+}
+
+.button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.input {
+    margin: 0px 5px 0px 0px;
+    font-size: 15px;
+    padding: 3px 5px;
+}

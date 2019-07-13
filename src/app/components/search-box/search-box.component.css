@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: gray;
+  }
+  
+  .fg--search {
+    background: white;
+    position: relative;
+  }
+  
+  .fg--search input {
+    width: 100%;
+    padding: 2px;
+    display: block;
+  }
+  
+  .fg--search button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    z-index: 2;
+  }
+  
+  .fa-search {
+    color: gray;
+  }
