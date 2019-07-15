@@ -9,6 +9,7 @@
   .fg--search {
     background: white;
     position: relative;
+    float: left;
   }
   
   .fg--search input {

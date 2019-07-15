@@ -6,7 +6,11 @@ import { reducers } from './redux/reducers/index';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { HeaderBarItemComponent } from './components/header-bar-item/header-bar-item.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component'
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NotePanelComponent } from './components/note-panel/note-panel.component';
+import { NoteComponent } from './components/note/note.component'
+import { RetrieveNotesService } from './services/retrieve-notes.service';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -14,13 +18,16 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
     SearchBoxComponent,
     HeaderBarComponent,
     HeaderBarItemComponent,
-    SidebarComponent
+    SidebarComponent,
+    NotePanelComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    FormsModule
   ],
-  providers: [],
+  providers: [RetrieveNotesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

@@ -1,11 +1,10 @@
 div {
-    overflow:auto;
     float:left;
     background:#f1f1f1;
-    width: 220px;
+    width: 240px;
     margin: 0px;
-    padding: 10px 10px;
-    height: calc(100% - 60px); 
+    padding: 10px;
+    height: 100%;
   }
   
 div.collapsed {

@@ -1,4 +1,4 @@
 <div class="form-group fg--search">
-    <input (ngModelChange)="onSearchTextChange($event)" type="text" placeholder="Suchtext..." class="input">
+    <input type="text" placeholder="Suchtext..." class="input" [ngModel]="searchText" (ngModelChange)="onSearchTextChange($event)">
     <button type="submit"><i class="fa fa-search"></i></button>
 </div>

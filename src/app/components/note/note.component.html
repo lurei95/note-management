@@ -1,0 +1,9 @@
+<div class="test">
+    <div class="headerLine">
+        <input style="grid-column: 1" type="text" placeholder="Titel" [(ngModel)] ="_note.title"/>
+        <button style="grid-column: 2"><i class="fa fa-times" aria-hidden="true" (click)="onDeleteButtonClicked()"></i></button>
+    </div>
+    <div style="height: 100%;margin: 10px 10px 0px 10px">
+        <textarea (input)="onTextAreaValueChanged($event.target.value)" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
+    </div>
+</div>
