@@ -1,36 +1,46 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    background: gray;
-  }
-  
-  .fg--search {
-    background: white;
-    position: relative;
-    float: left;
-  }
-  
-  .fg--search input {
-    width: 100%;
-    padding: 2px;
-    display: block;
-  }
-  
-  .fg--search button {
+label {
     background: transparent;
     border: none;
     cursor: pointer;
     display: inline-block;
-    font-size: 15px;
+    font-size: 14px;
     position: absolute;
     top: 0;
     right: 0;
-    padding: 5px;
+    padding: 6px 5px 8px 5px;
     z-index: 2;
-  }
+}
+
+div {
+    border: 1px solid #777;
+    border-radius: 3px;
+    height: 29px;
+    padding-right: 15px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
+}
+
+div:hover, div:focus-within {
+    border: 1.5px solid var(--themeBorderColor);
+    border-radius: 3px;
+}
   
-  .fa-search {
-    color: gray;
-  }
+.fg--search {
+    background: white;
+    position: relative;
+    float: left;
+}
+  
+.fg--search input, .fg--search input:hover, .fg--search input:focus-within {
+    width: calc(100% - 12px);
+    padding: 5px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    border: none;
+    outline: none;
+}
+  
+.fa-search {
+    color: var(--themeBorderColor);
+}

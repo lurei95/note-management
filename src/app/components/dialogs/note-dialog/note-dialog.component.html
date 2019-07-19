@@ -1,0 +1,29 @@
+<mat-dialog-content class="mat-typography" style="margin: 0px; padding: 0px">
+    <div id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
+        <div class="headerLine">
+            <button id="expandButton" (click)="onExpandButtonClicked()" style="grid-column: 2">
+                <i class="fa fa-expand" aria-hidden="true"></i>
+            </button>
+            <button id="closeButton" (click)="onCloseButtonClicked()">
+                <i class="fa fa-times" aria-hidden="true" style="grid-column: 3"></i>
+            </button>
+        </div>
+        <div id="titleArea">
+            <label id="titleLabel">Titel:</label>
+            <input [className]="hasError ? 'invalid' : 'hiddenInput'"
+                type="text" id="titleInput"
+                placeholder="Titel" 
+                (input)="onTitleChanged()"  
+                [(ngModel)] ="note.title" #titleInput/>
+        </div>
+        <div id="propertyArea">
+            <label class="propertyLabel">Fällig am:</label>
+            <app-date-picker></app-date-picker>
+        </div>
+        <div id="textAreaDiv">
+            <textarea 
+                (input)="onTextAreaValueChanged($event.target.value)" 
+                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
+        </div>
+    </div>
+</mat-dialog-content>

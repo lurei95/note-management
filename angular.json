@@ -29,6 +29,20 @@
             "scripts": []
           },
           "configurations": {
+            "de": { 
+              "aot": true,      
+              "i18nFile": "src/translate/messages.de.xlf", 
+              "i18nFormat": "xlf",      
+              "i18nLocale": "de",      
+              "i18nMissingTranslation": "error"    
+            },
+            "en": { 
+              "aot": true,      
+              "i18nFile": "src/translate/messages.en.xlf", 
+              "i18nFormat": "xlf",      
+              "i18nLocale": "en",      
+              "i18nMissingTranslation": "error"    
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -61,6 +75,12 @@
             "browserTarget": "note-management:build"
           },
           "configurations": {
+            "de": { 
+              "browserTarget": "note-management:build:de"   
+            },
+            "en": { 
+              "browserTarget": "note-management:build:en"   
+            },
             "production": {
               "browserTarget": "note-management:build:production"
             }

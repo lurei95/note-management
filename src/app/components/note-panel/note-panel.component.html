@@ -1,14 +1,13 @@
 <div class="grid">
-    <div style="grid-row: 1">
-        <div style="float: left;margin: 15px 0px 10px 25px;">
-            <button class="addButton" (click)="onAddButtonClicked()">+</button>
-            <label style="padding: 10px; font-size: 18px">add new</label>
-        </div>
-        <div style="float: left;margin: 20px 0px 10px 25px;">
-            <app-search-box fieldName="Note"></app-search-box>
-        </div>
+    <div id="topBar">
+        <label class="categoryLabel">{{selectedCategory.title}}</label>
+        <app-search-box fieldName="Note"></app-search-box>
+        <button class="addButton" 
+            (click)="onAddButtonClicked()">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
-    <hr style="grid-row: 2;height: 0px;">
+    <hr>
     <div class="panel">
         <app-note *ngFor="let note of filteredNotes;" [note]="note"></app-note>    
     </div>

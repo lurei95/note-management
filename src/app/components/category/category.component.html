@@ -1,0 +1,24 @@
+<div [className]="isSelected ? 'selected' : 'normal'" 
+    (click)="onCategoryClicked()" #container>
+    <input [className]="editMode ? (hasError ? 'invalid' : null) : 'hidden'"
+        [readonly]="!editMode"
+        style="grid-column: 1; grid-row: 1" 
+        [(ngModel)] ="category.title" 
+        (focusout)=onFocusLeaving()
+        (input)="onTitleChanged()" 
+        (keydown.enter)="trySaveChanges()"
+        (keydown.control.s)="handleSaveShortcut($event)"
+        #titleInput>
+    <button *ngIf="editMode"
+        style="grid-column: 2; grid-row: 1" 
+        (click)="onDeleteButtonClicked()" 
+        (pointerenter)="onPointerEnter()" 
+        (pointerleave)="onPointerLeave()">
+        <i class="fa fa-times"></i>
+    </button>
+    <button class="editButton" *ngIf="!editMode" #editButton
+        style="grid-column: 2; grid-row: 1" 
+        (click)="onEditButtonClicked()">
+        <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+    </button>
+</div>

@@ -1,7 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+    font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+
 :root {
     --themeRed: #e74c3c;
     --themeDarkGray: #555;
+    --themeGray: #e3e3e3;
+    --themeLightGray: #f1f1f1;
+    --themeBorderColor: #777;
+}
+
+.addButton {
+    margin-left: 10px;
+    font-size: 16px;
+    background-color: #00b894;
+    border: none;
+    padding-top: 6px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 5px;
 }
 
 html, body {
@@ -22,12 +42,54 @@ html, body {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.input {
-    margin: 0px 5px 0px 0px;
-    font-size: 15px;
-    padding: 3px 5px;
+div {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
 }
 
-div {
-    box-sizing: border-box;
+.hiddenInput {
+    border:  none;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
+}
+
+input:hover {
+    border: 1.5px solid var(--themeBorderColor);
+    border-radius: 3px;
+}
+
+input {
+    border: 1.5px solid var(--themeBorderColor);
+    border-radius: 3px;
+    padding: 3px
+}
+
+textarea:hover {
+    border: 1.5px solid var(--themeBorderColor);
+    border-radius: 3px;
+}
+
+textarea {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
+    border: 1px solid var(--themeBorderColor);
+    border-radius: 3px;
+    padding: 3px
+}
+
+button:hover > i {
+    transform: scale(1.1);
+}
+
+button:focus { 
+    outline:0;
+} 
+
+.invalid {
+    outline: none;
+    border-radius: 3px;
+    border: 1.5px solid  var(--themeRed)
 }

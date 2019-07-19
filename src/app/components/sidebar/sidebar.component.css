@@ -1,12 +1,50 @@
-div {
-    float:left;
-    background:#f1f1f1;
-    width: 240px;
+#container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(min-content, max-content);
+    background: var(--themeLightGray);
+    width: 260px;
     margin: 0px;
-    padding: 10px;
+    padding: 0px;
     height: 100%;
-  }
+}
   
 div.collapsed {
     width: 0;
+}
+
+hr {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0px;
+}
+
+#title {
+    margin-left: 60px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white
+}
+
+#titleArea {
+    background: var(--themeDarkGray);
+    width: 100%;
+    height: 60px;
+    padding: 0px;
+    margin: 0px;
+    padding-top: 20px;
+}
+
+#searchArea {
+    background: var(--themeLightGray);
+    width: 100%;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+}
+
+.fa-plus {
+    color: white;
 }

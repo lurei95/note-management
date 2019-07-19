@@ -4,19 +4,24 @@ a {
     text-align: center;
     padding: 10px 15px;
     color: white;
+    font-weight: bold;
     text-decoration: none;
     font-size: 17px;
 }
+
   
  /* Navbar links on mouse-over */
 .normal:hover {
     background-color: #000;
 }
 
+a:hover {
+    font-weight: bolder
+}
+
  /* Navbar links on mouse-over */
 .active:hover {
     background-color: --themeRed;
-    font-weight: bold;
 }
 
   /* Current/active navbar link */

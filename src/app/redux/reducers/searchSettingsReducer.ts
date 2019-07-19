@@ -1,7 +1,8 @@
 import * as searchText from '../actions/search-text'
 import { Dictionary } from 'src/app/util/dictionary';
 
-export function reducer(state: Dictionary<string> = new Dictionary<string>(), action: searchText.SearchTextChangeAction) {
+export function searchSettingsReducer(state: Dictionary<string> = new Dictionary<string>(), action: searchText.SearchTextChangeAction) 
+{
     switch (action.type)
     {
         case searchText.SEARCH_TEXT_CHANGE:

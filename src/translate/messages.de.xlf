@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="752216ea83395048d04083cf5e5647b0ab7dc864" datatype="html">
+        <source>Notiz löschen?</source>
+        <target>Notiz löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dialogs/note-delete-dialog/note-delete-dialog.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6efa2730adac2f8b7e9bc85018eb3560840e5500" datatype="html">
+        <source>Sind Sie sicher, dass sie die Notiz "<x id="INTERPOLATION" equiv-text="{{title}}"/>" löschen möchten?</source>
+        <target>Sind Sie sicher, dass sie die Notiz "<x id="INTERPOLATION" equiv-text="{{title}}"/>" löschen möchten?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dialogs/note-delete-dialog/note-delete-dialog.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1b24932d0f2269e4b41d0f936fdb5de1b94da401" datatype="html">
+        <source>Abbrechen</source>
+        <target>Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dialogs/note-delete-dialog/note-delete-dialog.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a813fd43c9a1b211fe541045d263d2c500c80f0f" datatype="html">
+        <source>Löschen</source>
+        <target>Löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dialogs/note-delete-dialog/note-delete-dialog.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b7f6cd735e8b660a6ec3d3dfb09de14ab32a10c8" datatype="html">
+        <source>Titel</source>
+        <target>Titel</target> 
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/note/note.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

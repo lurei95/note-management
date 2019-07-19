@@ -1,30 +1,24 @@
 import { Action } from '@ngrx/store'
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteDisplayModel } from 'src/app/models/noteModel';
 
-export const NOTE_DELETE = '[Note] Delete'
-export const NOTE_ADD = '[Note] Add'
-export const NOTES_RETRIEVED = '[Notes] Retrieved'
-
-export abstract class NotesActionBase implements Action {
-    abstract type: string;
-
-    constructor(public payload: NoteModel) {}
+export enum NoteActionKind 
+{
+    NoteDelete = 'NoteDelete',
+    NoteAdd = 'NoteAdd',
+    NotesRetrieved = 'NotesRetrieved',
+    NoteUpdate = 'NoteUpdate'
 }
 
-export class NoteDeleteAction implements NotesActionBase {
-    type = NOTE_DELETE
+export class NoteAction implements Action 
+{
+    type: string;
 
-    constructor(public payload: NoteModel) {}
+    constructor(actionKind: NoteActionKind, public payload: NoteDisplayModel) { this.type = actionKind; }
 }
 
-export class NoteAddAction implements NotesActionBase {
-    type = NOTE_ADD
+export class NotesRetrievedAction implements Action 
+{
+    type = NoteActionKind.NotesRetrieved
 
-    constructor(public payload: NoteModel) {}
-}
-
-export class NotesRetrievedAction implements Action {
-    type = NOTES_RETRIEVED
-
-    constructor(public payload: NoteModel[]) { }
+    constructor(public payload: NoteDisplayModel[]) { }
 }

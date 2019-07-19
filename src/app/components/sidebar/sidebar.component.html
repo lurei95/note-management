@@ -1,3 +1,12 @@
-<div>
-    <app-search-box></app-search-box>
+<div id="container">
+    <div id="searchArea">
+        <app-search-box fieldName="Category"></app-search-box>
+        <button class="addButton" 
+            (click)="onAddButtonClicked()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+    <app-category *ngFor="let category of filteredCategories;" 
+        [category]="category">
+    </app-category>
 </div>

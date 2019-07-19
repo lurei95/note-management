@@ -7,26 +7,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HeaderBarItemComponent implements OnInit {
 
-  private class: string;
+  private _class: string;
+  get class() { return this.class; }
 
   @Input() title: string;
 
   @Input() icon: string;
 
   private _isActive: boolean;
+  get isActive() { return this._isActive; }
   @Input()
-  set isActive(isActive: boolean) {
-    this._isActive = isActive;
-    this.calculateClass();
-  }
+  set isActive(isActive: boolean) { this._isActive = isActive; }
   
-  constructor() { 
-    this.calculateClass() 
-  }
+  constructor() { }
 
   ngOnInit() { }
-
-  private calculateClass() { 
-    this.class = this._isActive ? "active" : "normal";
-  }
 }

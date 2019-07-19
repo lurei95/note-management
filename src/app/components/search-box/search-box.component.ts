@@ -2,7 +2,6 @@ import { SearchTextChangeAction } from '../../redux/actions/search-text';
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IApplicationState, getSearchText } from 'src/app/redux/reducers';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-box',
@@ -16,16 +15,18 @@ export class SearchBoxComponent implements OnInit {
   @Input()
   set fieldName(value: string) { this._fieldName = value; }
 
-  private searchText: string;
+  private _searchText: string;
+  get searchText() { return this._searchText; }
+  set searchText(value: string) { this._searchText = value; }
 
-  constructor(public store: Store<IApplicationState>) {
-    store.select(state => getSearchText(this.fieldName, state)).subscribe((x: string) => this.searchText = x);
+  constructor(public store: Store<IApplicationState>) 
+  { 
+    store.select(state => getSearchText(this.fieldName, state)).subscribe(
+      (x: string) => this.searchText = x);
   }
 
   ngOnInit() { }
 
-  onSearchTextChange(searchText: string) {
-    console.log("searchTextChanged");
-    this.store.dispatch(new SearchTextChangeAction(searchText, this.fieldName));
-  }
+  onSearchTextChange(searchText: string) 
+  { this.store.dispatch(new SearchTextChangeAction(searchText, this.fieldName)); }
 }

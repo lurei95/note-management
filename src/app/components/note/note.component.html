@@ -1,9 +1,22 @@
-<div class="test">
+<div class="test" 
+    (focusout)=onFocusLeaving()
+    (pointerenter)="onPointerEnter()" 
+    (pointerleave)="onPointerLeave()"
+    (keydown.control.s)="handleSaveShortcut($event)"
+    (dblclick)="openEditDialog()">
     <div class="headerLine">
-        <input style="grid-column: 1" type="text" placeholder="Titel" [(ngModel)] ="_note.title"/>
-        <button style="grid-column: 2"><i class="fa fa-times" aria-hidden="true" (click)="onDeleteButtonClicked()"></i></button>
+        <input i18n-placeholder [className]="hasError ? 'invalid' : 'hiddenInput'"
+            type="text" 
+            placeholder="Titel"
+            (input)="onTitleChanged()"  
+            [(ngModel)] ="note.title" #titleInput/>
+        <button (click)="onDeleteButtonClicked()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
     </div>
-    <div style="height: 100%;margin: 10px 10px 0px 10px">
-        <textarea (input)="onTextAreaValueChanged($event.target.value)" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
+    <div id="textAreaDiv">
+        <textarea 
+            (input)="onTextAreaValueChanged($event.target.value)" 
+            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
     </div>
 </div>
