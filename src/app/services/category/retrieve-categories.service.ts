@@ -1,6 +1,6 @@
 import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { Injectable } from '@angular/core';
-import { IServiceBase } from '../service';
+import { IServiceBase } from '../base/iServiceBase';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { CategoriesRetrievedAction, CategoryActionKind, CategoryAction } from 'src/app/redux/actions/category';

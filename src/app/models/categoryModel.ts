@@ -1,10 +1,11 @@
+import { clone } from 'src/app/util/utility';
 import { IEditableModel } from './iEditableModel';
 import { nullOrEmpty } from '../util/utility';
 
 /**
  * Model for a category containing multiple notes
  */
-export class CategoryModel implements IEditableModel<CategoryDisplayModel>
+export class CategoryModel implements IEditableModel<CategoryModel>
 {
   /**
    * @returns {string} ID of the category
@@ -29,13 +30,6 @@ export class CategoryModel implements IEditableModel<CategoryDisplayModel>
   constructor(private _id?: string, private _title? : string) { }
 
   /**
-   * Tests if the model is valid for saving
-   * 
-   * @returns {boolean} Whether the model is valid for saving
-   */
-  isValid(): boolean { return !nullOrEmpty(this.title); }
-
-  /**
    * Tests if the model is equal to the other model
    * 
    * @param {CategoryModel} model The other model to compare to
@@ -43,6 +37,13 @@ export class CategoryModel implements IEditableModel<CategoryDisplayModel>
    */
   equals(model: CategoryModel): boolean 
   { return this.id == model.id  && this.title == model.title; }
+
+  /**
+   * Clones the model
+   * 
+   * @returns {CategoryModel} A cloned version of the model
+   */
+  clone(): CategoryModel { return clone<CategoryModel>(this, CategoryModel); }
 }
 
 /**
@@ -59,4 +60,11 @@ export class CategoryDisplayModel extends CategoryModel
    * @param {boolean} value Whether the model is currently edited
    */
   set isEditing(value: boolean) { this._isEditing = value; }
+
+  /**
+   * Clones the model
+   * 
+   * @returns {CategoryDisplayModel} A cloned version of the model
+   */
+  clone(): CategoryDisplayModel { return clone<CategoryDisplayModel>(this, CategoryDisplayModel); }
 }

@@ -2,7 +2,7 @@ import { strictEqual } from 'assert';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import { Injectable } from '@angular/core';
-import { IServiceBase } from '../service';
+import { IServiceBase } from '../base/iServiceBase';
 import { NoteDisplayModel } from 'src/app/models/noteModel';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { NoteActionKind, NoteAction } from 'src/app/redux/actions/notes';

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IServiceBase } from '../service';
+import { IServiceBase } from '../base/iServiceBase';
 import { NoteDisplayModel } from 'src/app/models/noteModel';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { NoteAction, NoteActionKind } from 'src/app/redux/actions/notes';
 import { truncate } from 'src/app/util/utility';
 import { NotificationService } from '../notification/notificationService';
+import { IDeleteService } from '../base/iDeleteService';
 
 /**
  * Service for deleting a note
@@ -13,7 +14,7 @@ import { NotificationService } from '../notification/notificationService';
 @Injectable({
   providedIn: 'root'
 })
-export class DeleteNoteService implements IServiceBase<NoteDisplayModel> 
+export class DeleteNoteService implements IDeleteService<NoteDisplayModel> 
 {
   /**
    * Constructor

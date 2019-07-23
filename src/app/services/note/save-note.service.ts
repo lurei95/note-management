@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IServiceBase } from '../service';
 import { NoteDisplayModel } from 'src/app/models/noteModel';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { NoteAction, NoteActionKind } from 'src/app/redux/actions/notes';
 import { truncate } from 'src/app/util/utility';
 import { NotificationService } from '../notification/notificationService';
+import { ISaveService } from '../base/iSaveService';
 
 /**
  * Service for saving changes to a note
@@ -13,7 +13,7 @@ import { NotificationService } from '../notification/notificationService';
 @Injectable({
   providedIn: 'root'
 })
-export class SaveNoteService implements IServiceBase<NoteDisplayModel> 
+export class SaveNoteService implements ISaveService<NoteDisplayModel> 
 {
   /**
    * Constructor

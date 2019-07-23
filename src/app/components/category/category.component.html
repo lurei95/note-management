@@ -1,6 +1,6 @@
 <div [className]="isSelected ? 'selected' : 'normal'" 
     (click)="onCategoryClicked()" #container>
-    <input [className]="editMode ? (hasError ? 'invalid' : null) : 'hidden'"
+    <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
         [readonly]="!editMode"
         style="grid-column: 1; grid-row: 1" 
         [(ngModel)] ="category.title" 
@@ -8,6 +8,7 @@
         (input)="onTitleChanged()" 
         (keydown.enter)="handleSaveShortcut()"
         (keydown.control.s)="handleSaveShortcut($event)"
+        placeholder="{{titleError == null ? Titel : titleError}}"
         #titleInput>
     <button *ngIf="editMode"
         style="grid-column: 2; grid-row: 1" 

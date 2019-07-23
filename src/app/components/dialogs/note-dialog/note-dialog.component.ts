@@ -1,12 +1,12 @@
+import { ValidateNoteService } from './../../../services/note/validate-note.service';
 import { SaveNoteService } from './../../../services/note/save-note.service';
 import { NoteDisplayModel } from 'src/app/models/noteModel';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import { nullOrEmpty, clone } from 'src/app/util/utility';
-import { EditableComponent } from '../../editableComponent';
+import { NoteComponentBase } from '../../noteComponentBase';
 
 /**
  * Dialog for editing a note
@@ -16,57 +16,38 @@ import { EditableComponent } from '../../editableComponent';
   templateUrl: './note-dialog.component.html',
   styleUrls: ['./note-dialog.component.css'],
 })
-export class NoteDialogComponent extends EditableComponent<NoteDisplayModel>
+export class NoteDialogComponent extends NoteComponentBase
 {
   @ViewChild("textAreaDiv", {static: false}) private textAreaDiv: ElementRef;
   @ViewChild("propertyAreaDiv", {static: false}) private propertyAreaDiv: ElementRef;
   @ViewChild("titleAreaDiv", {static: false}) private titleAreaDiv: ElementRef;
   @ViewChild("headerLine", {static: false}) private headerLine: ElementRef;
   @ViewChild("container", {static: false}) private container: ElementRef;
-  @ViewChild("titleInput", {static: false}) private titleInput: ElementRef;
-
-  /**
-   * Editor for the RichEditControl
-   */
-  editor = ClassicEditor;
 
   /**
    * Seperator key codes for the tag control
    */
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  private unmodified: NoteDisplayModel;
-
   private _isExpanded: boolean;
   /**
    * @returns {boolean} Whether the dialog is in expanded mode or not
    */
   get isExpanded(): boolean { return this._isExpanded; }
-
-  private _hasError: boolean;
-  /**
-   * @returns {boolean} Whether edited not is not valid
-   */
-  get hasError(): boolean { return this._hasError; }
-
-  /**
-   * @returns {NoteDisplayModel} The note which is edited
-   */
-  get note(): NoteDisplayModel { return this.model; }
   
   /**
    * Constructor
    * 
    * @param {NoteDisplayModel} data Injected: the note passed into the dialog
+   * @param {ValidateNoteService} validationService Injected: service for validating the note
    * @param {SaveNoteService} saveService Injected: service for saving the changes of the note
    * @param {MatDialogRef<NoteDialogComponent>} dialog Injected: reference to the own dialog
    */
-  constructor(@Inject(MAT_DIALOG_DATA) data: NoteDisplayModel, private saveService: SaveNoteService,
-    private dialog: MatDialogRef<NoteDialogComponent>) 
+  constructor(@Inject(MAT_DIALOG_DATA) data: NoteDisplayModel, validationService: ValidateNoteService,
+    saveService: SaveNoteService, private dialog: MatDialogRef<NoteDialogComponent>) 
   { 
-    super();
-    this.model = data; 
-    this.unmodified = clone<NoteDisplayModel>(this.model, NoteDisplayModel);
+    super(validationService, saveService);
+    this.note = data; 
   }
 
   /**
@@ -81,16 +62,7 @@ export class NoteDialogComponent extends EditableComponent<NoteDisplayModel>
   /**
    * Event handler: closes the dialog
    */
-  onCloseButtonClicked() 
-  { 
-    if (this.trySaveChanges())
-      this.dialog.close(); 
-  }
-
-  /**
-   * Event handler: validates the note to reset the error when the title is changed
-   */
-  onTitleChanged() { this._hasError = !this.note.isValid(); }
+  onCloseButtonClicked() { this.tryCloseDialog(); }
 
   /**
    * Event handler: adds a new tag
@@ -128,18 +100,10 @@ export class NoteDialogComponent extends EditableComponent<NoteDisplayModel>
   /**
    * Event handler: Calculates the RichEditControls height
    */
-  ngAfterViewInit() { this.calculateEditorHeight(); }
-
-  /**
-   * Event handler: tries to save the changes on pressing the save shortcut (ctrl + s)
-   * 
-   * @param {Event} e The event
-   */
-  handleSaveShortcut(e: Event)
-  {
-    e.preventDefault();
-    e.stopPropagation();
-    this.tryCloseDialog();
+  ngAfterViewInit() 
+  { 
+    super.ngAfterViewInit();
+    this.calculateEditorHeight(); 
   }
 
   private calculateEditorHeight()
@@ -159,20 +123,5 @@ export class NoteDialogComponent extends EditableComponent<NoteDisplayModel>
   {
     if(this.trySaveChanges())
       this.dialog.close();
-  }
-
-  private trySaveChanges()
-  {
-    if (this.model.equals(this.unmodified))
-      return;
-    if (!this.validateModel())
-    {
-      this._hasError = true;
-      this.titleInput.nativeElement.focus();
-      return false;
-    }
-    this.saveService.execute(this.note);
-    this.unmodified = clone<NoteDisplayModel>(this.model, NoteDisplayModel);
-    return true;
   }
 }

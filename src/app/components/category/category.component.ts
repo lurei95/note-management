@@ -1,7 +1,8 @@
+import { ValidateCategoryService } from './../../services/category/validate-category.service';
 import { CategoryActionKind } from './../../redux/actions/category';
 import { CategoryAction } from 'src/app/redux/actions/category';
 import { SaveCategoryService } from '../../services/category/save-category.service';
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { DeleteCategoryService } from 'src/app/services/category/delete-category.service';
 import { EditableComponent } from '../editableComponent';
@@ -10,7 +11,8 @@ import { IApplicationState, getSelectedCatgeory, getCategories } from 'src/app/r
 import { CategoryDeleteDialogComponent } from '../dialogs/category-delete-dialog/category-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogResult } from '../dialogs/dialogResult';
-import { clone } from 'src/app/util/utility';
+import { clone, nullOrEmpty } from 'src/app/util/utility';
+import { Dictionary } from 'src/app/util/dictionary';
 
 /**
  * Component for displaying and editing a category
@@ -27,13 +29,12 @@ export class CategoryComponent extends EditableComponent<CategoryDisplayModel>
   private isPointingOver: boolean;
   private selectedCategory: CategoryDisplayModel;
   private categories: CategoryDisplayModel[];
-  private unmodified: CategoryDisplayModel;
 
-  private _hasError: boolean;
+  private _titleError: string;
   /**
-   * @returns {boolean} If the category note is not valid 
+   * @returns {string} The error message for the title of the note
    */
-  get hasError(): boolean { return this._hasError; }
+  get titleError(): string { return this._titleError; }
 
   private _isSelected: boolean;
   /**
@@ -82,10 +83,11 @@ export class CategoryComponent extends EditableComponent<CategoryDisplayModel>
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {MatDialog} dialog Injected: service for showing a dialog
    */
-  constructor(private deleteService: DeleteCategoryService, private saveService: SaveCategoryService,   
-    private store: Store<IApplicationState>, private dialog: MatDialog) 
+  constructor(validationService: ValidateCategoryService, saveService: SaveCategoryService,
+    private deleteService: DeleteCategoryService, private store: Store<IApplicationState>, 
+    private dialog: MatDialog) 
   { 
-    super(); 
+    super(validationService, saveService); 
     this.store.select(getSelectedCatgeory).subscribe(
       (x: CategoryDisplayModel) => this.handleSelectedCategoryChanged(x));
     this.store.select(getCategories).subscribe(
@@ -97,14 +99,14 @@ export class CategoryComponent extends EditableComponent<CategoryDisplayModel>
    */
   onEditButtonClicked() 
   { 
-    if(!this.categories.some(category => !category.isValid()))
+    if(!this.categories.some(category => !nullOrEmpty(category.title)))
       this.editMode = true; 
   }
 
   /**
    * Event handler: validates the category to reset the error when the title is changed
    */
-  onTitleChanged() { this._hasError = !this.category.isValid(); }
+  onTitleChanged() { this.validateModel(); }
 
   /**
    * Event handler: selected the category
@@ -158,37 +160,30 @@ export class CategoryComponent extends EditableComponent<CategoryDisplayModel>
   onPointerLeave() { this.isPointingOver = false; }
 
   /**
-   * Event handler: tries to save the changes on pressing the save shortcut (ctrl + s)
+   * Method for handling the validation result of the model
    * 
-   * @param {Event} e The event
+   * @param {Dictionary<string>} result The validation result
+   * @returns {boolean} Whether the model should be saved
    */
-  handleSaveShortcut(e: Event)
+  protected handleValidationResult(result: Dictionary<string>): boolean
   {
-    e.preventDefault();
-    e.stopPropagation();
-    this.trySaveChanges();
+    if (result.containsKey("title"))
+    {
+      this._titleError = result["title"];
+      this.titleInput.nativeElement.focus();
+      return false;
+    }
+    else
+    {
+      this.model.isEditing = false;
+      return true;
+    }
   }
 
   private onDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Confirm)
       this.deleteService.execute(this.category); 
-  }
-
-  private trySaveChanges()
-  {
-    if (this.model.equals(this.unmodified))
-      return;
-
-    if (!this.category.isValid())
-    {
-      this._hasError = true;
-      this.titleInput.nativeElement.focus();
-      return;
-    }
-    this.saveService.execute(this.category);
-    this.unmodified = clone<CategoryDisplayModel>(this.model, CategoryDisplayModel);
-    this.editMode = false;
   }
 
   private trySetSelected()

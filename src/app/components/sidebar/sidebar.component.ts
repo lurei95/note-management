@@ -1,3 +1,4 @@
+import { ValidateCategoryService } from './../../services/category/validate-category.service';
 import { FilterCategoriesService } from './../../services/category/filter-categories.service';
 import { getCategories, getSelectedCatgeory, IApplicationState, getSearchText } from './../../redux/reducers/index';
 import { Store } from '@ngrx/store';
@@ -31,9 +32,10 @@ export class SidebarComponent
    * @param {AddCategoryService} addService Injected: service for adding a new category
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {FilterCategoriesService} store Injected: service for filtering the categories
+   * @param {ValidateCategoryService} validationService Injected: service for validating the category
    */
   constructor(private addService: AddCategoryService, private store: Store<IApplicationState>, 
-    private filterService: FilterCategoriesService) 
+    private filterService: FilterCategoriesService, private validationService: ValidateCategoryService) 
   {
     this.store.select(state => getSearchText("Category", state)).subscribe(
       (x: string) => this.handleSearchTextChanged(x));
@@ -49,7 +51,7 @@ export class SidebarComponent
   onAddButtonClicked() 
   { 
     let selectedCategory = this.categories.filter(category => category.isEditing)[0];
-    if (selectedCategory == null || selectedCategory.isValid())
+    if (selectedCategory == null || this.validationService.execute(selectedCategory).keys.length == 0)
       this.addService.execute(); 
   }
 
@@ -71,6 +73,6 @@ export class SidebarComponent
   private filterCategories() 
   {
     this._filteredCategories = this.filterService.filter(this.categories, this.searchText, 
-      this.selectedCategory.id);
+      this.selectedCategory == null ? null : this.selectedCategory.id);
   }
 }

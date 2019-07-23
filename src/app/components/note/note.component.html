@@ -6,9 +6,9 @@
     (dblclick)="openEditDialog()"
     (doubleTap)="openEditDialog()">
     <div class="headerLine">
-        <input i18n-placeholder [className]="hasError ? 'invalid' : 'hiddenInput'"
+        <input i18n-placeholder [className]="titleError == null ? 'hiddenInput' : 'invalid'"
             type="text" 
-            placeholder="Titel"
+            placeholder="{{titleError == null ? Titel : titleError}}"
             (input)="onTitleChanged()"  
             (keydown.enter)="handleSaveShortcut()"
             [(ngModel)] ="note.title" #titleInput/>

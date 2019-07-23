@@ -1,5 +1,5 @@
 import { IEditableModel } from './iEditableModel';
-import { nullOrEmpty } from '../util/utility';
+import { clone } from '../util/utility';
 
 /**
  * Model for a note
@@ -67,13 +67,6 @@ export class NoteModel implements IEditableModel<NoteModel>
   { }
 
   /**
-   * Tests if the model is valid for saving
-   * 
-   * @returns {boolean} Whether the model is valid for saving
-   */
-  isValid(): boolean { return !nullOrEmpty(this.title); }
-
-  /**
    * Tests if the model is equal to the other model
    * 
    * @param {NoteModel} model The other model to compare to
@@ -94,6 +87,13 @@ export class NoteModel implements IEditableModel<NoteModel>
         return false;
     return true;
   }
+
+  /**
+   * Clones the model
+   * 
+   * @returns {NoteModel} A cloned version of the model
+   */
+  clone(): NoteModel { return clone<NoteModel>(this, NoteModel); }
 }
 
 export class NoteDisplayModel extends NoteModel 
@@ -107,4 +107,11 @@ export class NoteDisplayModel extends NoteModel
    * @param {boolean} value Whether the model is currently edited
    */
   set isEditing(value: boolean) { this._isEditing = value; }
+
+  /**
+   * Clones the model
+   * 
+   * @returns {NoteDisplayModel} A cloned version of the model
+   */
+  clone(): NoteDisplayModel { return clone<NoteDisplayModel>(this, NoteDisplayModel); }
 }

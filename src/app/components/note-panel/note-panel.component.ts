@@ -3,11 +3,12 @@ import { CategoryDisplayModel } from '../../models/categoryModel';
 import { AddNoteService } from '../../services/note/add-note.service';
 import { getNotes, getSearchText, getSelectedCatgeory } from '../../redux/reducers/index';
 import { NoteDisplayModel } from '../../models/noteModel';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RetrieveNotesService } from 'src/app/services/note/retrieve-notes.service';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { RetrieveCategoriesService } from 'src/app/services/category/retrieve-categories.service';
+import { ValidateNoteService } from 'src/app/services/note/validate-note.service';
 
 /**
  * Component pf panel for displaying notes
@@ -42,10 +43,11 @@ export class NotePanelComponent
    * @param {AddNoteService} addService Injected: service for adding a new note
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {FilterNotesService} filterService Injected: service for filtering the notes
+   * @param {ValidateNoteService} validationService Injected: service for validating a note
    */
   constructor(notesService: RetrieveNotesService, categoriesService: RetrieveCategoriesService,
     private addService: AddNoteService, store: Store<IApplicationState>, 
-    private filterService: FilterNotesService) 
+    private filterService: FilterNotesService, private validationService: ValidateNoteService) 
   {
     store.select(state => getSearchText("Note", state)).subscribe(
       (x: string) => this.handleSearchTextChanged(x));
@@ -64,7 +66,7 @@ export class NotePanelComponent
   onAddButtonClicked() 
   { 
     let selectedNote = this.notes.filter(note => note.isEditing)[0];
-    if (selectedNote == null || selectedNote.isValid())
+    if (selectedNote == null || this.validationService.execute(selectedNote).keys.length == 0)
       this.addService.execute(this.selectedCategory.id); 
   }
 

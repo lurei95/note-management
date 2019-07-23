@@ -1,11 +1,11 @@
 import { IApplicationState } from '../../redux/reducers/index';
 import { Injectable } from '@angular/core';
-import { IServiceBase } from '../service';
 import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { Store } from '@ngrx/store';
 import { CategoryActionKind, CategoryAction } from 'src/app/redux/actions/category';
 import { truncate } from 'src/app/util/utility';
 import { NotificationService } from '../notification/notificationService';
+import { ISaveService } from '../base/iSaveService';
 
 /**
  * Service for saving changes to a category
@@ -13,7 +13,7 @@ import { NotificationService } from '../notification/notificationService';
 @Injectable({
   providedIn: 'root'
 })
-export class SaveCategoryService implements IServiceBase<CategoryDisplayModel>
+export class SaveCategoryService implements ISaveService<CategoryDisplayModel>
 {
   /**
    * Constructor

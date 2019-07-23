@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { CategoryDisplayModel } from 'src/app/models/categoryModel';
-import { IServiceBase } from '../service';
+import { IServiceBase } from '../base/iServiceBase';
 
 /**
  * Service for adding a new category
