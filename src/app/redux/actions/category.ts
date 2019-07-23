@@ -1,26 +1,67 @@
+import { CategoryDisplayModel } from './../../models/categoryModel';
 import { Action } from '@ngrx/store'
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 
+/**
+ * Kind of action performed on the state related to {@link CategoryModel}
+ */
 export enum CategoryActionKind 
 {
-    CategoryDelete = 'CategoryDelete',
-    CategoryAdd = 'CategoryAdd',
-    CategoryUpdate = 'CategoryUpdate',
-    CategoriesRetrieved = 'CategoriesRetrieved',
-    SelectedCategoryChange = 'SelectedCategoryChanged'
+  /**
+   * Category is deleted
+   */
+  CategoryDelete = 'CategoryDelete',
+  /**
+   * Category is added
+   */
+  CategoryAdd = 'CategoryAdd',
+  /**
+   * Category is saved/changed
+   */
+  CategoryUpdate = 'CategoryUpdate',
+  /**
+   * Categories are retrieved
+   */
+  CategoriesRetrieved = 'CategoriesRetrieved',
+  /**
+   * The selected category is changed
+   */
+  SelectedCategoryChange = 'SelectedCategoryChanged'
 }
 
+/**
+ * Action performed on the state related to {@link CategoryModel}
+ */
 export class CategoryAction implements Action 
 {
-    type: string;
+  /**
+   * Type of the action
+   */
+  type: string;
 
-    constructor(actionKind: CategoryActionKind, public payload: CategoryDisplayModel) 
-    { this.type = actionKind; }
+  /**
+   * Constructor
+   * 
+   * @param {CategoryActionKind} actionKind Type of the action
+   * @param {CategoryDisplayModel} payload The category involved in the action
+   */
+  constructor(actionKind: CategoryActionKind, public payload: CategoryDisplayModel) 
+  { this.type = actionKind; }
 }
 
+/**
+ * Action: categories are retrieved
+ */
 export class CategoriesRetrievedAction implements Action 
 {
-    type = CategoryActionKind.CategoriesRetrieved
+  /**
+   * Type of the action
+   */
+  type = CategoryActionKind.CategoriesRetrieved
 
-    constructor(public payload: CategoryDisplayModel[]) { }
+  /**
+   * Constructor
+   * 
+   * @param {CategoryDisplayModel[]} payload The retrieved categories
+   */
+  constructor(public payload: CategoryDisplayModel[]) { }
 }

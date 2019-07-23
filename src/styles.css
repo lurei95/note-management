@@ -11,17 +11,31 @@
     --themeGray: #e3e3e3;
     --themeLightGray: #f1f1f1;
     --themeBorderColor: #777;
+    --themeGreen: #00b894;
 }
 
 .addButton {
-    margin-left: 10px;
     font-size: 16px;
-    background-color: #00b894;
+    background-color: var(--themeGreen);
     border: none;
     padding-top: 6px;
     padding-left: 7px;
     padding-right: 7px;
     padding-bottom: 5px;
+}
+
+.ck.ck-reset.ck-editor.ck-rounded-corners {
+    height: 100%;
+}
+
+.ck-editor__editable_inline {
+    height: 100%;
+    min-height: 100px
+}
+
+.ck.ck-editor__main {
+    height: calc(100% - 40px);
+    min-height: 100px
 }
 
 html, body {
@@ -63,7 +77,14 @@ input:hover {
 input {
     border: 1.5px solid var(--themeBorderColor);
     border-radius: 3px;
-    padding: 3px
+    padding: 3px;
+    text-overflow: ellipsis;
+}
+
+label {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
 }
 
 textarea:hover {
@@ -92,4 +113,15 @@ button:focus {
     outline: none;
     border-radius: 3px;
     border: 1.5px solid  var(--themeRed)
+}
+
+.fullscreenDialog >  mat-dialog-container {
+    padding: 0px;
+    width: auto;
+    height: auto;
+}
+
+.cdk-overlay-pane {
+    max-width: 100vw !important;
+    max-height: 100vh !important;
 }

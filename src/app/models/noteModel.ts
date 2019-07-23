@@ -1,33 +1,110 @@
 import { IEditableModel } from './iEditableModel';
 import { nullOrEmpty } from '../util/utility';
 
-export class NoteModel 
+/**
+ * Model for a note
+ */
+export class NoteModel implements IEditableModel<NoteModel>
 {
-    get id() { return this._id; }
+  private _tags: string[] = [];
+  /**
+   * @returns {string[]} Tags assigned to the note
+   */
+  get tags(): string[] { return this._tags; }
 
-    get categoryId() { return this._categoryId; }
-    set categoryId(value : string) { this._categoryId = value; }
+  /**
+   * @returns {string} ID of the note
+   */
+  get id(): string { return this._id; }
 
-    get title() { return this._title; }
-    set title(value: string) { this._title = value; }
+  /**
+   * @returns {string} ID of the category the note belongs to
+   */
+  get categoryId(): string { return this._categoryId; }
+  /**
+   * @param {string} value ID of the category the note belongs to
+   */
+  set categoryId(value : string) { this._categoryId = value; }
 
-    get text() { return this._text; }
-    set text(value: string) { this._text = value; }
+  /**
+   * @returns {string} Title of the note
+   */
+  get title(): string { return this._title; }
+  /**
+   * @param {string} value Title of the note
+   */
+  set title(value: string) { this._title = value; }
 
-    get dueDate() { return this._dueDate; }
-    set dueDate(value: Date) { this._dueDate = value; }
+  /**
+   * @returns {string} Content of the note
+   */
+  get text(): string { return this._text; }
+  /**
+   * @param {string} value Content of the note
+   */
+  set text(value: string) { this._text = value; }
 
-    constructor(private _id?: string, private _title?: string, private _text?: string, private _categoryId?: string, private _dueDate?: Date) {}
+  /**
+   * @returns {Date} Due date of the note
+   */
+  get dueDate(): Date { return this._dueDate; }
+  /**
+   * @param {Date} value Due date of the note
+   */
+  set dueDate(value: Date) { this._dueDate = value; }
 
-    asDisplayModel(): NoteDisplayModel
-    { return new NoteDisplayModel(this.id, this.title, this.text, this.categoryId, this.dueDate); }
+  /**
+   * Constructor
+   * 
+   * @param {string} _id ID of the note
+   * @param {string} _title Title of the note
+   * @param {string} _text Content of the note
+   * @param {string} _categoryId ID of the category the note belongs to
+   * @param {Date} _dueDate Due date of the note
+   */
+  constructor(private _id?: string, private _title?: string, private _text?: string, 
+    private _categoryId?: string, private _dueDate?: Date) 
+  { }
+
+  /**
+   * Tests if the model is valid for saving
+   * 
+   * @returns {boolean} Whether the model is valid for saving
+   */
+  isValid(): boolean { return !nullOrEmpty(this.title); }
+
+  /**
+   * Tests if the model is equal to the other model
+   * 
+   * @param {NoteModel} model The other model to compare to
+   * @returns {boolean} Whether the two models equals
+   */
+  equals(item: NoteModel): boolean 
+  {
+    let isEqual = this.id == item.id 
+      && this.text == item.text 
+      && this.title == item.title
+      && this.dueDate == item.dueDate 
+      && this.tags.length == item.tags.length;
+    if (!isEqual)
+      return false;
+
+    for(let i = 0;i < this.tags.length;i++)
+      if (this.tags[i] != item.tags[i])
+        return false;
+    return true;
+  }
 }
 
-export class NoteDisplayModel extends NoteModel implements IEditableModel
+export class NoteDisplayModel extends NoteModel 
 {
-    private _isEditing: boolean;
-    get isEditing() { return this._isEditing; }
-    set isEditing(value: boolean) { this._isEditing = value; }   
-
-    isValid() { return !nullOrEmpty(this.title); }
+  private _isEditing: boolean;
+  /**
+   * @returns {boolean} Whether the model is currently edited
+   */
+  get isEditing(): boolean { return this._isEditing; }
+  /**
+   * @param {boolean} value Whether the model is currently edited
+   */
+  set isEditing(value: boolean) { this._isEditing = value; }
 }

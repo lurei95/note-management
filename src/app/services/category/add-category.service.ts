@@ -6,13 +6,24 @@ import { Store } from '@ngrx/store';
 import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { IServiceBase } from '../service';
 
+/**
+ * Service for adding a new category
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AddCategoryService implements IServiceBase<CategoryDisplayModel>
 {
+  /**
+   * Constructor
+   * 
+   * @param {Store<IApplicationState>} store Injected: redux store
+   */
   constructor(private store: Store<IApplicationState>) { }
 
+  /**
+   * Executes the service: Adds a new category
+   */
   execute()
   { 
     let model = new CategoryDisplayModel(uuid());

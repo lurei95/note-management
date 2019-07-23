@@ -17,24 +17,11 @@ input {
     margin-right: 10px
 }
 
-textarea {
-    width: 100%; 
-    height: 100%;
-    resize: vertical;
-    max-height: 500px;
-    min-height: 100px
-}
-
 .headerLine {
-    margin: 5px 5px 0px 10px;
+    margin: 5px 5px 5px 10px;
     display: grid;
     grid-template-columns: 1fr 30px;
     grid-column-gap: 10px
-}
-
-#textAreaDiv {
-    height: 100%;
-    margin: 10px 10px 0px 10px;
 }
 
 button{
@@ -46,4 +33,13 @@ button{
 
 .fa-times {
     color: var(--themeRed);
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+    border-top: none;
+    max-height: 400px
+}
+
+#textAreaDiv { 
+    padding: 5px;
 }

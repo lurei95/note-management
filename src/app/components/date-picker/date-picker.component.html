@@ -1,5 +1,5 @@
 <div id="container">
     <input id="dateInput" [matDatepicker]="picker" class="hiddenInput" placeholder="Choose a date">
     <mat-datepicker-toggle id="toggle" matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker style="grid-row: 1 / 3;" #picker></mat-datepicker>
+    <mat-datepicker startView="year" [startAt]="startDate" style="grid-row: 1 / 3;" #picker></mat-datepicker>
 </div>

@@ -3,20 +3,21 @@
     (pointerenter)="onPointerEnter()" 
     (pointerleave)="onPointerLeave()"
     (keydown.control.s)="handleSaveShortcut($event)"
-    (dblclick)="openEditDialog()">
+    (dblclick)="openEditDialog()"
+    (doubleTap)="openEditDialog()">
     <div class="headerLine">
         <input i18n-placeholder [className]="hasError ? 'invalid' : 'hiddenInput'"
             type="text" 
             placeholder="Titel"
             (input)="onTitleChanged()"  
+            (keydown.enter)="handleSaveShortcut()"
             [(ngModel)] ="note.title" #titleInput/>
         <button (click)="onDeleteButtonClicked()">
             <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>
+    <hr>
     <div id="textAreaDiv">
-        <textarea 
-            (input)="onTextAreaValueChanged($event.target.value)" 
-            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
+        <ckeditor id="textEditor" disabled="true" [(ngModel)]="note.text" [config]="{toolbar: []}" [editor]="editor"></ckeditor>
     </div>
 </div>

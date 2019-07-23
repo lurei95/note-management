@@ -1,6 +1,10 @@
-<mat-dialog-content class="mat-typography" style="margin: 0px; padding: 0px">
-    <div id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
-        <div class="headerLine">
+<mat-dialog-content id=content 
+    class="mat-typography" 
+    style="margin: 0px; padding: 0px" 
+    (keydown.esc)="tryCloseDialog()"
+    (keydown.control.s)="handleSaveShortcut($event)">
+    <div #container id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
+        <div #headerLine class="headerLine">
             <button id="expandButton" (click)="onExpandButtonClicked()" style="grid-column: 2">
                 <i class="fa fa-expand" aria-hidden="true"></i>
             </button>
@@ -8,7 +12,7 @@
                 <i class="fa fa-times" aria-hidden="true" style="grid-column: 3"></i>
             </button>
         </div>
-        <div id="titleArea">
+        <div id="titleArea" #titleAreaDiv>
             <label id="titleLabel">Titel:</label>
             <input [className]="hasError ? 'invalid' : 'hiddenInput'"
                 type="text" id="titleInput"
@@ -16,14 +20,27 @@
                 (input)="onTitleChanged()"  
                 [(ngModel)] ="note.title" #titleInput/>
         </div>
-        <div id="propertyArea">
+        <div id="propertyArea" #propertyAreaDiv>
             <label class="propertyLabel">Fällig am:</label>
             <app-date-picker></app-date-picker>
+            <label class="propertyLabel">Tags:</label>
+            <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let tag of note.tags" 
+                        [removable]="true" 
+                        (removed)="remove(tag)">
+                        {{tag}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="neuer Tag" *ngIf="note.tags.length < 10"
+                        maxlength="15" class="hiddenInput" id="tagInput"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
         </div>
-        <div id="textAreaDiv">
-            <textarea 
-                (input)="onTextAreaValueChanged($event.target.value)" 
-                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{note.text}}</textarea>
+        <div #textAreaDiv [className]="isExpanded ? 'textAreaExpanded' : 'textAreaNormal'">
+            <ckeditor id="textEditor" [(ngModel)]="note.text" [editor]="editor"></ckeditor>
         </div>
     </div>
 </mat-dialog-content>

@@ -1,53 +1,83 @@
-import { CategoryDisplayModel } from './../../models/categoryModel';
-import { AddNoteService } from './../../services/note/add-note.service';
-import { getNotes, getSearchText, getSelectedCatgeory } from './../../redux/reducers/index';
+import { FilterNotesService } from '../../services/note/filter-notes.service';
+import { CategoryDisplayModel } from '../../models/categoryModel';
+import { AddNoteService } from '../../services/note/add-note.service';
+import { getNotes, getSearchText, getSelectedCatgeory } from '../../redux/reducers/index';
 import { NoteDisplayModel } from '../../models/noteModel';
 import { Component, OnInit } from '@angular/core';
 import { RetrieveNotesService } from 'src/app/services/note/retrieve-notes.service';
 import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { RetrieveCategoriesService } from 'src/app/services/category/retrieve-categories.service';
-import { nullOrEmpty } from 'src/app/util/utility';
 
+/**
+ * Component pf panel for displaying notes
+ */
 @Component({
   selector: 'app-note-panel',
   templateUrl: './note-panel.component.html',
   styleUrls: ['./note-panel.component.css']
 })
-export class NotePanelComponent implements OnInit 
+export class NotePanelComponent
 {
   private notes: NoteDisplayModel[];
   private searchText: string;
+  private selectedCategory: CategoryDisplayModel;
 
   private _filteredNotes: NoteDisplayModel[];
-  get filteredNotes() { return this._filteredNotes; }
+  /**
+   * @returns {NoteDisplayModel[]} A list of notes filtered by the search text
+   */
+  get filteredNotes(): NoteDisplayModel[] { return this._filteredNotes; }
 
-  private _selectedCategory: CategoryDisplayModel;
-  get selectedCategory() { return this._selectedCategory; }
+  /**
+   * @returns {string} The title of the selected category
+   */
+  get title(): string { return this.selectedCategory == null ? "" : this.selectedCategory.title; }
 
-  constructor(private notesService: RetrieveNotesService, categoriesService: RetrieveCategoriesService,
-    private addService: AddNoteService, store: Store<IApplicationState>) 
+  /**
+   * Constructor
+   * 
+   * @param {RetrieveNotesService} notesService Injected: service for retrieving all notes
+   * @param {RetrieveCategoriesService} categoriesService Injected: service for retrieving all categories
+   * @param {AddNoteService} addService Injected: service for adding a new note
+   * @param {Store<IApplicationState>} store Injected: redux store
+   * @param {FilterNotesService} filterService Injected: service for filtering the notes
+   */
+  constructor(notesService: RetrieveNotesService, categoriesService: RetrieveCategoriesService,
+    private addService: AddNoteService, store: Store<IApplicationState>, 
+    private filterService: FilterNotesService) 
   {
-    categoriesService.execute();
-
     store.select(state => getSearchText("Note", state)).subscribe(
       (x: string) => this.handleSearchTextChanged(x));
     store.select(getNotes).subscribe(
       (x: NoteDisplayModel[]) => this.handleNotesChanged(x));
     store.select(state => getSelectedCatgeory(state)).subscribe(
       (x: CategoryDisplayModel) => this.handleSelectedCategoryChanged(x)); 
+
+    categoriesService.execute();
+    notesService.execute();
+  }
+
+  /**
+   * Event handler: adds a new note
+   */
+  onAddButtonClicked() 
+  { 
+    let selectedNote = this.notes.filter(note => note.isEditing)[0];
+    if (selectedNote == null || selectedNote.isValid())
+      this.addService.execute(this.selectedCategory.id); 
   }
 
   private handleNotesChanged(notes: NoteDisplayModel[]) 
   {
     this.notes = notes;
-    this.filterNotes(notes); 
+    this.filterNotes(); 
   }
 
   private handleSelectedCategoryChanged(category: CategoryDisplayModel) 
   {
-    this._selectedCategory = category;
-    this.notesService.execute(category.id);
+    this.selectedCategory = category;
+    this.filterNotes();
   }
 
   private handleSearchTextChanged(searchText: string) 
@@ -55,26 +85,16 @@ export class NotePanelComponent implements OnInit
     if (this.searchText != searchText)
     {
       this.searchText = searchText;
-      this.filterNotes(this.notes); 
+      this.filterNotes(); 
     }
   }
 
-  private filterNotes(notes: NoteDisplayModel[]) 
+  private filterNotes() 
   {
-    if (!nullOrEmpty(this.searchText))
-      this._filteredNotes = notes.filter(
-        note => note.title.toUpperCase().includes(this.searchText.toUpperCase())
-      );
-    else
-      this._filteredNotes = notes;
-  }
+    if (this.selectedCategory == null)
+      return;
 
-  ngOnInit() { }
-
-  onAddButtonClicked() 
-  { 
-    let selectedNote = this.notes.filter(note => note.isEditing)[0];
-    if (selectedNote == null || selectedNote.isValid())
-      this.addService.execute(this.selectedCategory.id); 
+    this._filteredNotes = this.filterService.filter(this.notes, this.searchText, 
+      this.selectedCategory.id)
   }
 }

@@ -6,7 +6,7 @@
         [(ngModel)] ="category.title" 
         (focusout)=onFocusLeaving()
         (input)="onTitleChanged()" 
-        (keydown.enter)="trySaveChanges()"
+        (keydown.enter)="handleSaveShortcut()"
         (keydown.control.s)="handleSaveShortcut($event)"
         #titleInput>
     <button *ngIf="editMode"

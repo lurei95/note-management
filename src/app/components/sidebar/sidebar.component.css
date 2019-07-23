@@ -26,6 +26,10 @@ hr {
     color: white
 }
 
+.addButton {
+    margin-left: 10px;
+}
+
 #titleArea {
     background: var(--themeDarkGray);
     width: 100%;

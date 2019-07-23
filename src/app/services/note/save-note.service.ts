@@ -8,12 +8,12 @@ import { truncate } from 'src/app/util/utility';
 import { NotificationService } from '../notification/notificationService';
 
 /**
- * Service for deleting a note
+ * Service for saving changes to a note
  */
 @Injectable({
   providedIn: 'root'
 })
-export class DeleteNoteService implements IServiceBase<NoteDisplayModel> 
+export class SaveNoteService implements IServiceBase<NoteDisplayModel> 
 {
   /**
    * Constructor
@@ -21,20 +21,18 @@ export class DeleteNoteService implements IServiceBase<NoteDisplayModel>
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {NotificationService} notificationService Injected: service for displaying notifications
    */
-  constructor(private store: Store<IApplicationState>, 
-    private notificationService: NotificationService) 
-  { }
+  constructor(private store: Store<IApplicationState>, private notificationService: NotificationService) { }
 
   /**
-   * Executes the service: deletes the note
+   * Executes the service: Saves the note
    * 
-   * @param {NoteDisplayModel} parameter Note to delete
+   * @param {NoteDisplayModel} parameter Note to save
    */
   execute(parameter: NoteDisplayModel) 
-  {
-    this.store.dispatch(new NoteAction(NoteActionKind.NoteDelete, parameter));
+  { 
+    this.store.dispatch(new NoteAction(NoteActionKind.NoteUpdate, parameter)); 
 
-    const message = 'Notiz "' + truncate(parameter.title, 10) + '" erfolgreich gelöscht'
+    const message = 'Notiz "' + truncate(parameter.title, 10) + '" erfolgreich gespeichert'
     this.notificationService.notifySuccessMessage(message);
   }
 }

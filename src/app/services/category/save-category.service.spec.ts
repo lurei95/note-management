@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import { SaveCategoryService } from './save-category.service';
 
-import { UpdateNoteService } from './update-note.service';
-
-describe('UpdateNoteService', () => {
+describe('SaveCategoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UpdateNoteService = TestBed.get(UpdateNoteService);
+    const service: SaveCategoryService = TestBed.get(SaveCategoryService);
     expect(service).toBeTruthy();
   });
 });
