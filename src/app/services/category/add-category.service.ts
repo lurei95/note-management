@@ -1,10 +1,11 @@
-import { CategoryActionKind, CategoryAction } from './../../redux/actions/category';
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
-import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { IServiceBase } from '../base/iServiceBase';
+import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
+import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
+import { CategoryModel } from 'src/app/models/categoryModel';
+import { IApplicationState } from 'src/app/redux/state';
 
 /**
  * Service for adding a new category
@@ -12,7 +13,7 @@ import { IServiceBase } from '../base/iServiceBase';
 @Injectable({
   providedIn: 'root'
 })
-export class AddCategoryService implements IServiceBase<CategoryDisplayModel>
+export class AddCategoryService implements IServiceBase<CategoryModel>
 {
   /**
    * Constructor
@@ -26,7 +27,7 @@ export class AddCategoryService implements IServiceBase<CategoryDisplayModel>
    */
   execute()
   { 
-    let model = new CategoryDisplayModel(uuid());
+    let model = new CategoryModel(uuid());
     model.isEditing = true;
     this.store.dispatch(new CategoryAction(CategoryActionKind.CategoryAdd, model)); 
   }

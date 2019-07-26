@@ -16,11 +16,21 @@ export function nullOrEmpty(value: string) : boolean
 export function truncate(text: string, maxLength: number): string
 { 
   if (nullOrEmpty(text))
-    return text;
+    return coalesce(text);
   if (text.length > maxLength)
     return text.substring(0, maxLength - 1) + "...";
   return text;
 }
+
+/**
+ * Coalesces a string
+ * 
+ * @param {string} value The string to coalesce
+ * @param {string} defaultValue The default result when value is null or undefined
+ * @returns {string} value or defaultValue if value is null or undefined
+ */
+export function coalesce(value: string, defaultValue: string = ""): string
+{ return value == null ? defaultValue : value; }
 
 /**
  * Clones an object

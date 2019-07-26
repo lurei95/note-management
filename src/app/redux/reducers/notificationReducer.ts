@@ -1,6 +1,7 @@
-import { NotificationModel } from './../../models/notificationModel';
-import { NotificationAction, NotificationActionKind } from './../actions/notification';
+import { NotificationModel } from '../../models/notificationModel';
 import { Action } from '@ngrx/store';
+import { NotificationActionKind } from '../actions/notification/notificationActionKind';
+import { NotificationAction } from '../actions/notification/notificationAction';
 
 /**
  * Reducer-function for changing the state related to {@link NotificationModel}

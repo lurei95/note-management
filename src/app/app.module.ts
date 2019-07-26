@@ -1,5 +1,4 @@
 import { SaveCategoryService } from 'src/app/services/category/save-category.service';
-import { CategoryDeleteDialogComponent } from './components/dialogs/category-delete-dialog/category-delete-dialog.component';
 import { AddCategoryService } from 'src/app/services/category/add-category.service';
 import { AddNoteService } from './services/note/add-note.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store'
-import { reducers } from './redux/reducers/index';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -21,7 +19,7 @@ import { DeleteNoteService } from './services/note/delete-note.service';
 import { RetrieveCategoriesService } from './services/category/retrieve-categories.service';
 import { DeleteCategoryService } from './services/category/delete-category.service';
 import { MatInputModule } from '@angular/material/input';
-import { NoteDeleteDialogComponent } from './components/dialogs/note-delete-dialog/note-delete-dialog.component';
+import { CancelableDialogComponent } from './components/dialogs/cancelable-dialog/cancelable-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -32,10 +30,19 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatChipsModule } from '@angular/material/chips';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { NotificationService } from './services/notification/notificationService';
 import { FilterNotesService } from './services/note/filter-notes.service';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule} from '@angular/common/http';
+import { reducers } from './redux/state';
+import { LazyForDirective } from './util/lazyFor';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   declarations: [
@@ -46,18 +53,25 @@ import { FilterNotesService } from './services/note/filter-notes.service';
     NotePanelComponent,
     NoteComponent,
     CategoryComponent,
-    NoteDeleteDialogComponent,
-    CategoryDeleteDialogComponent,
+    CancelableDialogComponent,
     NoteDialogComponent,
     DatePickerComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    LazyForDirective
   ],
   entryComponents: [
-    NoteDeleteDialogComponent, 
-    NoteDialogComponent, 
-    CategoryDeleteDialogComponent
+    CancelableDialogComponent, 
+    NoteDialogComponent
   ],
   imports: [
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     MatButtonModule,
     MatButtonToggleModule,
     BrowserModule,
@@ -84,8 +98,10 @@ import { FilterNotesService } from './services/note/filter-notes.service';
     SaveCategoryService,
     NotificationService,
     MatDialog,
+    HttpClientModule,
     FilterNotesService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule 
+{ }

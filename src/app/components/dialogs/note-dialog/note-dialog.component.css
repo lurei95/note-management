@@ -1,113 +1,115 @@
 #noteContainer {
-    display: grid;
-    grid-template-rows: 32px 52px auto 1fr;
-    border-left: 6px solid var(--themeRed);
-    border-right: 1px solid lightgray;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+  display: grid;
+  grid-template-rows: 32px 52px auto 1fr;
+  border-left: 6px solid var(--themeRed);
+  border-right: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
 }
 
 .dialogNormal {
-    width: 1200px;
-    height: 600px;
+  width: 1200px;
+  height: 600px;
 }
 
 .dialogExpanded {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 #content, .cdk-overlay-pane {
-    max-width: 100vw !important;
-    max-height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
 }
 
 #noteContainer > #titleArea > #titleInput {
-    margin: 5px 10px;
-    font-size: 18px
+  margin: 5px 10px;
+  font-size: 18px
 }
 
 #tagInput {
-    height: 28px;
-    size: 15;
+  height: 28px;
+  size: 15;
 }
 
 mat-dialog-content {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+  margin: 0px; 
+  padding: 0px;
 }
 
 #noteContainer > .headerLine {
-    margin: 5px 5px 0px 10px;
-    display: grid;
-    grid-template-columns: 1fr 30px 30px;
-    grid-column-gap: 10px
+  margin: 5px 5px 0px 10px;
+  display: grid;
+  grid-template-columns: 1fr 30px 30px;
+  grid-column-gap: 10px
 }
 
 #noteContainer > #titleArea {
-    margin: 0px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    padding: 0px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-column-gap: 10px;
+  margin: 0px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 0px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 10px;
 }
 
 .propertyLabel {
-    padding: 5px;
-    padding-top: 10px;
+  padding: 5px;
+  padding-top: 10px;
 }
 
 .textAreaNormal {
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    max-height: 400px;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  max-height: 400px;
 }
 
 .textAreaExpanded {
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    max-height: 760px;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  max-height: 760px;
 }
 
 #propertyArea {
-    padding-top: 13px;
-    padding-bottom: 18px;
-    grid-column-gap: 10px;
-    padding-left: 20px;
-    display: grid;
-    grid-template-columns: auto 200px auto 1fr;
-    width: 100%;
-    height: 100%;
-    background: var(--themeLightGray);
-    font-size: 14px;
+  padding-top: 13px;
+  padding-bottom: 18px;
+  grid-column-gap: 10px;
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: auto 200px auto 1fr;
+  width: 100%;
+  height: 100%;
+  background: var(--themeLightGray);
+  font-size: 14px;
 }
 
 mat-chip-list {
-    margin-top: 5px;
-    margin-right: 10px;
+  margin-top: 5px;
+  margin-right: 10px;
 }
 
 #titleLabel {
-    padding: 10px;
-    font-size: 20px;
+  padding: 11px;
+  font-size: 20px;
 }
 
 #closeButton, #expandButton {
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    padding: 5px;
-    height: 30px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  padding: 5px;
+  height: 30px;
 }
 
 .fa-times {
-    color: var(--themeRed);
+  color: var(--themeRed);
 }
 
 .fa-expand {
-    color: var(--themeDarkGray);
+  color: var(--themeDarkGray);
 }

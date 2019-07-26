@@ -1,14 +1,13 @@
 import { FilterNotesService } from '../../services/note/filter-notes.service';
-import { CategoryDisplayModel } from '../../models/categoryModel';
 import { AddNoteService } from '../../services/note/add-note.service';
-import { getNotes, getSearchText, getSelectedCatgeory } from '../../redux/reducers/index';
-import { NoteDisplayModel } from '../../models/noteModel';
 import { Component } from '@angular/core';
 import { RetrieveNotesService } from 'src/app/services/note/retrieve-notes.service';
-import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
 import { RetrieveCategoriesService } from 'src/app/services/category/retrieve-categories.service';
-import { ValidateNoteService } from 'src/app/services/note/validate-note.service';
+import { CategoryModel } from 'src/app/models/categoryModel';
+import { coalesce } from 'src/app/util/utility';
+import { IApplicationState, getSearchText, getNotes, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { NoteModel } from 'src/app/models/noteModel';
 
 /**
  * Component pf panel for displaying notes
@@ -20,20 +19,22 @@ import { ValidateNoteService } from 'src/app/services/note/validate-note.service
 })
 export class NotePanelComponent
 {
-  private notes: NoteDisplayModel[];
+  private notes: NoteModel[];
   private searchText: string;
-  private selectedCategory: CategoryDisplayModel;
+  private selectedCategory: CategoryModel;
+  private invalidCategoryId: string;
+  private invalidNoteId: string;
 
-  private _filteredNotes: NoteDisplayModel[];
+  private _filteredNotes: NoteModel[];
   /**
-   * @returns {NoteDisplayModel[]} A list of notes filtered by the search text
+   * @returns {NoteModel[]} A list of notes filtered by the search text
    */
-  get filteredNotes(): NoteDisplayModel[] { return this._filteredNotes; }
+  get filteredNotes(): NoteModel[] { return this._filteredNotes; }
 
   /**
    * @returns {string} The title of the selected category
    */
-  get title(): string { return this.selectedCategory == null ? "" : this.selectedCategory.title; }
+  get title(): string { return coalesce(this.selectedCategory.title, ""); }
 
   /**
    * Constructor
@@ -43,18 +44,19 @@ export class NotePanelComponent
    * @param {AddNoteService} addService Injected: service for adding a new note
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {FilterNotesService} filterService Injected: service for filtering the notes
-   * @param {ValidateNoteService} validationService Injected: service for validating a note
    */
   constructor(notesService: RetrieveNotesService, categoriesService: RetrieveCategoriesService,
     private addService: AddNoteService, store: Store<IApplicationState>, 
-    private filterService: FilterNotesService, private validationService: ValidateNoteService) 
+    private filterService: FilterNotesService) 
   {
     store.select(state => getSearchText("Note", state)).subscribe(
       (x: string) => this.handleSearchTextChanged(x));
     store.select(getNotes).subscribe(
-      (x: NoteDisplayModel[]) => this.handleNotesChanged(x));
+      (x: NoteModel[]) => this.handleNotesChanged(x));
     store.select(state => getSelectedCatgeory(state)).subscribe(
-      (x: CategoryDisplayModel) => this.handleSelectedCategoryChanged(x)); 
+      (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
+    store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
+    store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
 
     categoriesService.execute();
     notesService.execute();
@@ -65,18 +67,17 @@ export class NotePanelComponent
    */
   onAddButtonClicked() 
   { 
-    let selectedNote = this.notes.filter(note => note.isEditing)[0];
-    if (selectedNote == null || this.validationService.execute(selectedNote).keys.length == 0)
+    if (this.invalidCategoryId == null && this.invalidNoteId == null)
       this.addService.execute(this.selectedCategory.id); 
   }
 
-  private handleNotesChanged(notes: NoteDisplayModel[]) 
+  private handleNotesChanged(notes: NoteModel[]) 
   {
     this.notes = notes;
     this.filterNotes(); 
   }
 
-  private handleSelectedCategoryChanged(category: CategoryDisplayModel) 
+  private handleSelectedCategoryChanged(category: CategoryModel) 
   {
     this.selectedCategory = category;
     this.filterNotes();
@@ -88,6 +89,7 @@ export class NotePanelComponent
     {
       this.searchText = searchText;
       this.filterNotes(); 
+      let i = 0;
     }
   }
 
@@ -97,6 +99,6 @@ export class NotePanelComponent
       return;
 
     this._filteredNotes = this.filterService.filter(this.notes, this.searchText, 
-      this.selectedCategory.id)
+      this.selectedCategory.id).slice(0, 11)
   }
 }

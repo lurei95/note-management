@@ -1,6 +1,5 @@
 <mat-dialog-content id=content 
     class="mat-typography" 
-    style="margin: 0px; padding: 0px" 
     (keydown.esc)="tryCloseDialog()"
     (keydown.control.s)="handleSaveShortcut($event)">
     <div #container id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
@@ -14,9 +13,9 @@
         </div>
         <div id="titleArea" #titleAreaDiv>
             <label id="titleLabel">Titel:</label>
-            <input [className]="hasError ? 'invalid' : 'hiddenInput'"
+            <input [className]="titleError == null ? 'hiddenInput' : 'invalid'"
                 type="text" id="titleInput"
-                placeholder="Titel" 
+                placeholder="{{titleError == null ? Titel : titleError}}"
                 (input)="onTitleChanged()"  
                 [(ngModel)] ="note.title" #titleInput/>
         </div>

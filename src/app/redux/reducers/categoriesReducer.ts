@@ -1,37 +1,43 @@
 import { SelectableList } from './../../util/selectableList';
-import { CategoryAction, CategoryActionKind, CategoriesRetrievedAction } from './../actions/category';
 import { Action } from '@ngrx/store';
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { clone } from 'src/app/util/utility';
+import { CategoryActionKind } from '../actions/category/categoryActionKind';
+import { CategoriesRetrievedAction } from '../actions/category/categoriesRetrievedAction';
+import { CategoryAction } from '../actions/category/categoryAction';
+import { CategoryModel } from 'src/app/models/categoryModel';
+import { stat } from 'fs';
 
 /**
  * Reducer-function for changing the state related to {@link CategoryModel}
  * 
- * @param {SelectableList<CategoryDisplayModel>} state The current state
+ * @param {SelectableList<CategoryModel>} state The current state
  * @param {Action} The action which changes the state
  */
-export function categoriesReducer(state: SelectableList<CategoryDisplayModel> 
-  = new SelectableList<CategoryDisplayModel>(), action: Action) 
+export function categoriesReducer(state: SelectableList<CategoryModel> 
+  = new SelectableList<CategoryModel>(), action: Action) 
 {
+  let newState: SelectableList<CategoryModel>;
   let category = (<CategoryAction>action).payload;
   switch (action.type) 
   {
     case CategoryActionKind.SelectedCategoryChange:
-      state.selectedItem = category;
-      return state;
+      newState = new SelectableList([...state.items], category);
+      return newState;
     case CategoryActionKind.CategoryUpdate:
       let index = state.findIndex(category1 => category1.id == category.id);
-      state.items[index] = clone<CategoryDisplayModel>(category, CategoryDisplayModel);
+      state.items[index] = clone<CategoryModel>(category, CategoryModel);
       return state;
     case CategoryActionKind.CategoryAdd:   
-      state.add(category);
-      return state;
+      newState = new SelectableList([...state.items], state.selectedItem);
+      newState.add(category);
+      return newState;
     case CategoryActionKind.CategoryDelete:
-      state.remove(item => item.id == category.id);
-      return state; 
+      newState = new SelectableList([...state.items], state.selectedItem);
+      newState.remove(item => item.id == category.id);
+      return newState; 
     case CategoryActionKind.CategoriesRetrieved:
       let items = (<CategoriesRetrievedAction>action).payload
-      state = new SelectableList<CategoryDisplayModel>(items, state.selectedItem);
+      state = new SelectableList<CategoryModel>(items, state.selectedItem);
       return state;
     default:
       return state;

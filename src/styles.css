@@ -63,7 +63,7 @@ div {
 }
 
 .hiddenInput {
-    border:  none;
+    border: none;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;  
@@ -77,7 +77,7 @@ input:hover {
 input {
     border: 1.5px solid var(--themeBorderColor);
     border-radius: 3px;
-    padding: 3px;
+    padding: 5px;
     text-overflow: ellipsis;
 }
 
@@ -85,20 +85,6 @@ label {
     text-overflow: ellipsis;
     display: inline-block;
     overflow: hidden;
-}
-
-textarea:hover {
-    border: 1.5px solid var(--themeBorderColor);
-    border-radius: 3px;
-}
-
-textarea {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;  
-    border: 1px solid var(--themeBorderColor);
-    border-radius: 3px;
-    padding: 3px
 }
 
 button:hover > i {
@@ -114,6 +100,27 @@ button:focus {
     border-radius: 3px;
     border: 1.5px solid  var(--themeRed)
 }
+
+.invalid:hover {
+  outline: none;
+  border-radius: 3px;
+  border: 1.5px solid var(--themeRed)
+}
+
+.invalid::placeholder { /* Firefox, Chrome, Opera */ 
+  color: var(--themeRed);
+  opacity: 0.8;
+} 
+
+.invalid:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+  color: var(--themeRed);
+  opacity: 0.8;
+} 
+
+.invalid::-ms-input-placeholder { /* Microsoft Edge */ 
+  color: var(--themeRed);
+  opacity: 0.8;
+} 
 
 .fullscreenDialog >  mat-dialog-container {
     padding: 0px;

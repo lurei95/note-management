@@ -1,12 +1,21 @@
 import { clone } from 'src/app/util/utility';
 import { IEditableModel } from './iEditableModel';
-import { nullOrEmpty } from '../util/utility';
 
 /**
  * Model for a category containing multiple notes
  */
 export class CategoryModel implements IEditableModel<CategoryModel>
 {
+  private _isEditing: boolean;
+  /**
+   * @returns {boolean} Whether the model is currently edited
+   */
+  get isEditing(): boolean { return this._isEditing; }
+  /**
+   * @param {boolean} value Whether the model is currently edited
+   */
+  set isEditing(value: boolean) { this._isEditing = value; }
+
   /**
    * @returns {string} ID of the category
    */
@@ -44,27 +53,4 @@ export class CategoryModel implements IEditableModel<CategoryModel>
    * @returns {CategoryModel} A cloned version of the model
    */
   clone(): CategoryModel { return clone<CategoryModel>(this, CategoryModel); }
-}
-
-/**
- * Model of a category for displaying purpose
- */
-export class CategoryDisplayModel extends CategoryModel
-{
-  private _isEditing: boolean;
-  /**
-   * @returns {boolean} Whether the model is currently edited
-   */
-  get isEditing(): boolean { return this._isEditing; }
-  /**
-   * @param {boolean} value Whether the model is currently edited
-   */
-  set isEditing(value: boolean) { this._isEditing = value; }
-
-  /**
-   * Clones the model
-   * 
-   * @returns {CategoryDisplayModel} A cloned version of the model
-   */
-  clone(): CategoryDisplayModel { return clone<CategoryDisplayModel>(this, CategoryDisplayModel); }
 }

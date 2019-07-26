@@ -19,13 +19,23 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   protected unmodified: TModel
 
   /**
+   * @returns {IValidationService<TModel>} Service for validating the model
+   */
+  protected get validationService(): IValidationService<TModel> { return this._validationService; }
+
+  /**
+   * @returns {ISaveService<TModel>} Service for saving changes to the model
+   */
+  protected get saveService(): ISaveService<TModel> { return this._saveService; }
+
+  /**
    * Constructor
    * 
-   * @param {IValidationService<TModel>} validationService Injected: service for validating the model
-   * @param {ISaveService<TModel>} saveService Injected: service for saving changes to the model
+   * @param {IValidationService<TModel>} _validationService Injected: service for validating the model
+   * @param {ISaveService<TModel>} _saveService Injected: service for saving changes to the model
    */
-  constructor(private validationService: IValidationService<TModel>, 
-    private saveService: ISaveService<TModel>)
+  constructor(private _validationService: IValidationService<TModel>, 
+    private _saveService: ISaveService<TModel>)
   { }
 
   /**
@@ -44,24 +54,36 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   }
 
   /**
-   * Tries to save the changes of the model 
+   * Tries to save the changes of the model
+   * 
+   * @returns {boolean} If changes have been saved
    */
   protected trySaveChanges() : boolean
   {
-    if (this.model.equals(this.unmodified))
-      return;
-
     if (this.validateModel())
     {
-      this.unmodified = this.model.clone();
-      this.saveService.execute(this.model);
+      if (this.model.equals(this.unmodified))
+        return true;
+
+      this.saveChanges();
       return true;
     }
     return false;
   }
 
   /**
+   * Saves the changes of the model 
+   */
+  protected saveChanges()
+  {
+    this.unmodified = this.model.clone();
+    this.saveService.execute(this.model);
+  }
+
+  /**
    * Validates the model 
+   * 
+   * @returns {boolean} If the model is valid
    */
   protected validateModel(): boolean
   {

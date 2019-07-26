@@ -1,0 +1,12 @@
+{
+  "DeleteNoteDialogTitle" : "Notiz löschen?",
+  "DeleteNoteDialogText" : "Sind Sie sicher, dass sie die Notiz \"{{title}}\" löschen möchten?",
+  "DeleteCategoryDialogTitle" : "Kategorie löschen?",
+  "DeleteCategoryDialogText" : "Sind Sie sicher, dass sie die Kategorie \"{{title}}\" und alle darin enthaltenen Notizen löschen möchten?",
+  "SaveCategoryMessage" : "Kategorie \"{{title}}\" erfolgreich gespeichert",
+  "SaveNoteMessage" : "Notiz \"{{title}}\" erfolgreich gespeichert",
+  "DeleteCategoryMessage" : "'Kategorie \"{{title}}\" erfolgreich gelöscht",
+  "DeleteNoteMessage" : "Notiz \"{{title}}\" erfolgreich gelöscht",
+  "Delete" : "Löschen",
+  "RequiredField" : "Pflichtfeld"
+}

@@ -1,11 +1,14 @@
-import { IApplicationState } from '../../redux/reducers/index';
+import { CategoryModel } from './../../models/categoryModel';
 import { Injectable } from '@angular/core';
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { Store } from '@ngrx/store';
-import { CategoryActionKind, CategoryAction } from 'src/app/redux/actions/category';
 import { truncate } from 'src/app/util/utility';
 import { NotificationService } from '../notification/notificationService';
 import { ISaveService } from '../base/iSaveService';
+import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
+import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
+import { IApplicationState } from 'src/app/redux/state';
+import { LocalizationArgument, LocalizationService } from '../localization.service';
+import { MessageKind } from 'src/app/messageKind';
 
 /**
  * Service for saving changes to a category
@@ -13,29 +16,33 @@ import { ISaveService } from '../base/iSaveService';
 @Injectable({
   providedIn: 'root'
 })
-export class SaveCategoryService implements ISaveService<CategoryDisplayModel>
+export class SaveCategoryService implements ISaveService<CategoryModel>
 {
   /**
    * Constructor
    * 
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {NotificationService} notificationService Injected: service for displaying notifications
+   * @param {LocalizationService} localizationService Injected: service for getting localized strings
    */
-  constructor(private store: Store<IApplicationState>, 
-    private notificationService: NotificationService) 
+  constructor(private store: Store<IApplicationState>,
+    private notificationService: NotificationService, 
+    private localizationService: LocalizationService) 
   { }
   
   /**
    * Executes the service: Saves the category
    * 
-   * @param {CategoryDisplayModel} parameter Category to save
+   * @param {CategoryModel} parameter Category to save
    */
-  execute(parameter: CategoryDisplayModel)
+  execute(parameter: CategoryModel)
   {
     parameter.isEditing = false;
     this.store.dispatch(new CategoryAction(CategoryActionKind.CategoryUpdate, parameter));
 
-    const message = 'Kategorie "' + truncate(parameter.title, 10) + '" erfolgreich gespeichert'
+    let argument = new LocalizationArgument(MessageKind.SaveCategoryMessage, 
+      { title: truncate(parameter.title, 10)});
+    const message = this.localizationService.execute(argument);
     this.notificationService.notifySuccessMessage(message);
   }
 }

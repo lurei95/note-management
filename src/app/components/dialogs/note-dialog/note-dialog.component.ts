@@ -1,12 +1,14 @@
 import { ValidateNoteService } from './../../../services/note/validate-note.service';
 import { SaveNoteService } from './../../../services/note/save-note.service';
-import { NoteDisplayModel } from 'src/app/models/noteModel';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
-import { nullOrEmpty, clone } from 'src/app/util/utility';
+import { nullOrEmpty } from 'src/app/util/utility';
 import { NoteComponentBase } from '../../noteComponentBase';
+import { NoteModel } from 'src/app/models/noteModel';
+import { Store } from '@ngrx/store';
+import { IApplicationState } from 'src/app/redux/state';
 
 /**
  * Dialog for editing a note
@@ -23,6 +25,7 @@ export class NoteDialogComponent extends NoteComponentBase
   @ViewChild("titleAreaDiv", {static: false}) private titleAreaDiv: ElementRef;
   @ViewChild("headerLine", {static: false}) private headerLine: ElementRef;
   @ViewChild("container", {static: false}) private container: ElementRef;
+  @ViewChild("titleInput", {static: false}) private titleInput: ElementRef;
 
   /**
    * Seperator key codes for the tag control
@@ -38,15 +41,17 @@ export class NoteDialogComponent extends NoteComponentBase
   /**
    * Constructor
    * 
-   * @param {NoteDisplayModel} data Injected: the note passed into the dialog
+   * @param {NoteModel} data Injected: the note passed into the dialog
    * @param {ValidateNoteService} validationService Injected: service for validating the note
    * @param {SaveNoteService} saveService Injected: service for saving the changes of the note
    * @param {MatDialogRef<NoteDialogComponent>} dialog Injected: reference to the own dialog
+   * @param {Store<IApplicationState>} store Injected: redux store
    */
-  constructor(@Inject(MAT_DIALOG_DATA) data: NoteDisplayModel, validationService: ValidateNoteService,
-    saveService: SaveNoteService, private dialog: MatDialogRef<NoteDialogComponent>) 
+  constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, validationService: ValidateNoteService,
+    saveService: SaveNoteService, private dialog: MatDialogRef<NoteDialogComponent>, 
+    store: Store<IApplicationState>) 
   { 
-    super(validationService, saveService);
+    super(validationService, saveService, store);
     this.note = data; 
   }
 
@@ -98,12 +103,16 @@ export class NoteDialogComponent extends NoteComponentBase
   }
 
   /**
-   * Event handler: Calculates the RichEditControls height
+   * Focuses the title input if the note is currently edited
    */
   ngAfterViewInit() 
-  { 
-    super.ngAfterViewInit();
-    this.calculateEditorHeight(); 
+  {
+    setTimeout(() =>
+    {
+      if(this.titleInput != null)
+      this.titleInput.nativeElement.focus();
+    }, 400);
+    this.calculateEditorHeight();
   }
 
   private calculateEditorHeight()

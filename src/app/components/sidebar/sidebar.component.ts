@@ -1,10 +1,10 @@
 import { ValidateCategoryService } from './../../services/category/validate-category.service';
 import { FilterCategoriesService } from './../../services/category/filter-categories.service';
-import { getCategories, getSelectedCatgeory, IApplicationState, getSearchText } from './../../redux/reducers/index';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { AddCategoryService } from 'src/app/services/category/add-category.service';
+import { CategoryModel } from 'src/app/models/categoryModel';
+import { IApplicationState, getSearchText, getCategories, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 
 /**
  * Component for a sidbar containing categories
@@ -16,15 +16,17 @@ import { AddCategoryService } from 'src/app/services/category/add-category.servi
 })
 export class SidebarComponent
 {
-  private categories: CategoryDisplayModel[];
+  private categories: CategoryModel[];
   private searchText: string;
-  private selectedCategory: CategoryDisplayModel;
+  private selectedCategory: CategoryModel;
+  private invalidCategoryId: string;
+  private invalidNoteId: string;
 
-  private _filteredCategories: CategoryDisplayModel[];
+  private _filteredCategories: CategoryModel[];
   /**
-   * @returns {CategoryDisplayModel[]} A list of categories filtered by the search text
+   * @returns {CategoryModel[]} A list of categories filtered by the search text
    */
-  get filteredCategories(): CategoryDisplayModel[] { return this._filteredCategories; }
+  get filteredCategories(): CategoryModel[] { return this._filteredCategories; }
 
   /**
    * Constructor
@@ -39,10 +41,12 @@ export class SidebarComponent
   {
     this.store.select(state => getSearchText("Category", state)).subscribe(
       (x: string) => this.handleSearchTextChanged(x));
+    this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
+    this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
     this.store.select(getCategories).subscribe(
-      (x: CategoryDisplayModel[]) => this.handleCategoriesChanged(x));
+      (x: CategoryModel[]) => this.handleCategoriesChanged(x));
     this.store.select(getSelectedCatgeory).subscribe(
-      (x: CategoryDisplayModel) => this.selectedCategory = x);
+      (x: CategoryModel) => this.selectedCategory = x);
   }
 
   /**
@@ -50,12 +54,11 @@ export class SidebarComponent
    */
   onAddButtonClicked() 
   { 
-    let selectedCategory = this.categories.filter(category => category.isEditing)[0];
-    if (selectedCategory == null || this.validationService.execute(selectedCategory).keys.length == 0)
+    if (this.invalidCategoryId == null && this.invalidNoteId == null)
       this.addService.execute(); 
   }
 
-  private handleCategoriesChanged(categories: CategoryDisplayModel[]) 
+  private handleCategoriesChanged(categories: CategoryModel[]) 
   {
     this.categories = categories;
     this.filterCategories(); 
@@ -73,6 +76,6 @@ export class SidebarComponent
   private filterCategories() 
   {
     this._filteredCategories = this.filterService.filter(this.categories, this.searchText, 
-      this.selectedCategory == null ? null : this.selectedCategory.id);
+      this.selectedCategory == null ? null : this.selectedCategory.id).slice(0, 19);
   }
 }

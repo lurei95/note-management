@@ -1,5 +1,5 @@
-import * as searchText from '../actions/search-text'
 import { Dictionary } from 'src/app/util/dictionary';
+import { SearchTextChangeAction, SEARCH_TEXT_CHANGE } from '../actions/searchText/searchTextChangeAction';
 
 /**
  * Reducer-function for changing the state of the search settings
@@ -8,11 +8,11 @@ import { Dictionary } from 'src/app/util/dictionary';
  * @param {Action} The action which changes the state
  */
 export function searchSettingsReducer(state: Dictionary<string> = new Dictionary<string>(), 
-  action: searchText.SearchTextChangeAction) 
+  action: SearchTextChangeAction) 
 {
   switch (action.type)
   {
-    case searchText.SEARCH_TEXT_CHANGE:
+    case SEARCH_TEXT_CHANGE:
       let newState = new Dictionary<string>();
       if (newState.containsKey(action.fieldName))
         newState[action.fieldName] = action.payload;

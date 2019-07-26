@@ -1,36 +1,46 @@
 import { EditableComponent } from './editableComponent';
-import { NoteDisplayModel } from '../models/noteModel';
 import { ElementRef, ViewChild, Input } from '@angular/core';
 import { Dictionary } from '../util/dictionary';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { clone } from '../util/utility';
+import { NoteModel } from '../models/noteModel';
+import { ValidateNoteService } from '../services/note/validate-note.service';
+import { SaveNoteService } from '../services/note/save-note.service';
+import { getInvalidNoteId, getInvalidCategoryId, IApplicationState } from '../redux/state';
+import { Store } from '@ngrx/store';
+import { NoteValidityChangeAction } from '../redux/actions/note/noteValidityChangeAction';
 
-export abstract class NoteComponentBase extends EditableComponent<NoteDisplayModel>
+export abstract class NoteComponentBase extends EditableComponent<NoteModel>
 {
   /**
    * Editor for the RichEditControl
    */
   editor = ClassicEditor;
 
+  private _invalidCategoryId: string;
   /**
-   * Input for the title of the note
+   * @returns {string} Id of the invalid category
    */
-  @ViewChild("titleInput", {static: false}) protected titleInput: ElementRef;
+  protected get invalidCategoryId(): string { return this._invalidCategoryId; }
+
+  private _invalidNoteId: string;
+  /**
+   * @returns {string} Id of the invalid note
+   */
+  protected get invalidNoteId(): string { return this._invalidNoteId; }
 
   /**
-   * @returns {NoteDisplayModel} The note which is edited in the component
+   * @returns {NoteModel} The note which is edited in the component
    */
-  get note(): NoteDisplayModel { return this.model; }
+  get note(): NoteModel { return this.model; }
   /**
-   * @param {NoteDisplayModel} value The note which is edited in the component
+   * @param {NoteModel} value The note which is edited in the component
    */
   @Input()
-  set note(value: NoteDisplayModel) 
+  set note(value: NoteModel) 
   { 
-    this.unmodified = clone<NoteDisplayModel>(value, NoteDisplayModel);
-    this.model = value; 
-    if(this.model.isEditing && this.titleInput != null)
-      this.titleInput.nativeElement.focus();
+    this.unmodified = clone<NoteModel>(value, NoteModel);
+    this.model = value;
   }
 
   private _titleError: string;
@@ -40,12 +50,18 @@ export abstract class NoteComponentBase extends EditableComponent<NoteDisplayMod
   get titleError(): string { return this._titleError; }
 
   /**
-   * Focuses the title input if the note is currently edited
+   * Constructor
+   * 
+   * @param {ValidateNoteService} validationService Injected: service for validating the note
+   * @param {SaveNoteService} saveService Injected: service for saving changes to the note
+   * @param {Store<IApplicationState>} store Injected: redux store
    */
-  ngAfterViewInit() 
-  {
-    if(this.note.isEditing && this.titleInput != null)
-      this.titleInput.nativeElement.focus();
+  constructor(validationService: ValidateNoteService, saveService: SaveNoteService, 
+    private store: Store<IApplicationState>) 
+  { 
+    super(validationService, saveService);
+    store.select(getInvalidCategoryId).subscribe((x: string) => this._invalidCategoryId = x);
+    store.select(getInvalidNoteId).subscribe((x: string) => this._invalidNoteId = x);
   }
 
   /**
@@ -64,12 +80,17 @@ export abstract class NoteComponentBase extends EditableComponent<NoteDisplayMod
     if (result.containsKey("title"))
     {
       this._titleError = result["title"];
-      this.titleInput.nativeElement.focus();
+
+      if (this._invalidNoteId != this.note.id)
+        this.store.dispatch(new NoteValidityChangeAction(this.note.id));
+
       return false;
     }
     else
     {
-      this.model.isEditing = false;
+      if (this._invalidNoteId == this.note.id)
+        this.store.dispatch(new NoteValidityChangeAction(null));
+      this._titleError = null;
       return true;
     }
   }

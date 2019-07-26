@@ -1,0 +1,12 @@
+{
+  "DeleteNoteDialogTitle" : "Delete note?",
+  "DeleteNoteDialogText" : "Are you sure that you want to delete the note \"{{title}}\"?",
+  "DeleteCategoryDialogTitle" : "Delete category?",
+  "DeleteCategoryDialogText" : "Are you sure that you want to delete the category \"{{title}}\" and all its notes?",
+  "SaveCategoryMessage" : "Category \"{{title}}\" saved successfully",
+  "SaveNoteMessage" : "Note \"{{title}}\" saved successfully",
+  "DeleteCategoryMessage" : "Category \"{{title}}\" deleted successfully",
+  "DeleteNoteMessage" : "Note \"{{title}}\" deleted successfully",
+  "Delete" : "Delete",
+  "RequiredField" : "required"
+}

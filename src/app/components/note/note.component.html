@@ -1,15 +1,15 @@
 <div class="test" 
     (focusout)=onFocusLeaving()
-    (pointerenter)="onPointerEnter()" 
-    (pointerleave)="onPointerLeave()"
     (keydown.control.s)="handleSaveShortcut($event)"
     (dblclick)="openEditDialog()"
     (doubleTap)="openEditDialog()">
     <div class="headerLine">
         <input i18n-placeholder [className]="titleError == null ? 'hiddenInput' : 'invalid'"
             type="text" 
+            (pointerenter)="onPointerEnter()" 
+            (pointerleave)="onPointerLeave()"
             placeholder="{{titleError == null ? Titel : titleError}}"
-            (input)="onTitleChanged()"  
+            (input)="validateModel()"  
             (keydown.enter)="handleSaveShortcut()"
             [(ngModel)] ="note.title" #titleInput/>
         <button (click)="onDeleteButtonClicked()">

@@ -1,7 +1,7 @@
-import { SearchTextChangeAction } from '../../redux/actions/search-text';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IApplicationState, getSearchText } from 'src/app/redux/reducers';
+import { SearchTextChangeAction } from 'src/app/redux/actions/searchText/searchTextChangeAction';
+import { IApplicationState, getSearchText } from 'src/app/redux/state';
 
 /**
  * Component for a search box
@@ -12,7 +12,7 @@ import { IApplicationState, getSearchText } from 'src/app/redux/reducers';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent
- {
+{
   private _fieldName: string;
   /**
    * @returns {string} Field name used for the search settings see {@info SearchTextChangeAction} 

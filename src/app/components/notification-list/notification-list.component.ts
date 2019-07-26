@@ -1,9 +1,8 @@
-import { getNotifications } from './../../redux/reducers/index';
 import { NotificationModel } from './../../models/notificationModel';
 import { Component} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
+import { IApplicationState, getNotifications } from 'src/app/redux/state';
 
 /**
  * Component for showing notifications

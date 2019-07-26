@@ -1,9 +1,11 @@
-import { CategoryDisplayModel } from 'src/app/models/categoryModel';
 import { Injectable } from '@angular/core';
 import { IServiceBase } from '../base/iServiceBase';
-import { IApplicationState } from 'src/app/redux/reducers';
 import { Store } from '@ngrx/store';
-import { CategoriesRetrievedAction, CategoryActionKind, CategoryAction } from 'src/app/redux/actions/category';
+import { CategoriesRetrievedAction } from 'src/app/redux/actions/category/categoriesRetrievedAction';
+import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
+import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
+import { IApplicationState } from 'src/app/redux/state';
+import { CategoryModel } from 'src/app/models/categoryModel';
 
 /**
  * Service for retrieving all exisiting categories
@@ -25,7 +27,7 @@ export class RetrieveCategoriesService implements IServiceBase
    */
   execute()
   {
-    let categories = [new CategoryDisplayModel("1522BA08-C407-458A-9E93-ED94CD8DBF1B", "Allgemeines")];
+    let categories = [new CategoryModel("1522BA08-C407-458A-9E93-ED94CD8DBF1B", "Allgemeines")];
     this.store.dispatch(new CategoriesRetrievedAction(categories));
     this.store.dispatch(new CategoryAction(CategoryActionKind.SelectedCategoryChange, categories[0]));
   }

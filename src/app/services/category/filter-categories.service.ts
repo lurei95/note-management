@@ -1,6 +1,6 @@
-import { CategoryDisplayModel } from './../../models/categoryModel';
 import { Injectable } from '@angular/core';
 import { nullOrEmpty } from 'src/app/util/utility';
+import { CategoryModel } from 'src/app/models/categoryModel';
 
 /**
  * Service for filtering the categories by a search text
@@ -13,13 +13,12 @@ export class FilterCategoriesService
   /**
    * Filters the categories by a search text (selected category is not filtered out!)
    * 
-   * @param {CategoryDisplayModel[]} categories Categories to filter
+   * @param {CategoryModel[]} categories Categories to filter
    * @param {string} searchText Search text to use for filtering the categories
    * @param {string} selectedCategoryId ID of the selected category
-   * @returns {CategoryDisplayModel[]} The filtered list of categories
+   * @returns {CategoryModel[]} The filtered list of categories
    */
-  filter (categories: CategoryDisplayModel[], searchText: string, selectedCategoryId: string)
-    : CategoryDisplayModel[]
+  filter (categories: CategoryModel[], searchText: string, selectedCategoryId: string) : CategoryModel[]
   {
     if (!nullOrEmpty(searchText))
       return categories.filter(category => category.id == selectedCategoryId 

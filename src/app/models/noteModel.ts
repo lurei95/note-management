@@ -62,7 +62,7 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @param {string} _categoryId ID of the category the note belongs to
    * @param {Date} _dueDate Due date of the note
    */
-  constructor(private _id?: string, private _title?: string, private _text?: string, 
+  constructor(private _id?: string, private _title?: string, private _text: string = "", 
     private _categoryId?: string, private _dueDate?: Date) 
   { }
 
@@ -94,24 +94,4 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @returns {NoteModel} A cloned version of the model
    */
   clone(): NoteModel { return clone<NoteModel>(this, NoteModel); }
-}
-
-export class NoteDisplayModel extends NoteModel 
-{
-  private _isEditing: boolean;
-  /**
-   * @returns {boolean} Whether the model is currently edited
-   */
-  get isEditing(): boolean { return this._isEditing; }
-  /**
-   * @param {boolean} value Whether the model is currently edited
-   */
-  set isEditing(value: boolean) { this._isEditing = value; }
-
-  /**
-   * Clones the model
-   * 
-   * @returns {NoteDisplayModel} A cloned version of the model
-   */
-  clone(): NoteDisplayModel { return clone<NoteDisplayModel>(this, NoteDisplayModel); }
 }
