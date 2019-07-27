@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { AddCategoryService } from 'src/app/services/category/add-category.service';
 import { CategoryModel } from 'src/app/models/categoryModel';
-import { IApplicationState, getSearchText, getCategories, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { IApplicationState, getCategories, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 
 /**
  * Component for a sidbar containing categories
@@ -17,7 +17,7 @@ import { IApplicationState, getSearchText, getCategories, getSelectedCatgeory, g
 export class SidebarComponent
 {
   private categories: CategoryModel[];
-  private searchText: string;
+  private filterText: string;
   private selectedCategory: CategoryModel;
   private invalidCategoryId: string;
   private invalidNoteId: string;
@@ -33,14 +33,11 @@ export class SidebarComponent
    * 
    * @param {AddCategoryService} addService Injected: service for adding a new category
    * @param {Store<IApplicationState>} store Injected: redux store
-   * @param {FilterCategoriesService} store Injected: service for filtering the categories
-   * @param {ValidateCategoryService} validationService Injected: service for validating the category
+   * @param {FilterCategoriesService} filterService Injected: service for filtering the categories
    */
   constructor(private addService: AddCategoryService, private store: Store<IApplicationState>, 
-    private filterService: FilterCategoriesService, private validationService: ValidateCategoryService) 
+    private filterService: FilterCategoriesService) 
   {
-    this.store.select(state => getSearchText("Category", state)).subscribe(
-      (x: string) => this.handleSearchTextChanged(x));
     this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
     this.store.select(getCategories).subscribe(
@@ -58,24 +55,27 @@ export class SidebarComponent
       this.addService.execute(); 
   }
 
+  /**
+   * Event handler: filters the categories
+   */
+  handleFilterTextChanged(filterText: string)
+  {
+    if (this.filterText != filterText)
+    {
+      this.filterText = filterText;
+      this.filterCategories(); 
+    }
+  }
+
   private handleCategoriesChanged(categories: CategoryModel[]) 
   {
     this.categories = categories;
     this.filterCategories(); 
   }
 
-  private handleSearchTextChanged(searchText: string)
-  {
-    if (this.searchText != searchText)
-    {
-      this.searchText = searchText;
-      this.filterCategories(); 
-    }
-  }
-
   private filterCategories() 
   {
-    this._filteredCategories = this.filterService.filter(this.categories, this.searchText, 
+    this._filteredCategories = this.filterService.filter(this.categories, this.filterText, 
       this.selectedCategory == null ? null : this.selectedCategory.id).slice(0, 19);
   }
 }

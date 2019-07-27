@@ -14,15 +14,15 @@ export class FilterCategoriesService
    * Filters the categories by a search text (selected category is not filtered out!)
    * 
    * @param {CategoryModel[]} categories Categories to filter
-   * @param {string} searchText Search text to use for filtering the categories
+   * @param {string} filterText Search text to use for filtering the categories
    * @param {string} selectedCategoryId ID of the selected category
    * @returns {CategoryModel[]} The filtered list of categories
    */
-  filter (categories: CategoryModel[], searchText: string, selectedCategoryId: string) : CategoryModel[]
+  filter (categories: CategoryModel[], filterText: string, selectedCategoryId: string) : CategoryModel[]
   {
-    if (!nullOrEmpty(searchText))
+    if (!nullOrEmpty(filterText))
       return categories.filter(category => category.id == selectedCategoryId 
-        || category.title.toUpperCase().includes(searchText.toUpperCase()));
+        || category.title.toUpperCase().includes(filterText.toUpperCase()));
     else
       return categories;
   }

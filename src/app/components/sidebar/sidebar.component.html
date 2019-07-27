@@ -1,6 +1,6 @@
 <div id="container">
     <div id="searchArea">
-        <app-search-box fieldName="Category"></app-search-box>
+        <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
         <button class="addButton" 
             (click)="onAddButtonClicked()">
             <i class="fa fa-plus"></i>

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { RetrieveCategoriesService } from 'src/app/services/category/retrieve-categories.service';
 import { CategoryModel } from 'src/app/models/categoryModel';
 import { coalesce } from 'src/app/util/utility';
-import { IApplicationState, getSearchText, getNotes, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { IApplicationState, getNotes, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { NoteModel } from 'src/app/models/noteModel';
 
 /**
@@ -20,7 +20,7 @@ import { NoteModel } from 'src/app/models/noteModel';
 export class NotePanelComponent
 {
   private notes: NoteModel[];
-  private searchText: string;
+  private filterText: string;
   private selectedCategory: CategoryModel;
   private invalidCategoryId: string;
   private invalidNoteId: string;
@@ -49,8 +49,6 @@ export class NotePanelComponent
     private addService: AddNoteService, store: Store<IApplicationState>, 
     private filterService: FilterNotesService) 
   {
-    store.select(state => getSearchText("Note", state)).subscribe(
-      (x: string) => this.handleSearchTextChanged(x));
     store.select(getNotes).subscribe(
       (x: NoteModel[]) => this.handleNotesChanged(x));
     store.select(state => getSelectedCatgeory(state)).subscribe(
@@ -60,6 +58,18 @@ export class NotePanelComponent
 
     categoriesService.execute();
     notesService.execute();
+  }
+
+  /**
+   * Event handler: filters the notes
+   */
+  handleFilterTextChanged(filterText: string) 
+  {
+    if (this.filterText != filterText)
+    {
+      this.filterText = filterText;
+      this.filterNotes(); 
+    }
   }
 
   /**
@@ -83,22 +93,12 @@ export class NotePanelComponent
     this.filterNotes();
   }
 
-  private handleSearchTextChanged(searchText: string) 
-  {
-    if (this.searchText != searchText)
-    {
-      this.searchText = searchText;
-      this.filterNotes(); 
-      let i = 0;
-    }
-  }
-
   private filterNotes() 
   {
     if (this.selectedCategory == null)
       return;
 
-    this._filteredNotes = this.filterService.filter(this.notes, this.searchText, 
+    this._filteredNotes = this.filterService.filter(this.notes, this.filterText, 
       this.selectedCategory.id).slice(0, 11)
   }
 }

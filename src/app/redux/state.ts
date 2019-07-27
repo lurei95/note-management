@@ -1,8 +1,6 @@
 import { CategoryModel } from './../models/categoryModel';
 import { SelectableList } from '../util/selectableList';
-import { Dictionary } from 'src/app/util/dictionary'
 import { notesReducer } from './reducers/notesReducer';
-import { searchSettingsReducer } from './reducers/searchSettingsReducer';
 import { categoriesReducer } from './reducers/categoriesReducer';
 import { NotificationModel } from 'src/app/models/notificationModel';
 import { notificationsReducer } from './reducers/notificationReducer';
@@ -15,7 +13,6 @@ import { NoteModel } from '../models/noteModel';
  */
 export interface IApplicationState 
 {
-    searchSettings: Dictionary<string>;
     notes: NoteModel[],
     notifications: NotificationModel[],
     categoryInformation: SelectableList<CategoryModel>
@@ -27,7 +24,6 @@ export interface IApplicationState
  * Combination of the existing reducer functions 
  */
 export const reducers = {
-    searchSettings: searchSettingsReducer,
     notes: notesReducer,
     categoryInformation: categoriesReducer,
     notifications: notificationsReducer,
@@ -61,16 +57,6 @@ export const getNotesOfCategory = (state: IApplicationState, id: string) => {
  * Returns a specific note of the current state specified by its id
  */
 export const getNote = (state: IApplicationState, id: string) => state.notes.find(note => note.id == id);
-
-/**
- * Returns the search text for a specific field
- */
-export const getSearchText = (fieldName: string, state: IApplicationState) => 
-{         
-    if (state.searchSettings == null || !state.searchSettings.containsKey(fieldName)) 
-        return null;
-    return state.searchSettings[fieldName];
-}
 
 /**
  * Returns the existing notifications of the current state 

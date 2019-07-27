@@ -1,3 +1,4 @@
+import { MessageDialogService } from './services/message-dialog.service';
 import { SaveCategoryService } from 'src/app/services/category/save-category.service';
 import { AddCategoryService } from 'src/app/services/category/add-category.service';
 import { AddNoteService } from './services/note/add-note.service';
@@ -6,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store'
-import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { SearchBoxComponent } from './components/filter-input/filter-input.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-panel/note-panel.component';
@@ -97,7 +98,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     NotificationService,
     MatDialog,
     HttpClientModule,
-    FilterNotesService
+    FilterNotesService,
+    MessageDialogService
   ],
   bootstrap: [AppComponent]
 })

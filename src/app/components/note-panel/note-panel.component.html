@@ -1,7 +1,7 @@
 <div class="grid">
     <div id="topBar">
         <label class="categoryLabel">{{title}}</label>
-        <app-search-box fieldName="Note"></app-search-box>
+        <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
         <button class="addButton" 
             (click)="onAddButtonClicked()">
             <i class="fa fa-plus"></i>

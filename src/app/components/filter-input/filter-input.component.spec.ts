@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchBoxComponent as SearchBoxComponent } from './search-box.component';
+import { SearchBoxComponent as SearchBoxComponent } from './filter-input.component';
 
 describe('SearchBoxComponent', () => {
   let component: SearchBoxComponent;
