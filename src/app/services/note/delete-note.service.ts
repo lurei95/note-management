@@ -42,7 +42,7 @@ export class DeleteNoteService implements IDeleteService<NoteModel>
     this.unsetInvalidCategory(parameter.id);
 
     const message = this.localizationService.execute(MessageKind.DeleteNoteMessage, 
-      truncate(parameter.title, 10));
+      { title: truncate(parameter.title, 10) });
     this.notificationService.notifySuccessMessage(message);
   }
 

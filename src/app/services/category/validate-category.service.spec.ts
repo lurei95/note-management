@@ -1,12 +1,37 @@
-import { TestBed } from '@angular/core/testing';
-
+import { CategoryModel } from 'src/app/models/categoryModel';
+import { LocalizationServiceMock } from './../mocks/localizationServiecMock';
 import { ValidateCategoryService } from './validate-category.service';
+import { MessageKind } from 'src/app/messageKind';
 
-describe('ValidateCategoryService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('ValidateCategoryService', () => 
+{
+  let mockService: LocalizationServiceMock;
+  let service: ValidateCategoryService;
 
-  it('should be created', () => {
-    const service: ValidateCategoryService = TestBed.get(ValidateCategoryService);
-    expect(service).toBeTruthy();
+  beforeEach(() =>
+  {
+    mockService = new LocalizationServiceMock();
+    service = new ValidateCategoryService(mockService);
+  });
+
+  it("should return no error when the category is valid", () => 
+  {
+    const model = new CategoryModel("test-id", "test-title");
+
+    const result = service.execute(model);
+
+    expect(result.keys.length).toBe(0);
+  });
+
+  it("should return error when the title is empty", () => 
+  {
+    const model = new CategoryModel("test-id");
+    mockService.returnValue = "test-error";
+
+    const result = service.execute(model);
+
+    expect(result.keys.length).toBe(1);
+    expect(mockService.name).toBe(MessageKind.RequiredField);
+    expect(result["title"]).toBe("test-error");
   });
 });

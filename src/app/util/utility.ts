@@ -18,7 +18,7 @@ export function truncate(text: string, maxLength: number): string
   if (nullOrEmpty(text))
     return coalesce(text);
   if (text.length > maxLength)
-    return text.substring(0, maxLength - 1) + "...";
+    return text.substring(0, maxLength) + "...";
   return text;
 }
 

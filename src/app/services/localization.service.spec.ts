@@ -1,12 +1,24 @@
-import { TestBed } from '@angular/core/testing';
-
 import { LocalizationService } from './localization.service';
+import { TranslateServiceMock } from './mocks/translateServiceMock';
 
-describe('LocalizationService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('LocalizationService', () => 
+{
+  let mockService: TranslateServiceMock;
+  let service: LocalizationService;
 
-  it('should be created', () => {
-    const service: LocalizationService = TestBed.get(LocalizationService);
-    expect(service).toBeTruthy();
+  beforeEach(() =>
+  {
+    mockService = new TranslateServiceMock();
+    service = new LocalizationService(mockService);
+  });
+
+  it('should pass the correct arguments to the translate service and return the right value', () => 
+  {
+    mockService.returnValue = "Test translation"
+    let params = { key: "value" };
+
+    expect(service.execute("Testkey", params));
+    expect(mockService.key).toBe("Testkey");
+    expect(mockService.interpolateParams).toBe(params);
   });
 });

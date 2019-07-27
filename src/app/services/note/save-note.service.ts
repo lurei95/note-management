@@ -38,7 +38,7 @@ export class SaveNoteService implements ISaveService<NoteModel>
     this.store.dispatch(new NoteAction(NoteActionKind.NoteUpdate, parameter)); 
 
     const message = this.localizationService.execute(MessageKind.SaveNoteMessage, 
-      truncate(parameter.title, 10));
+      { title: truncate(parameter.title, 10) });
     this.notificationService.notifySuccessMessage(message);
   }
 }

@@ -44,7 +44,7 @@ export class DeleteCategoryService implements IDeleteService<CategoryModel>
     this.unsetInvalidCategory(parameter.id);
 
     const message = this.localizationService.execute(MessageKind.DeleteCategoryMessage, 
-      truncate(parameter.title, 10));
+      { title: truncate(parameter.title, 10) });
     this.notificationService.notifySuccessMessage(message);
   }
 

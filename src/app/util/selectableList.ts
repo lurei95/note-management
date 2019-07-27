@@ -41,7 +41,7 @@ export class SelectableList<T>
     this._items = items;
     this.selectedItem = selectedItem;
     if (selectedItem == null && items.length > 0)
-      selectedItem = this._items.find(() => true);
+      this.selectedItem = this._items.find(() => true);
   }
 
   /**
@@ -49,7 +49,7 @@ export class SelectableList<T>
    * 
    * @param {T} item The new item to add
    */
-  add(item: T)
+  addItem(item: T)
   {
     this._items.push(item);
     if (this.count() == 1)
@@ -78,16 +78,9 @@ export class SelectableList<T>
    * Returns the index of the item or -1 if the item is not in the list
    * 
    * @param {T} item The item to get the index of
-   * @param {boolean} compareReference Determines whether "===" or "==" should be used for comparison
    * @returns {number} The index of the item or -1
    */
-  indexOf(item: T, compareReference: boolean = false): number
-  {
-    if (compareReference)
-      return this.items.indexOf(item);
-    else
-      return this.items.findIndex(item1 => item1 == item);
-  }
+  indexOf(item: T): number { return this.items.indexOf(item); }
 
   /**
    * Returns the index of the first item that matches the predicate or -1

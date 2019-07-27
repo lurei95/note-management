@@ -29,7 +29,7 @@ export function categoriesReducer(state: SelectableList<CategoryModel>
       return state;
     case CategoryActionKind.CategoryAdd:   
       newState = new SelectableList([...state.items], state.selectedItem);
-      newState.add(category);
+      newState.addItem(category);
       return newState;
     case CategoryActionKind.CategoryDelete:
       newState = new SelectableList([...state.items], state.selectedItem);

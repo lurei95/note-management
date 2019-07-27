@@ -52,10 +52,13 @@ export class Dictionary<T>
    */
   remove(key: string) 
   {
-    var index = this._keys.indexOf(key, 0);
-    this._keys.splice(index, 1);
-    this._values.splice(index, 1);
-    delete this[key];
+    var index = this._keys.indexOf(key);
+    if (index > 0)
+    {
+      this._keys.splice(index, 1);
+      this._values.splice(index, 1);
+      delete this[key];
+    }
   }
 
   /**

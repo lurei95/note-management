@@ -41,7 +41,7 @@ export class SaveCategoryService implements ISaveService<CategoryModel>
     this.store.dispatch(new CategoryAction(CategoryActionKind.CategoryUpdate, parameter));
 
     const message = this.localizationService.execute(MessageKind.SaveCategoryMessage, 
-      truncate(parameter.title, 10));
+     { title: truncate(parameter.title, 10) });
     this.notificationService.notifySuccessMessage(message);
   }
 }
