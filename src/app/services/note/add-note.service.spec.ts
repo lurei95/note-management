@@ -20,11 +20,11 @@ describe('AddNoteService', () =>
 
   it('note should be added', () => 
   {
-    service.execute("1");
+    service.execute("2");
     
     let action = (storeMock.dispatchedActions[0] as NoteAction);
     expect(action.type).toBe(NoteActionKind.NoteAdd);
     expect(!nullOrEmpty(action.payload.id)).toBe(true);
-    expect(action.payload.categoryId).toBe("1");
+    expect(action.payload.categoryId).toBe("2");
   });
 });
