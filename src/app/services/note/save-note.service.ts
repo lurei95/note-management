@@ -1,5 +1,4 @@
 import { MessageKind } from 'src/app/messageKind';
-import { LocalizationArgument } from './../localization.service';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -38,9 +37,8 @@ export class SaveNoteService implements ISaveService<NoteModel>
   { 
     this.store.dispatch(new NoteAction(NoteActionKind.NoteUpdate, parameter)); 
 
-    let argument = new LocalizationArgument(MessageKind.SaveNoteMessage, 
-      { title: truncate(parameter.title, 10)});
-    const message = this.localizationService.execute(argument);
+    const message = this.localizationService.execute(MessageKind.SaveNoteMessage, 
+      truncate(parameter.title, 10));
     this.notificationService.notifySuccessMessage(message);
   }
 }

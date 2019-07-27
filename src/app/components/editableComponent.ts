@@ -54,6 +54,13 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   }
 
   /**
+   * Returns if the model has changes in comparison to the unmodified version
+   * 
+   * @returns {boolean} If the model has changes in comparison to the unmodified version
+   */
+  hasChanges() : boolean { return !this.model.equals(this.unmodified); }
+
+  /**
    * Tries to save the changes of the model
    * 
    * @returns {boolean} If changes have been saved
@@ -62,7 +69,7 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   {
     if (this.validateModel())
     {
-      if (this.model.equals(this.unmodified))
+      if (!this.hasChanges())
         return true;
 
       this.saveChanges();

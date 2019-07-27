@@ -8,7 +8,7 @@ import { IServiceBase } from './base/iServiceBase';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalizationService implements IServiceBase<LocalizationArgument, string>
+export class LocalizationService
 {
   /**
    * Constructor
@@ -20,41 +20,17 @@ export class LocalizationService implements IServiceBase<LocalizationArgument, s
   /**
    * Executes the service: returns the localized string
    * 
-   * @param {LocalizationArgument} parameter Parameter with name of the string and interpolate parameters
+   * @param {string} name Name of the string to retrieve
+   * @param {Object} parameter Interpolate parameters
    * @returns {string} The localized string
    */
-  execute(parameter: LocalizationArgument): string 
+  execute(name: string, parameter?: Object): string 
   {
     let result: string;
-    if (parameter.parameter == null)
-      this.translationService.get(parameter.name).subscribe((x: string) => result = x);
+    if (parameter == null)
+      this.translationService.get(name).subscribe((x: string) => result = x);
     else
-      this.translationService.get(parameter.name, parameter.parameter)
-        .subscribe((x: string) => result = x);
+      this.translationService.get(name, parameter).subscribe((x: string) => result = x);
     return result;
   }
-}
-
-/**
- * Argument for retrieving a localized string
- */
-export class LocalizationArgument
-{
-  /**
-   * @returns {string} Name of the string to retrieve
-   */
-  get name(): string { return this._name; }
-
-  /**
-   * @returns {Object} Interpolate parameters
-   */
-  get parameter(): Object { return this._parameter; }
-
-  /**
-   * Constructor
-   * 
-   * @param {string} _name Name of the string to retrieve
-   * @param {Object} _parameter Interpolate parameters
-   */
-  constructor(private _name: string, private _parameter?: Object) { }
 }

@@ -1,7 +1,7 @@
 export enum DialogResult
 {
     Cancel = "Cancel",
-    Delete = "Confirm",
+    Delete = "Delete",
     Yes = "Yes",
     No = "No"
 }

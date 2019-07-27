@@ -7,7 +7,7 @@ import { ISaveService } from '../base/iSaveService';
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { IApplicationState } from 'src/app/redux/state';
-import { LocalizationArgument, LocalizationService } from '../localization.service';
+import { LocalizationService } from '../localization.service';
 import { MessageKind } from 'src/app/messageKind';
 
 /**
@@ -40,9 +40,8 @@ export class SaveCategoryService implements ISaveService<CategoryModel>
     parameter.isEditing = false;
     this.store.dispatch(new CategoryAction(CategoryActionKind.CategoryUpdate, parameter));
 
-    let argument = new LocalizationArgument(MessageKind.SaveCategoryMessage, 
-      { title: truncate(parameter.title, 10)});
-    const message = this.localizationService.execute(argument);
+    const message = this.localizationService.execute(MessageKind.SaveCategoryMessage, 
+      truncate(parameter.title, 10));
     this.notificationService.notifySuccessMessage(message);
   }
 }

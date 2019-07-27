@@ -9,5 +9,7 @@ export enum MessageKind
   SaveNoteMessage = "SaveNoteMessage",
   DeleteCategoryMessage = "DeleteCategoryMessage",
   DeleteNoteMessage = "DeleteNoteMessage",
-  RequiredField = "RequiredField"
+  RequiredField = "RequiredField",
+  NoteSaveChangesDialogTitle = "NoteSaveChangesDialogTitle",
+  NoteSaveChangesDialogText = "NoteSaveChangesDialogText"
 }

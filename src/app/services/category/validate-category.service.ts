@@ -4,7 +4,7 @@ import { Dictionary } from 'src/app/util/dictionary';
 import { IValidationService } from '../base/iValidationService';
 import { nullOrEmpty } from 'src/app/util/utility';
 import { CategoryModel } from 'src/app/models/categoryModel';
-import { LocalizationService, LocalizationArgument } from '../localization.service';
+import { LocalizationService } from '../localization.service';
 
 /**
  * Service for validating a category
@@ -34,7 +34,7 @@ export class ValidateCategoryService implements IValidationService<CategoryModel
 
     if (nullOrEmpty(parameter.title))
     {
-      let message = this.localizationService.execute(new LocalizationArgument(MessageKind.RequiredField));
+      let message = this.localizationService.execute(MessageKind.RequiredField);
       result.add("title", message);
     }
     return result;

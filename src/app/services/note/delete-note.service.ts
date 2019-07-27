@@ -9,7 +9,6 @@ import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
 import { IApplicationState, getInvalidNoteId } from 'src/app/redux/state';
 import { NoteModel } from 'src/app/models/noteModel';
 import { MessageKind } from 'src/app/messageKind';
-import { LocalizationArgument } from '../localization.service';
 import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
 
 /**
@@ -42,9 +41,8 @@ export class DeleteNoteService implements IDeleteService<NoteModel>
     this.store.dispatch(new NoteAction(NoteActionKind.NoteDelete, parameter));
     this.unsetInvalidCategory(parameter.id);
 
-    let argument = new LocalizationArgument(MessageKind.DeleteNoteMessage, 
-      { title: truncate(parameter.title, 10)});
-    const message = this.localizationService.execute(argument);
+    const message = this.localizationService.execute(MessageKind.DeleteNoteMessage, 
+      truncate(parameter.title, 10));
     this.notificationService.notifySuccessMessage(message);
   }
 

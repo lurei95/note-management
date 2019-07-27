@@ -3,10 +3,15 @@
   "DeleteNoteDialogText" : "Sind Sie sicher, dass sie die Notiz \"{{title}}\" löschen möchten?",
   "DeleteCategoryDialogTitle" : "Kategorie löschen?",
   "DeleteCategoryDialogText" : "Sind Sie sicher, dass sie die Kategorie \"{{title}}\" und alle darin enthaltenen Notizen löschen möchten?",
+  "NoteSaveChangesDialogTitle" : "Änderungen speichern?",
+  "NoteSaveChangesDialogText" : "Die Notiz verfügt über Änderungen. Möchten sie diese vor dem Schließen speichern?",
   "SaveCategoryMessage" : "Kategorie \"{{title}}\" erfolgreich gespeichert",
   "SaveNoteMessage" : "Notiz \"{{title}}\" erfolgreich gespeichert",
   "DeleteCategoryMessage" : "'Kategorie \"{{title}}\" erfolgreich gelöscht",
   "DeleteNoteMessage" : "Notiz \"{{title}}\" erfolgreich gelöscht",
   "Delete" : "Löschen",
+  "Yes" : "Ja",
+  "No" : "Nein",
+  "Cancel" : "Abbrechen",
   "RequiredField" : "Pflichtfeld"
 }

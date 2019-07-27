@@ -10,13 +10,14 @@ import { DialogResult } from '../dialogs/dialogResult';
 import { clone, coalesce } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { MessageKind } from 'src/app/messageKind';
-import { CancelableDialogData } from '../dialogs/cancelable-dialog/cancelableDialogParam';
-import { CancelableDialogComponent } from '../dialogs/cancelable-dialog/cancelable-dialog.component';
-import { LocalizationService, LocalizationArgument } from 'src/app/services/localization.service';
+import { MessageDialogComponent } from '../dialogs/message-dialog/message-dialog.component';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedCatgeory } from 'src/app/redux/state';
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { CategoryModel } from 'src/app/models/categoryModel';
+import { DialogInformation } from '../dialogs/dialogInformation';
+import { MessageDialogService } from 'src/app/services/message-dialog.service';
 
 /**
  * Component for displaying and editing a category
@@ -83,11 +84,12 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    * @param {SaveCategoryService} saveService Injected: service for savin the changes of the category
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
-   * @param {MatDialog} dialog Injected: service for showing a dialog
+   * @param {LocalizationService} localizationService Injected: service for getting localized strings
+   * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
   constructor(validationService: ValidateCategoryService, saveService: SaveCategoryService,
     private deleteService: DeleteCategoryService, private store: Store<IApplicationState>, 
-    private localizationService: LocalizationService, private dialog: MatDialog) 
+    private localizationService: LocalizationService, private dialogService: MessageDialogService) 
   { 
     super(validationService, saveService); 
 
@@ -152,15 +154,11 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    */
   onDeleteButtonClicked()
   { 
-    let text = this.localizationService.execute(new LocalizationArgument(
-      MessageKind.DeleteCategoryDialogText, {title: coalesce(this.category.title)}));
-    let title = this.localizationService.execute(
-      new LocalizationArgument(MessageKind.DeleteCategoryDialogTitle));
-    let buttonCaption = this.localizationService.execute(new LocalizationArgument(MessageKind.Delete));
-    let data = new CancelableDialogData(text, title, buttonCaption);
-    
-    const dialogRef = this.dialog.open(CancelableDialogComponent, { data: data });
-    dialogRef.afterClosed().subscribe(result => this.onDeleteDialogFinished(result));
+    let text = this.localizationService.execute(MessageKind.DeleteCategoryDialogText, 
+      {title: coalesce(this.category.title)});
+    let title = this.localizationService.execute(MessageKind.DeleteCategoryDialogTitle);
+    this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
+      result => this.onDeleteDialogFinished(result));
   }
 
   /**

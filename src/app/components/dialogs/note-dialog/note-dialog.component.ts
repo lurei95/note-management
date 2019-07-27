@@ -1,7 +1,8 @@
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ValidateNoteService } from './../../../services/note/validate-note.service';
 import { SaveNoteService } from './../../../services/note/save-note.service';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import { nullOrEmpty } from 'src/app/util/utility';
@@ -9,6 +10,11 @@ import { NoteComponentBase } from '../../noteComponentBase';
 import { NoteModel } from 'src/app/models/noteModel';
 import { Store } from '@ngrx/store';
 import { IApplicationState } from 'src/app/redux/state';
+import { MessageKind } from 'src/app/messageKind';
+import { DialogInformation } from '../dialogInformation';
+import { DialogResult } from '../dialogResult';
+import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
+import { MessageDialogService } from 'src/app/services/message-dialog.service';
 
 /**
  * Dialog for editing a note
@@ -44,15 +50,18 @@ export class NoteDialogComponent extends NoteComponentBase
    * @param {NoteModel} data Injected: the note passed into the dialog
    * @param {ValidateNoteService} validationService Injected: service for validating the note
    * @param {SaveNoteService} saveService Injected: service for saving the changes of the note
-   * @param {MatDialogRef<NoteDialogComponent>} dialog Injected: reference to the own dialog
+   * @param {MatDialogRef<NoteDialogComponent>} self Injected: reference to the own dialog
    * @param {Store<IApplicationState>} store Injected: redux store
+   * @param {LocalizationService} localizationService Injected: service for getting localized strings
+   * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
   constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, validationService: ValidateNoteService,
-    saveService: SaveNoteService, private dialog: MatDialogRef<NoteDialogComponent>, 
-    store: Store<IApplicationState>) 
+    saveService: SaveNoteService, private self: MatDialogRef<NoteDialogComponent>, 
+    store: Store<IApplicationState>, private localizationService: LocalizationService, 
+    private dialogService: MessageDialogService) 
   { 
     super(validationService, saveService, store);
-    this.note = data; 
+    this.note = data;
   }
 
   /**
@@ -66,8 +75,27 @@ export class NoteDialogComponent extends NoteComponentBase
 
   /**
    * Event handler: closes the dialog
+   * 
+   * @param {Event} e The event
    */
-  onCloseButtonClicked() { this.tryCloseDialog(); }
+  onCloseButtonClicked(e: Event) 
+  { 
+    if(e != null)
+    {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    if (this.hasChanges())
+    {
+      let text = this.localizationService.execute(MessageKind.NoteSaveChangesDialogText);
+      let title = this.localizationService.execute(MessageKind.NoteSaveChangesDialogTitle);
+      this.dialogService.execute(title, text, [DialogResult.Yes, DialogResult.No, DialogResult.Cancel], 
+        result => this.onSaveChangesDialogFinished(result));
+    }
+    else
+      this.tryCloseDialog(false); 
+  }
 
   /**
    * Event handler: adds a new tag
@@ -115,6 +143,11 @@ export class NoteDialogComponent extends NoteComponentBase
     this.calculateEditorHeight();
   }
 
+  /**
+   * Tries saving the changes and closing the dialog
+   */
+  handleSaveAndCloseShortcut() { this.tryCloseDialog(); }
+
   private calculateEditorHeight()
   {
     setTimeout(() =>
@@ -128,9 +161,17 @@ export class NoteDialogComponent extends NoteComponentBase
     });
   }
 
-  private tryCloseDialog()
+  private onSaveChangesDialogFinished(result: string)
   {
-    if(this.trySaveChanges())
-      this.dialog.close();
+    if (result == DialogResult.Yes)
+      this.tryCloseDialog();
+    else if (result == DialogResult.No)
+      this.tryCloseDialog(false);
+  }
+
+  private tryCloseDialog(saveChanges: boolean = true)
+  {
+    if(!saveChanges || this.trySaveChanges())
+      this.self.close();
   }
 }

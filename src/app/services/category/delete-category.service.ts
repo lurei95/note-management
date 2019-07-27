@@ -9,7 +9,7 @@ import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { CategoryModel } from 'src/app/models/categoryModel';
 import { IApplicationState, getInvalidCategoryId } from 'src/app/redux/state';
-import { LocalizationArgument, LocalizationService } from '../localization.service';
+import { LocalizationService } from '../localization.service';
 import { MessageKind } from 'src/app/messageKind';
 
 /**
@@ -43,9 +43,8 @@ export class DeleteCategoryService implements IDeleteService<CategoryModel>
     this.store.dispatch(new CategoryAction(CategoryActionKind.CategoryDelete, parameter));
     this.unsetInvalidCategory(parameter.id);
 
-    let argument = new LocalizationArgument(MessageKind.DeleteCategoryMessage, 
-      { title: truncate(parameter.title, 10)});
-    const message = this.localizationService.execute(argument);
+    const message = this.localizationService.execute(MessageKind.DeleteCategoryMessage, 
+      truncate(parameter.title, 10));
     this.notificationService.notifySuccessMessage(message);
   }
 

@@ -1,7 +1,8 @@
 <mat-dialog-content id=content 
     class="mat-typography" 
-    (keydown.esc)="tryCloseDialog()"
-    (keydown.control.s)="handleSaveShortcut($event)">
+    (keydown.esc)="onCloseButtonClicked($evtn)"
+    (keydown.control.s)="handleSaveShortcut($event)"
+    (keydown.control.Enter)="handleSaveAndCloseShortcut()">
     <div #container id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
         <div #headerLine class="headerLine">
             <button id="expandButton" (click)="onExpandButtonClicked()" style="grid-column: 2">

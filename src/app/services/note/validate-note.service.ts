@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IValidationService } from '../base/iValidationService';
 import { nullOrEmpty } from 'src/app/util/utility';
 import { NoteModel } from 'src/app/models/noteModel';
-import { LocalizationArgument, LocalizationService } from '../localization.service';
+import { LocalizationService } from '../localization.service';
 import { MessageKind } from 'src/app/messageKind';
 
 /**
@@ -33,7 +33,7 @@ export class ValidateNoteService implements IValidationService<NoteModel>
     let result = new Dictionary<string>();
     if (nullOrEmpty(parameter.title))
     {
-      let message = this.localizationService.execute(new LocalizationArgument(MessageKind.RequiredField));
+      let message = this.localizationService.execute(MessageKind.RequiredField);
       result.add("title", message);
     }
     return result;

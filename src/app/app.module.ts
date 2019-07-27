@@ -19,7 +19,7 @@ import { DeleteNoteService } from './services/note/delete-note.service';
 import { RetrieveCategoriesService } from './services/category/retrieve-categories.service';
 import { DeleteCategoryService } from './services/category/delete-category.service';
 import { MatInputModule } from '@angular/material/input';
-import { CancelableDialogComponent } from './components/dialogs/cancelable-dialog/cancelable-dialog.component';
+import { MessageDialogComponent } from './components/dialogs/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -38,7 +38,6 @@ import { FilterNotesService } from './services/note/filter-notes.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { reducers } from './redux/state';
-import { LazyForDirective } from './util/lazyFor';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -53,14 +52,13 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     NotePanelComponent,
     NoteComponent,
     CategoryComponent,
-    CancelableDialogComponent,
+    MessageDialogComponent,
     NoteDialogComponent,
     DatePickerComponent,
-    NotificationListComponent,
-    LazyForDirective
+    NotificationListComponent
   ],
   entryComponents: [
-    CancelableDialogComponent, 
+    MessageDialogComponent, 
     NoteDialogComponent
   ],
   imports: [

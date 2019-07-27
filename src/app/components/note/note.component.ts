@@ -1,9 +1,10 @@
+import { MessageDialogService } from './../../services/message-dialog.service';
 import { NoteModel } from 'src/app/models/noteModel';
-import { LocalizationService, LocalizationArgument } from './../../services/localization.service';
+import { LocalizationService } from './../../services/localization.service';
 import { ValidateNoteService } from './../../services/note/validate-note.service';
 import { SaveNoteService } from '../../services/note/save-note.service';
 import { DialogResult } from '../dialogs/dialogResult';
-import { CancelableDialogComponent } from '../dialogs/cancelable-dialog/cancelable-dialog.component';
+import { MessageDialogComponent } from '../dialogs/message-dialog/message-dialog.component';
 import { Component } from '@angular/core';
 import { DeleteNoteService } from 'src/app/services/note/delete-note.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,9 +12,9 @@ import { clone, coalesce } from 'src/app/util/utility';
 import { NoteDialogComponent } from '../dialogs/note-dialog/note-dialog.component';
 import { NoteComponentBase } from '../noteComponentBase';
 import { MessageKind } from 'src/app/messageKind';
-import { CancelableDialogData } from '../dialogs/cancelable-dialog/cancelableDialogParam';
 import { IApplicationState } from 'src/app/redux/state';
 import { Store } from '@ngrx/store';
+import { DialogInformation } from '../dialogs/dialogInformation';
 
 /**
  * Component for displaying and editing a note
@@ -36,10 +37,12 @@ export class NoteComponent extends NoteComponentBase
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {MatDialog} dialog Injected: service for showing a dialog
    * @param {Store<IApplicationState>} store Injected: redux store
+   * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
   constructor(validationService: ValidateNoteService, saveService: SaveNoteService, 
     private deleteService: DeleteNoteService, private localizationService: LocalizationService,
-    private dialog: MatDialog, store: Store<IApplicationState>) 
+    private dialog: MatDialog, store: Store<IApplicationState>, 
+    private dialogService: MessageDialogService) 
   { super(validationService, saveService, store); }
 
   /**
@@ -63,15 +66,11 @@ export class NoteComponent extends NoteComponentBase
    */
   onDeleteButtonClicked() 
   {
-    let text = this.localizationService.execute(
-      new LocalizationArgument(MessageKind.DeleteNoteDialogText, {title: coalesce(this.note.title)}));
-    let title = this.localizationService.execute(
-      new LocalizationArgument(MessageKind.DeleteNoteDialogTitle));
-    let buttonCaption = this.localizationService.execute(new LocalizationArgument(MessageKind.Delete));
-    let data = new CancelableDialogData(text, title, buttonCaption);
-
-    const dialogRef = this.dialog.open(CancelableDialogComponent, { data: data });
-    dialogRef.afterClosed().subscribe(result => this.onDeleteDialogFinished(result));
+    let text = this.localizationService.execute(MessageKind.DeleteNoteDialogText, 
+      {title: coalesce(this.note.title)});
+    let title = this.localizationService.execute(MessageKind.DeleteNoteDialogTitle);
+    this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
+      result => this.onDeleteDialogFinished(result));
   }
 
   /**
