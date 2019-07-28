@@ -45,20 +45,6 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    */
   get isSelected(): boolean { return this._isSelected; }
 
-  /**
-   * @param {CategoryModel} value The category which is edited in the component
-   */
-  @Input()
-  set category(value: CategoryModel) 
-  { 
-    this.model = value;
-    this.unmodified = clone<CategoryModel>(this.model, CategoryModel);
-  }
-  /**
-   * @returns {CategoryModel} The category which is edited in the component
-   */
-  get category(): CategoryModel { return this.model; }
-
   private _editMode: boolean;
   /**
    * @param {boolean} value Whether the component is in edit mode
@@ -102,7 +88,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   ngAfterViewInit() 
   {
     setTimeout(() => {
-      if (this.category.isEditing && this.titleInput != null)
+      if (this.model.isEditing && this.titleInput != null)
         this.editMode = true;
       this.trySetSelected();
     })
@@ -122,10 +108,10 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    */
   handleTitleChanged() 
   { 
-    if (this.validateModel() && this.invalidCategoryId == this.category.id)
+    if (this.validateModel() && this.invalidCategoryId == this.model.id)
       this.store.dispatch(new CategoryValidityChangeAction(null));
     else
-      this.store.dispatch(new CategoryValidityChangeAction(this.category.id));
+      this.store.dispatch(new CategoryValidityChangeAction(this.model.id));
   }
 
   /**
@@ -134,7 +120,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   handleCategoryClicked()
   {
     if(!this.editMode && !this._isSelected && !this.isButtonPointingOver)
-      this.store.dispatch(new CategoryAction(CategoryActionKind.SelectedCategoryChange, this.category));
+      this.store.dispatch(new CategoryAction(CategoryActionKind.SelectedCategoryChange, this.model));
   }
 
   /**
@@ -152,7 +138,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   handleDeleteButtonClicked()
   { 
     let text = this.localizationService.execute(MessageKind.DeleteCategoryDialogText, 
-      {title: coalesce(this.category.title)});
+      {title: coalesce(this.model.title)});
     let title = this.localizationService.execute(MessageKind.DeleteCategoryDialogTitle);
     this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
       result => this.handleDeleteDialogFinished(result));
@@ -199,15 +185,15 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
       this._titleError = result["title"];
       this.titleInput.nativeElement.focus();
 
-      if (this.invalidCategoryId != this.category.id)
-        this.store.dispatch(new CategoryValidityChangeAction(this.category.id));
+      if (this.invalidCategoryId != this.model.id)
+        this.store.dispatch(new CategoryValidityChangeAction(this.model.id));
       
       return false;
     }
     else
     {
       this.model.isEditing = false;
-      if (this.invalidCategoryId == this.category.id)
+      if (this.invalidCategoryId == this.model.id)
         this.store.dispatch(new CategoryValidityChangeAction(null));
       return true;
     }
@@ -216,7 +202,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   private handleDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Delete)
-      this.deleteService.execute(this.category); 
+      this.deleteService.execute(this.model); 
     else
       this.editMode = false;
   }
@@ -229,7 +215,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
 
   private trySetSelected()
   {
-    if (this.category != null && this.selectedCategory != null)
-      this._isSelected = this.selectedCategory.id == this.category.id;
+    if (this.model != null && this.selectedCategory != null)
+      this._isSelected = this.selectedCategory.id == this.model.id;
   }
 }

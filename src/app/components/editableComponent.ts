@@ -1,17 +1,28 @@
+import { clone } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { IValidationService } from './../services/base/iValidationService';
 import { IEditableModel } from '../models/iEditableModel';
 import { ISaveService } from '../services/base/iSaveService';
+import { Input } from '@angular/core';
 
 /**
  * Base class for all components for editing a certain type of model
  */
 export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
 {
+  private _model: TModel
   /**
-   * The model which is edited in the component
+   * @param {TModel} value The model which is edited in the component
    */
-  protected model: TModel
+  @Input() set model(value: TModel) 
+  {
+    this._model = value; 
+    this.unmodified = value.clone();
+  }
+  /**
+   * @returns {TModel} The model which is edited in the component
+   */
+  get model() : TModel { return this._model; }
 
   /**
    * The unmodified version of the model

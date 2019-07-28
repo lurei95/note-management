@@ -1,49 +1,39 @@
 <mat-dialog-content id=content 
-    class="mat-typography" 
-    (keydown.esc)="handleCloseButtonClicked($evtn)"
-    (keydown.control.s)="handleSaveShortcut($event)"
-    (keydown.control.Enter)="handleSaveAndCloseShortcut()">
-    <div #container id="noteContainer" [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
-        <div #headerLine class="headerLine">
-            <button id="expandButton" (click)="handleExpandButtonClicked()" style="grid-column: 2">
-                <i class="fa fa-expand" aria-hidden="true"></i>
-            </button>
-            <button id="closeButton" (click)="handleCloseButtonClicked()">
-                <i class="fa fa-times" aria-hidden="true" style="grid-column: 3"></i>
-            </button>
-        </div>
-        <div id="titleArea" #titleAreaDiv>
-            <label id="titleLabel">Titel:</label>
-            <input [className]="titleError == null ? 'hiddenInput' : 'invalid'"
-                type="text" id="titleInput"
-                placeholder="{{titleError == null ? Titel : titleError}}"
-                (input)="handleTitleChanged()"  
-                [(ngModel)] ="note.title" #titleInput/>
-        </div>
-        <div id="propertyArea" #propertyAreaDiv>
-            <label class="propertyLabel">Fällig am:</label>
-            <app-date-picker [minDate]="now" 
-              (dateChanged)="handleDateChanged($event)"
-              [selectedDate] ="note.dueDate">
-            </app-date-picker>
-            <label class="propertyLabel">Tags:</label>
-            <mat-chip-list #chipList>
-                    <mat-chip *ngFor="let tag of note.tags" 
-                        [removable]="true" 
-                        (removed)="remove(tag)">
-                        {{tag}}
-                      <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input placeholder="neuer Tag" *ngIf="note.tags.length < 10"
-                        maxlength="15" class="hiddenInput" id="tagInput"
-                        [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-        </div>
-        <div #textAreaDiv [className]="isExpanded ? 'textAreaExpanded' : 'textAreaNormal'">
-            <ckeditor id="textEditor" [(ngModel)]="note.text" [editor]="editor"></ckeditor>
-        </div>
+  class="mat-typography" 
+  (keydown.esc)="handleCloseButtonClicked($evtn)"
+  (keydown.control.s)="handleSaveShortcut($event)"
+  (keydown.control.Enter)="handleSaveAndCloseShortcut()">
+  <div #container id="noteContainer" 
+    [className]="isExpanded ? 'dialogExpanded' : 'dialogNormal'">
+    <div #headerLine class="headerLine">
+      <button id="expandButton" (click)="handleExpandButtonClicked()" style="grid-column: 2">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+      <button id="closeButton" (click)="handleCloseButtonClicked()">
+        <i class="fa fa-times" aria-hidden="true" style="grid-column: 3"></i>
+      </button>
     </div>
+    <div id="titleArea" #titleAreaDiv>
+      <label id="titleLabel">Titel:</label>
+      <input [className]="titleError == null ? 'hiddenInput' : 'invalid'"
+        type="text" id="titleInput"
+        placeholder="{{titleError == null ? Titel : titleError}}"
+        (input)="handleTitleChanged()"  
+        [(ngModel)] ="model.title" #titleInput/>
+    </div>
+    <div id="propertyArea" #propertyAreaDiv>
+      <label class="propertyLabel">Fällig am:</label>
+      <app-date-picker [minDate]="now" 
+        (dateChanged)="handleDateChanged($event)"
+        [selectedDate] ="model.dueDate">
+      </app-date-picker>
+      <label class="propertyLabel">Tags:</label>
+      <app-tag-list (tagsChanged)="handleTagsChanged($event)"
+        [tags]="model.tags">
+      </app-tag-list>
+    </div>
+    <div #textAreaDiv [className]="isExpanded ? 'textAreaExpanded' : 'textAreaNormal'">
+      <ckeditor id="textEditor" [(ngModel)]="model.text" [editor]="editor"></ckeditor>
+    </div>
+  </div>
 </mat-dialog-content>

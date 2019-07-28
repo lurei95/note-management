@@ -11,6 +11,10 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @returns {string[]} Tags assigned to the note
    */
   get tags(): string[] { return this._tags; }
+    /**
+   * @param {string[]} value Tags assigned to the note
+   */
+  set tags(value: string[]) { this._tags = value; }
 
   /**
    * @returns {string} ID of the note
@@ -93,5 +97,10 @@ export class NoteModel implements IEditableModel<NoteModel>
    * 
    * @returns {NoteModel} A cloned version of the model
    */
-  clone(): NoteModel { return clone<NoteModel>(this, NoteModel); }
+  clone(): NoteModel 
+  { 
+    let copy = clone<NoteModel>(this, NoteModel);
+    copy.tags = [...this.tags];
+    return copy;
+  }
 }

@@ -3,7 +3,7 @@
     <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
         [readonly]="!editMode"
         style="grid-column: 1; grid-row: 1" 
-        [(ngModel)] ="category.title" 
+        [(ngModel)] ="model.title" 
         (focusout)=handleFocusLeaving()
         (input)="handleTitleChanged()" 
         (keydown.enter)="handleSaveShortcut()"

@@ -31,11 +31,6 @@ export class NoteDialogComponent extends NoteComponentBase
   @ViewChild("container", {static: false}) private container: ElementRef;
   @ViewChild("titleInput", {static: false}) private titleInput: ElementRef;
 
-  /**
-   * Seperator key codes for the tag control
-   */
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-
   private _now: Date = new Date();
   /**
    * @returns {Date} The current date
@@ -65,7 +60,7 @@ export class NoteDialogComponent extends NoteComponentBase
     private dialogService: MessageDialogService) 
   { 
     super(validationService, saveService, store);
-    this.note = data;
+    this.model = data;
   }
 
   /**
@@ -91,6 +86,15 @@ export class NoteDialogComponent extends NoteComponentBase
   }
 
   /**
+   * Event handler: changes the tags of the note
+   */
+  handleTagsChanged(tags: string[]) 
+  {
+    this.model.tags = tags; 
+    this.calculateEditorHeight();
+  }
+
+  /**
    * Event handler: closes the dialog
    * 
    * @param {Event} e The event
@@ -112,39 +116,6 @@ export class NoteDialogComponent extends NoteComponentBase
     }
     else
       this.tryCloseDialog(false); 
-  }
-
-  /**
-   * Event handler: adds a new tag
-   * 
-   * @param {MatChipInputEvent} event Input event for the tag control
-   */
-  add(event: MatChipInputEvent)
-  {
-    const input = event.input;
-    const value = event.value.trim();
-    if (!nullOrEmpty(value) && ! this.note.tags.some(tag => tag == value)) 
-    {
-      this.note.tags.push(value);
-      this.calculateEditorHeight();
-    }
-    if (input) 
-      input.value = '';
-  }
-
-  /**
-   * Event handler: removes tag
-   * 
-   * @param {string} tag The tag to remove
-   */
-  remove(tag: string)
-  {
-    const index = this.note.tags.indexOf(tag);
-    if (index >= 0) 
-    {
-      this.note.tags.splice(index, 1);
-      this.calculateEditorHeight();
-    }
   }
 
   /**

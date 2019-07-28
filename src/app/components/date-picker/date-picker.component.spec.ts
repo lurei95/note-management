@@ -9,6 +9,8 @@ describe('DatePickerComponent', () =>
 {
   let component: DatePickerComponent;
   let fixture: ComponentFixture<DatePickerComponent>;
+  let field: HTMLInputElement;
+  let date: Date;
 
   beforeEach(async(() => 
   { 
@@ -24,32 +26,32 @@ describe('DatePickerComponent', () =>
     fixture = TestBed.createComponent(DatePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    field = fixture.debugElement.query(By.css("#dateInput")).nativeElement;
+    date = new Date(2019, 11, 12);
   });
 
   it('should create', () => expect(component).toBeTruthy());
 
   it("modifying the input value should raise the date change event", () => 
   {
-    let field: HTMLInputElement = fixture.debugElement.query(By.css("#dateInput")).nativeElement;
-    let date = new Date(2019, 12, 12);
     field.value = date.toString();
     let spy = spyOn(component.dateChanged, "emit");
 
     field.dispatchEvent(new Event("dateInput"));
     fixture.detectChanges();
+    expect(component.selectedDate.toString()).toBe(date.toString());
     expect(spy.calls.mostRecent().args[0].toString()).toBe(date.toString());
 
     date = new Date(2018, 12, 12);
     field.value = date.toString();
     field.dispatchEvent(new Event("dateChange"));
     fixture.detectChanges();
+    expect(component.selectedDate.toString()).toBe(date.toString());
     expect(spy.calls.mostRecent().args[0].toString()).toBe(date.toString());
   });
 
   it("changing the selected date updates the input", () => 
   {
-    let field: HTMLInputElement = fixture.debugElement.query(By.css("#dateInput")).nativeElement;
-    let date = new Date(2019, 11, 12);
     component.selectedDate = date;
 
     fixture.detectChanges();

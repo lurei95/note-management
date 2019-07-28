@@ -39,6 +39,7 @@ import { FilterNotesService } from './services/note/filter-notes.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { reducers } from './redux/state';
+import { TagListComponent } from './components/tag-list/tag-list.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -56,7 +57,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MessageDialogComponent,
     NoteDialogComponent,
     DatePickerComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    TagListComponent
   ],
   entryComponents: [
     MessageDialogComponent, 

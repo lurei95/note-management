@@ -1,9 +1,10 @@
 <div class="form-group fg--search">
-    <input type="text" 
-        placeholder="Filter..." 
-        class="input"
-        (input)="handleFilterTextChange($event.target.value)">
-    <label>
-        <i class="fa fa-search"></i>
-    </label>
+  <input type="text"
+    [value]="filterText" 
+    placeholder="Filter..." 
+    class="input"
+    (input)="handleFilterTextChange($event.target.value)">
+  <label>
+    <i class="fa fa-search"></i>
+  </label>
 </div>

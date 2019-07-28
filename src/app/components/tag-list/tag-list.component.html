@@ -1,0 +1,16 @@
+<mat-chip-list #chipList>
+    <mat-chip *ngFor="let tag of tags" 
+      [removable]="true" 
+      (removed)="handleRemoveTag(tag)">
+      {{tag}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input #tagInput placeholder="neuer Tag" 
+      *ngIf="tags.length < maxTagCount"
+      class="hiddenInput" 
+      id="tagInput"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="handleAddNewTag($event)">
+</mat-chip-list>

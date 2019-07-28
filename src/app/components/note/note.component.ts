@@ -48,11 +48,11 @@ export class NoteComponent extends NoteComponentBase
    */
   openEditDialog() 
   { 
-    if ((this.invalidNoteId == null || this.invalidNoteId == this.note.id) 
+    if ((this.invalidNoteId == null || this.invalidNoteId == this.model.id) 
       && this.invalidCategoryId == null)
     {
       this.dialog.open(NoteDialogComponent, { 
-        data: clone<NoteModel>(this.note, NoteModel),
+        data: this.model.clone(),
         panelClass: 'fullscreenDialog',
         disableClose: true
       }); 
@@ -65,7 +65,7 @@ export class NoteComponent extends NoteComponentBase
   handleDeleteButtonClicked() 
   {
     let text = this.localizationService.execute(MessageKind.DeleteNoteDialogText, 
-      {title: coalesce(this.note.title)});
+      {title: coalesce(this.model.title)});
     let title = this.localizationService.execute(MessageKind.DeleteNoteDialogTitle);
     this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
       result => this.handleDeleteDialogFinished(result));
@@ -94,6 +94,6 @@ export class NoteComponent extends NoteComponentBase
   private handleDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Delete)
-      this.deleteService.execute(this.note); 
+      this.deleteService.execute(this.model); 
   }
 }

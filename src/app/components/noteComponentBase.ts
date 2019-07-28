@@ -29,20 +29,6 @@ export abstract class NoteComponentBase extends EditableComponent<NoteModel>
    */
   protected get invalidNoteId(): string { return this._invalidNoteId; }
 
-  /**
-   * @returns {NoteModel} The note which is edited in the component
-   */
-  get note(): NoteModel { return this.model; }
-  /**
-   * @param {NoteModel} value The note which is edited in the component
-   */
-  @Input()
-  set note(value: NoteModel) 
-  { 
-    this.unmodified = clone<NoteModel>(value, NoteModel);
-    this.model = value;
-  }
-
   private _titleError: string;
   /**
    * @returns {string} The error message for the title of the note
@@ -81,14 +67,13 @@ export abstract class NoteComponentBase extends EditableComponent<NoteModel>
     {
       this._titleError = result["title"];
 
-      if (this._invalidNoteId != this.note.id)
-        this.store.dispatch(new NoteValidityChangeAction(this.note.id));
-
+      if (this._invalidNoteId != this.model.id)
+        this.store.dispatch(new NoteValidityChangeAction(this.model.id));
       return false;
     }
     else
     {
-      if (this._invalidNoteId == this.note.id)
+      if (this._invalidNoteId == this.model.id)
         this.store.dispatch(new NoteValidityChangeAction(null));
       this._titleError = null;
       return true;

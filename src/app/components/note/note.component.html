@@ -11,13 +11,13 @@
             placeholder="{{titleError == null ? Titel : titleError}}"
             (input)="validateModel()"  
             (keydown.enter)="handleSaveShortcut()"
-            [(ngModel)] ="note.title" #titleInput/>
+            [(ngModel)] ="model.title" #titleInput/>
         <button (click)="handleDeleteButtonClicked()">
             <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>
     <hr>
     <div id="textAreaDiv">
-        <ckeditor id="textEditor" disabled="true" [(ngModel)]="note.text" [config]="{toolbar: []}" [editor]="editor"></ckeditor>
+        <ckeditor id="textEditor" disabled="true" [(ngModel)]="model.text" [config]="{toolbar: []}" [editor]="editor"></ckeditor>
     </div>
 </div>

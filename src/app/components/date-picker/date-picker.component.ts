@@ -78,6 +78,9 @@ export class DatePickerComponent
   { 
     let date = Date.parse(dateText);
     if(!isNaN(date))
-      this.dateChanged.emit(new Date(dateText)); 
+    {
+      this.selectedDate = new Date(dateText);
+      this.dateChanged.emit(this.selectedDate); 
+    }
   }
 }
