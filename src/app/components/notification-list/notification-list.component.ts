@@ -42,7 +42,7 @@ export class NotificationListComponent
    * 
    * @param {NotificationModel} item Notification to remove
    */
-  removeItem(item: NotificationModel)
+  handleRemoveButtonClicked(item: NotificationModel)
   {
     const index = this.notifications.findIndex(notification => notification.id == item.id);
     this.notifications.splice(index, 1);

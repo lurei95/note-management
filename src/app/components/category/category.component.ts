@@ -5,18 +5,15 @@ import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { DeleteCategoryService } from 'src/app/services/category/delete-category.service';
 import { EditableComponent } from '../editableComponent';
 import { Store } from '@ngrx/store';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogResult } from '../dialogs/dialogResult';
 import { clone, coalesce } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { MessageKind } from 'src/app/messageKind';
-import { MessageDialogComponent } from '../dialogs/message-dialog/message-dialog.component';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedCatgeory } from 'src/app/redux/state';
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { CategoryModel } from 'src/app/models/categoryModel';
-import { DialogInformation } from '../dialogs/dialogInformation';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 
 /**
@@ -100,44 +97,6 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   }
 
   /**
-   * Event handler: sets the component to edit mode
-   */
-  onEditButtonClicked() 
-  { 
-    if(this.invalidCategoryId == null && this.invalidNoteId == null)
-      this.editMode = true; 
-  }
-
-  /**
-   * Event handler: validates the category to reset the error when the title is changed
-   */
-  onTitleChanged() 
-  { 
-    if (this.validateModel() && this.invalidCategoryId == this.category.id)
-      this.store.dispatch(new CategoryValidityChangeAction(null));
-    else
-      this.store.dispatch(new CategoryValidityChangeAction(this.category.id));
-  }
-
-  /**
-   * Event handler: selected the category
-   */
-  onCategoryClicked()
-  {
-    if(!this.editMode && !this._isSelected && !this.isButtonPointingOver)
-      this.store.dispatch(new CategoryAction(CategoryActionKind.SelectedCategoryChange, this.category));
-  }
-
-  /**
-   * Event handler: tries to save the changes to the note on leaving focus
-   */
-  onFocusLeaving() 
-  {
-    if (this.editMode && !this.isButtonPointingOver)
-      this.trySaveChanges();
-  }
-
-  /**
    * Event handler: sets edit mode and selected on initialized
    */
   ngAfterViewInit() 
@@ -150,26 +109,64 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   }
 
   /**
+   * Event handler: sets the component to edit mode
+   */
+  handleEditButtonClicked() 
+  { 
+    if(this.invalidCategoryId == null && this.invalidNoteId == null)
+      this.editMode = true; 
+  }
+
+  /**
+   * Event handler: validates the category to reset the error when the title is changed
+   */
+  handleTitleChanged() 
+  { 
+    if (this.validateModel() && this.invalidCategoryId == this.category.id)
+      this.store.dispatch(new CategoryValidityChangeAction(null));
+    else
+      this.store.dispatch(new CategoryValidityChangeAction(this.category.id));
+  }
+
+  /**
+   * Event handler: selected the category
+   */
+  handleCategoryClicked()
+  {
+    if(!this.editMode && !this._isSelected && !this.isButtonPointingOver)
+      this.store.dispatch(new CategoryAction(CategoryActionKind.SelectedCategoryChange, this.category));
+  }
+
+  /**
+   * Event handler: tries to save the changes to the note on leaving focus
+   */
+  handleFocusLeaving() 
+  {
+    if (this.editMode && !this.isButtonPointingOver)
+      this.trySaveChanges();
+  }
+
+  /**
    * Event handler: deletes the category
    */
-  onDeleteButtonClicked()
+  handleDeleteButtonClicked()
   { 
     let text = this.localizationService.execute(MessageKind.DeleteCategoryDialogText, 
       {title: coalesce(this.category.title)});
     let title = this.localizationService.execute(MessageKind.DeleteCategoryDialogTitle);
     this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
-      result => this.onDeleteDialogFinished(result));
+      result => this.handleDeleteDialogFinished(result));
   }
 
   /**
    * Event handler: pointer is over the component
    */
-  onPointerEnter() { this.isButtonPointingOver = true; }
+  handlePointerEnter() { this.isButtonPointingOver = true; }
 
   /**
    * Event handler: pointer is not over the component
    */
-  onPointerLeave() { this.isButtonPointingOver = false; }
+  handlePointerLeave() { this.isButtonPointingOver = false; }
 
   /**
    * Tries to save the changes of the model
@@ -216,7 +213,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
     }
   }
 
-  private onDeleteDialogFinished(result: string)
+  private handleDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Delete)
       this.deleteService.execute(this.category); 
@@ -224,15 +221,15 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
       this.editMode = false;
   }
 
-  private trySetSelected()
-  {
-    if (this.category != null && this.selectedCategory != null)
-      this._isSelected = this.selectedCategory.id == this.category.id;
-  }
-
   private handleSelectedCategoryChanged(selectedCategory: CategoryModel)
   {  
     this.selectedCategory = selectedCategory;
     this.trySetSelected();
+  }
+
+  private trySetSelected()
+  {
+    if (this.category != null && this.selectedCategory != null)
+      this._isSelected = this.selectedCategory.id == this.category.id;
   }
 }

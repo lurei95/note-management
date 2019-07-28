@@ -8,7 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   templateUrl: './filter-input.component.html',
   styleUrls: ['./filter-input.component.css']
 })
-export class SearchBoxComponent
+export class FilterInputComponent
 {
   /**
    * Text change event
@@ -20,5 +20,5 @@ export class SearchBoxComponent
    * 
    * @param {string} filterText The new search text
    */
-  onFilterTextChange(filterText: string) { this.textChanged.emit(filterText); }
+  handleFilterTextChange(filterText: string) { this.textChanged.emit(filterText); }
 }

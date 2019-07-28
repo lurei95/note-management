@@ -1,4 +1,3 @@
-import { ValidateCategoryService } from './../../services/category/validate-category.service';
 import { FilterCategoriesService } from './../../services/category/filter-categories.service';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
@@ -49,7 +48,7 @@ export class SidebarComponent
   /**
    * Event handler: adds a new category
    */
-  onAddButtonClicked() 
+  handleAddButtonClicked() 
   { 
     if (this.invalidCategoryId == null && this.invalidNoteId == null)
       this.addService.execute(); 

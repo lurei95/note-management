@@ -1,4 +1,4 @@
-import { coalesce, clone } from 'src/app/util/utility';
+import { coalesce, clone, maxDate, minDate } from 'src/app/util/utility';
 import { nullOrEmpty, truncate } from "./utility";
 
 describe("nullOrEmpty", () =>
@@ -85,4 +85,16 @@ describe("clone", () =>
     expect(result.propertyA).toBe("test");
     expect(result.propertyB).toBe(12);
   });
+});
+
+describe("maxDate", () => 
+{
+  it("maxDate returns the maximum date value", () => 
+  { expect(maxDate()).toEqual(new Date(8640000000000000)); });
+});
+
+describe("minDate", () => 
+{
+  it("minDate returns the minimum date value", () => 
+  { expect(minDate()).toEqual(new Date(-8640000000000000)); });
 });

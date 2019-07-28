@@ -75,7 +75,7 @@ export class NotePanelComponent
   /**
    * Event handler: adds a new note
    */
-  onAddButtonClicked() 
+  handleAddButtonClicked() 
   { 
     if (this.invalidCategoryId == null && this.invalidNoteId == null)
       this.addService.execute(this.selectedCategory.id); 

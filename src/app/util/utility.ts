@@ -44,3 +44,17 @@ export function clone<TObject>(object: TObject, type: (new () => TObject)): TObj
   let copy: TObject = Object.assign(new type(), object);
   return copy;
 }
+
+/**
+ * Returns the minimum possible date value
+ * 
+ * @returns {Date} The minimum possible date value
+ */
+export function minDate(): Date { return new Date(-8640000000000000); }
+
+/**
+ * Returns the maximum possible date value
+ * 
+ * @returns {Date} The maximum possible date value
+ */
+export function maxDate(): Date { return new Date(8640000000000000); }

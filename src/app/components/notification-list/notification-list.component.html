@@ -1,7 +1,7 @@
 <div class="list-container">
     <div class="list-item" *ngFor="let notification of notifications" [@simpleFadeAnimation]="'in'">
         <div class="item-content" >{{ notification.message }}</div>
-        <button (click)="removeItem(notification)">
+        <button (click)="handleRemoveButtonClicked(notification)">
             <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>

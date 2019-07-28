@@ -1,25 +1,25 @@
 <div [className]="isSelected ? 'selected' : 'normal'" 
-    (click)="onCategoryClicked()" #container>
+    (click)="handleCategoryClicked()" #container>
     <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
         [readonly]="!editMode"
         style="grid-column: 1; grid-row: 1" 
         [(ngModel)] ="category.title" 
-        (focusout)=onFocusLeaving()
-        (input)="onTitleChanged()" 
+        (focusout)=handleFocusLeaving()
+        (input)="handleTitleChanged()" 
         (keydown.enter)="handleSaveShortcut()"
         (keydown.control.s)="handleSaveShortcut($event)"
         placeholder="{{titleError == null ? Titel : titleError}}"
         #titleInput>
     <button *ngIf="editMode"
         style="grid-column: 2; grid-row: 1" 
-        (click)="onDeleteButtonClicked()" 
-        (pointerenter)="onPointerEnter()" 
-        (pointerleave)="onPointerLeave()">
+        (click)="handleDeleteButtonClicked()" 
+        (pointerenter)="handlePointerEnter()" 
+        (pointerleave)="handlePointerLeave()">
         <i class="fa fa-times"></i>
     </button>
     <button class="editButton" *ngIf="!editMode" #editButton
         style="grid-column: 2; grid-row: 1" 
-        (click)="onEditButtonClicked()">
+        (click)="handleEditButtonClicked()">
         <i class="fas fa-pencil-alt" aria-hidden="true"></i>
     </button>
 </div>

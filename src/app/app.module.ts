@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store'
-import { SearchBoxComponent } from './components/filter-input/filter-input.component';
+import { FilterInputComponent } from './components/filter-input/filter-input.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-panel/note-panel.component';
@@ -47,7 +47,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBoxComponent,
+    FilterInputComponent,
     HeaderBarComponent,
     SidebarComponent,
     NotePanelComponent,

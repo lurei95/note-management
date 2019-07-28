@@ -11,9 +11,7 @@ import { NoteModel } from 'src/app/models/noteModel';
 import { Store } from '@ngrx/store';
 import { IApplicationState } from 'src/app/redux/state';
 import { MessageKind } from 'src/app/messageKind';
-import { DialogInformation } from '../dialogInformation';
 import { DialogResult } from '../dialogResult';
-import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 
 /**
@@ -37,6 +35,12 @@ export class NoteDialogComponent extends NoteComponentBase
    * Seperator key codes for the tag control
    */
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  private _now: Date = new Date();
+  /**
+   * @returns {Date} The current date
+   */
+  get now(): Date { return this._now; }
 
   private _isExpanded: boolean;
   /**
@@ -65,9 +69,22 @@ export class NoteDialogComponent extends NoteComponentBase
   }
 
   /**
+   * Focuses the title input if the note is currently edited
+   */
+  ngAfterViewInit() 
+  {
+    setTimeout(() =>
+    {
+      if(this.titleInput != null)
+      this.titleInput.nativeElement.focus();
+    }, 400);
+    this.calculateEditorHeight();
+  }
+
+  /**
    * Event handler: expands or shrinks the dialog
    */
-  onExpandButtonClicked() 
+  handleExpandButtonClicked() 
   { 
     this._isExpanded = !this._isExpanded; 
     this.calculateEditorHeight();
@@ -78,7 +95,7 @@ export class NoteDialogComponent extends NoteComponentBase
    * 
    * @param {Event} e The event
    */
-  onCloseButtonClicked(e: Event) 
+  handleCloseButtonClicked(e: Event) 
   { 
     if(e != null)
     {
@@ -91,7 +108,7 @@ export class NoteDialogComponent extends NoteComponentBase
       let text = this.localizationService.execute(MessageKind.NoteSaveChangesDialogText);
       let title = this.localizationService.execute(MessageKind.NoteSaveChangesDialogTitle);
       this.dialogService.execute(title, text, [DialogResult.Yes, DialogResult.No, DialogResult.Cancel], 
-        result => this.onSaveChangesDialogFinished(result));
+        result => this.handleSaveChangesDialogFinished(result));
     }
     else
       this.tryCloseDialog(false); 
@@ -131,20 +148,12 @@ export class NoteDialogComponent extends NoteComponentBase
   }
 
   /**
-   * Focuses the title input if the note is currently edited
+   * Event handler: Sets the due date of the note
    */
-  ngAfterViewInit() 
-  {
-    setTimeout(() =>
-    {
-      if(this.titleInput != null)
-      this.titleInput.nativeElement.focus();
-    }, 400);
-    this.calculateEditorHeight();
-  }
+  handleDateChanged(date: Date) { this.model.dueDate = date; }
 
   /**
-   * Tries saving the changes and closing the dialog
+   * Event handler: Tries saving the changes and closing the dialog
    */
   handleSaveAndCloseShortcut() { this.tryCloseDialog(); }
 
@@ -161,7 +170,7 @@ export class NoteDialogComponent extends NoteComponentBase
     });
   }
 
-  private onSaveChangesDialogFinished(result: string)
+  private handleSaveChangesDialogFinished(result: string)
   {
     if (result == DialogResult.Yes)
       this.tryCloseDialog();

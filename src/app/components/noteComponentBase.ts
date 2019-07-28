@@ -67,7 +67,7 @@ export abstract class NoteComponentBase extends EditableComponent<NoteModel>
   /**
    * Event handler: validates the note to reset the error when the title is changed
    */
-  onTitleChanged() { this.validateModel(); }
+  handleTitleChanged() { this.validateModel(); }
 
   /**
    * Method for handling the validation result of the model

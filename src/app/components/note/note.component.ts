@@ -4,7 +4,6 @@ import { LocalizationService } from './../../services/localization.service';
 import { ValidateNoteService } from './../../services/note/validate-note.service';
 import { SaveNoteService } from '../../services/note/save-note.service';
 import { DialogResult } from '../dialogs/dialogResult';
-import { MessageDialogComponent } from '../dialogs/message-dialog/message-dialog.component';
 import { Component } from '@angular/core';
 import { DeleteNoteService } from 'src/app/services/note/delete-note.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +13,6 @@ import { NoteComponentBase } from '../noteComponentBase';
 import { MessageKind } from 'src/app/messageKind';
 import { IApplicationState } from 'src/app/redux/state';
 import { Store } from '@ngrx/store';
-import { DialogInformation } from '../dialogs/dialogInformation';
 
 /**
  * Component for displaying and editing a note
@@ -64,36 +62,36 @@ export class NoteComponent extends NoteComponentBase
   /**
    * Event handler: deletes the note
    */
-  onDeleteButtonClicked() 
+  handleDeleteButtonClicked() 
   {
     let text = this.localizationService.execute(MessageKind.DeleteNoteDialogText, 
       {title: coalesce(this.note.title)});
     let title = this.localizationService.execute(MessageKind.DeleteNoteDialogTitle);
     this.dialogService.execute(title, text, [DialogResult.Delete, DialogResult.Cancel], 
-      result => this.onDeleteDialogFinished(result));
+      result => this.handleDeleteDialogFinished(result));
   }
 
   /**
    * Event handler: pointer is over the component
    */
-  onPointerEnter() { this.isPointingOver = true; }
+  handlePointerEnter() { this.isPointingOver = true; }
 
   /**
    * Event handler: pointer is not over the component
    */
-  onPointerLeave() { this.isPointingOver = false; }
+  handlePointerLeave() { this.isPointingOver = false; }
 
   /**
    * Event handler: tries to save the changes to the note on leaving focus
    */
-  onFocusLeaving() 
+  handleFocusLeaving() 
   {
     if (this.isPointingOver)
       return;
     this.trySaveChanges();
   }
 
-  private onDeleteDialogFinished(result: string)
+  private handleDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Delete)
       this.deleteService.execute(this.note); 

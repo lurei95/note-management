@@ -49,9 +49,8 @@ export const getNotes = (state: IApplicationState) => state.notes;
 /**
  * Returns the existing notes of the category
  */
-export const getNotesOfCategory = (state: IApplicationState, id: string) => { 
-  state.notes.filter(note => note.categoryId == id); 
-}
+export const getNotesOfCategory = (state: IApplicationState, id: string) => 
+{ return state.notes.filter(note => note.categoryId == id); }
 
 /**
  * Returns a specific note of the current state specified by its id
