@@ -12,7 +12,7 @@ import { NoteModel } from 'src/app/models/noteModel';
  * @param {NoteModel[]} state The current state
  * @param {Action} The action which changes the state
  */
-export function notesReducer(state: NoteModel[] = [], action: Action) 
+export function noteReducer(state: NoteModel[] = [], action: Action) 
 {   
   let note = (<NoteAction>action).payload;
   switch (action.type) 

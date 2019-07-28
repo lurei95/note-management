@@ -95,18 +95,18 @@ export class SelectableList<T>
    */
   removeAt(index: number)
   {
-    if (this._items.length > index)
+    if (index < 0 || index >= this._items.length)
+      return;
+
+    let item = this._items[index];
+    this._items.splice(index, 1);
+    if (this.selectedItem == item)
     {
-      let item = this._items[index];
-      this._items.splice(index, 1);
-      if (this.selectedItem == item)
-      {
-        if (this.count() > 0)
-          this.selectedItem = this._items.find(() => true);
-        else
-          this.selectedItem = null;
-      }
-    } 
+      if (this.count() > 0)
+        this.selectedItem = this._items.find(() => true);
+      else
+        this.selectedItem = null;
+    }
   }
 
   /**

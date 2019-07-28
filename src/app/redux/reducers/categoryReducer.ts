@@ -1,4 +1,4 @@
-import { SelectableList } from './../../util/selectableList';
+import { SelectableList } from '../../util/selectableList';
 import { Action } from '@ngrx/store';
 import { clone } from 'src/app/util/utility';
 import { CategoryActionKind } from '../actions/category/categoryActionKind';
@@ -13,7 +13,7 @@ import { stat } from 'fs';
  * @param {SelectableList<CategoryModel>} state The current state
  * @param {Action} The action which changes the state
  */
-export function categoriesReducer(state: SelectableList<CategoryModel> 
+export function categoryReducer(state: SelectableList<CategoryModel> 
   = new SelectableList<CategoryModel>(), action: Action) 
 {
   let newState: SelectableList<CategoryModel>;

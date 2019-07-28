@@ -125,6 +125,18 @@ describe("SelectableList", () =>
     expect(list.selectedItem).toBe(null);
   });
 
+  it("removeAt does not do anything when index out of bounds", () =>
+  {
+    let items = ["test1", "test2"];
+    let list = new SelectableList<string>(items, "test1");
+
+    list.removeAt(-1);
+    expect(list.count()).toBe(2);
+
+    list.removeAt(2);
+    expect(list.count()).toBe(2);
+  });
+
   //IndexOf
   class TestClass {
     constructor(public propertyA: string) {}

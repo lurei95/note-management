@@ -1,9 +1,9 @@
 import { CategoryModel } from './../models/categoryModel';
 import { SelectableList } from '../util/selectableList';
-import { notesReducer } from './reducers/notesReducer';
-import { categoriesReducer } from './reducers/categoriesReducer';
+import { noteReducer } from './reducers/noteReducer';
+import { categoryReducer } from './reducers/categoryReducer';
 import { NotificationModel } from 'src/app/models/notificationModel';
-import { notificationsReducer } from './reducers/notificationReducer';
+import { notificationReducer } from './reducers/notificationReducer';
 import { noteValidityReducer } from './reducers/noteValidityReducer';
 import { categoryValidityReducer } from './reducers/categoryValidityReducer';
 import { NoteModel } from '../models/noteModel';
@@ -24,9 +24,9 @@ export interface IApplicationState
  * Combination of the existing reducer functions 
  */
 export const reducers = {
-    notes: notesReducer,
-    categoryInformation: categoriesReducer,
-    notifications: notificationsReducer,
+    notes: noteReducer,
+    categoryInformation: categoryReducer,
+    notifications: notificationReducer,
     invalidCategoryId: categoryValidityReducer,
     invalidNoteId: noteValidityReducer
 }

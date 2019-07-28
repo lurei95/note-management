@@ -9,7 +9,7 @@ import { NotificationAction } from '../actions/notification/notificationAction';
  * @param {NotificationModel[]} state The current state
  * @param {Action} The action which changes the state
  */
-export function notificationsReducer(state: NotificationModel[] = [], action: Action) 
+export function notificationReducer(state: NotificationModel[] = [], action: Action) 
 {   
   let notification = (<NotificationAction>action).payload;
 
