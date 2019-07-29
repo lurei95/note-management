@@ -5,7 +5,7 @@ import { NoteModel } from '../models/noteModel';
 import { SaveServiceMock } from '../services/mocks/saveServiceMock';
 import { Dictionary } from '../util/dictionary';
 import { NoteComponentBase } from './noteComponentBase';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NoteValidityChangeAction } from '../redux/actions/note/noteValidityChangeAction';
 import { NoteActionKind } from '../redux/actions/note/noteActionKind';
 import { nullOrEmpty } from '../util/utility';

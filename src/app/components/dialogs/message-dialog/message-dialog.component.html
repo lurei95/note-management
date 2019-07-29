@@ -3,5 +3,7 @@
   <p i18n>{{data.text}}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button *ngFor="let button of buttons"  mat-button mat-dialog-close="{{button.result}}">{{button.caption}}</button>
+  <button *ngFor="let button of buttons" 
+    mat-button mat-dialog-close="{{button.result}}">{{button.caption}}
+  </button>
 </mat-dialog-actions>
