@@ -1,14 +1,12 @@
 import { EditableComponent } from './editableComponent';
-import { ElementRef, ViewChild, Input } from '@angular/core';
 import { Dictionary } from '../util/dictionary';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { clone } from '../util/utility';
 import { NoteModel } from '../models/noteModel';
-import { ValidateNoteService } from '../services/note/validate-note.service';
-import { SaveNoteService } from '../services/note/save-note.service';
 import { getInvalidNoteId, getInvalidCategoryId, IApplicationState } from '../redux/state';
 import { Store } from '@ngrx/store';
 import { NoteValidityChangeAction } from '../redux/actions/note/noteValidityChangeAction';
+import { IValidationService } from '../services/base/iValidationService';
+import { ISaveService } from '../services/base/iSaveService';
 
 export abstract class NoteComponentBase extends EditableComponent<NoteModel>
 {
@@ -38,11 +36,11 @@ export abstract class NoteComponentBase extends EditableComponent<NoteModel>
   /**
    * Constructor
    * 
-   * @param {ValidateNoteService} validationService Injected: service for validating the note
-   * @param {SaveNoteService} saveService Injected: service for saving changes to the note
+   * @param {IValidationService<NoteModel>} validationService Injected: service for validating the note
+   * @param {ISaveService<NoteModel>} saveService Injected: service for saving changes to the note
    * @param {Store<IApplicationState>} store Injected: redux store
    */
-  constructor(validationService: ValidateNoteService, saveService: SaveNoteService, 
+  constructor(validationService: IValidationService<NoteModel>, saveService: ISaveService<NoteModel>, 
     private store: Store<IApplicationState>) 
   { 
     super(validationService, saveService);

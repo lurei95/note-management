@@ -1,25 +1,23 @@
 <div [className]="isSelected ? 'selected' : 'normal'" 
-    (click)="handleCategoryClicked()" #container>
-    <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
-        [readonly]="!editMode"
-        style="grid-column: 1; grid-row: 1" 
-        [(ngModel)] ="model.title" 
-        (focusout)=handleFocusLeaving()
-        (input)="handleTitleChanged()" 
-        (keydown.enter)="handleSaveShortcut()"
-        (keydown.control.s)="handleSaveShortcut($event)"
-        placeholder="{{titleError == null ? Titel : titleError}}"
-        #titleInput>
-    <button *ngIf="editMode"
-        style="grid-column: 2; grid-row: 1" 
-        (click)="handleDeleteButtonClicked()" 
-        (pointerenter)="handlePointerEnter()" 
-        (pointerleave)="handlePointerLeave()">
-        <i class="fa fa-times"></i>
-    </button>
-    <button class="editButton" *ngIf="!editMode" #editButton
-        style="grid-column: 2; grid-row: 1" 
-        (click)="handleEditButtonClicked()">
-        <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-    </button>
+  (click)="handleCategoryClicked()" #container>
+  <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
+    [readonly]="!editMode"
+    [(ngModel)] ="model.title" 
+    (focusout)=handleFocusLeaving()
+    (input)="handleTitleChanged()" 
+    (keydown.enter)="handleSaveShortcut()"
+    (keydown.control.s)="handleSaveShortcut($event)"
+    placeholder="{{titleError == null ? Titel : titleError}}"
+    #titleInput>
+  <button *ngIf="editMode"
+    (click)="handleDeleteButtonClicked()" 
+    (pointerenter)="handlePointerEnter()" 
+    (pointerleave)="handlePointerLeave()">
+    <i class="fa fa-times"></i>
+  </button>
+  <button class="editButton" 
+    *ngIf="!editMode" #editButton
+    (click)="handleEditButtonClicked()">
+    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+  </button>
 </div>

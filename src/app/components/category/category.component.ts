@@ -6,7 +6,7 @@ import { DeleteCategoryService } from 'src/app/services/category/delete-category
 import { EditableComponent } from '../editableComponent';
 import { Store } from '@ngrx/store';
 import { DialogResult } from '../dialogs/dialogResult';
-import { clone, coalesce } from 'src/app/util/utility';
+import { coalesce } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';
@@ -66,7 +66,6 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    * @param {DeleteCategoryService} deleteService Injected: service for deleting the category
    * @param {SaveCategoryService} saveService Injected: service for savin the changes of the category
    * @param {Store<IApplicationState>} store Injected: redux store
-   * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
