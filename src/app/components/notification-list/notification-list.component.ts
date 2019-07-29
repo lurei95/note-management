@@ -1,8 +1,10 @@
-import { NotificationModel } from './../../models/notificationModel';
+import { NotificationModel, NotificationKind } from './../../models/notificationModel';
 import { Component} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';
 import { IApplicationState, getNotifications } from 'src/app/redux/state';
+import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
+import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
 
 /**
  * Component for showing notifications
@@ -31,7 +33,7 @@ export class NotificationListComponent
    * 
    * @param {Store<IApplicationState>} store Injected: redux store
    */
-  constructor(store: Store<IApplicationState>) 
+  constructor(private store: Store<IApplicationState>) 
   { 
     store.select(getNotifications).subscribe(
       (x: NotificationModel[]) => this.handleNotificationsChanged(x)); 
@@ -45,7 +47,30 @@ export class NotificationListComponent
   handleRemoveButtonClicked(item: NotificationModel)
   {
     const index = this.notifications.findIndex(notification => notification.id == item.id);
-    this.notifications.splice(index, 1);
+    if (index >= 0)
+    {
+      let notification: NotificationModel = this.notifications.splice(index, 1)[0];
+      this.store.dispatch(
+        new NotificationAction(NotificationActionKind.NotificationRemove, notification));
+    }
+  }
+
+  /**
+   * Calculates the css class of the items based on the notifications NotificationKind
+   * 
+   * @param {NotificationModel} notification The notification
+   */
+  calculateClass(notification: NotificationModel)
+  {
+    switch (notification.notificationKind)
+    {
+      case NotificationKind.Error:
+        return "list-item error";
+      case NotificationKind.Warning:
+        return "list-item warning";
+      default:
+        return "list-item success"
+    }
   }
 
   private handleNotificationsChanged(notifications: NotificationModel[])

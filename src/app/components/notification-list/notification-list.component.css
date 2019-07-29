@@ -20,6 +20,18 @@
     background-color: var(--themeGreen);
 }
 
+.list-item.success {
+  background-color: var(--themeGreen);
+}
+
+.list-item.error {
+  background-color: var(--themeRed);
+}
+
+.list-item.warning {
+  background-color: var(--themeYellow);
+}
+
 .item-content {
     padding: 9px;
 }
