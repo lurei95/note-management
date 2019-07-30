@@ -2,7 +2,6 @@ import { CategoryValidityChangeAction } from './../../redux/actions/category/cat
 import { getInvalidCategoryId } from './../../redux/state';
 import { CategoryAction } from './../../redux/actions/category/categoryAction';
 import { CategoryModel } from './../../models/categoryModel';
-import { SaveCategoryService } from './save-category.service';
 import { LocalizationServiceMock } from '../mocks/localizationServiecMock';
 import { NotificationServiceMock } from '../mocks/notificationServiceMock';
 import { StoreMock } from '../mocks/storeMock';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoteComponent } from './note.component';
 
-describe('CategoryComponent', () => {
+describe('NoteComponent', () => {
   let component: NoteComponent;
   let fixture: ComponentFixture<NoteComponent>;
 

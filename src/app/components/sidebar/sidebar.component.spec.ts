@@ -1,6 +1,4 @@
 import { MessageDialogService } from './../../services/message-dialog.service';
-import { SaveServiceMock } from './../../services/mocks/saveServiceMock';
-import { LocalizationServiceMock } from './../../services/mocks/localizationServiecMock';
 import { LocalizationService } from './../../services/localization.service';
 import { getInvalidCategoryId, getInvalidNoteId, getCategories, getSelectedCatgeory } from 'src/app/redux/state';
 import { CategoryModel } from './../../models/categoryModel';

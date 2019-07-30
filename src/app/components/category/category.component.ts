@@ -33,6 +33,11 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   private invalidCategoryId: string;
   private invalidNoteId: string;
 
+  /**
+   * @returns {string} The title of the model
+   */
+  get title(): string { return coalesce(this.model.title); }
+
   private _titleError: string;
   /**
    * @returns {string} The error message for the title of the note
@@ -45,14 +50,14 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
    */
   get isSelected(): boolean { return this._isSelected; }
 
-  private _editMode: boolean;
+  private _editMode: boolean = false;
   /**
    * @param {boolean} value Whether the component is in edit mode
    */
   set editMode (value: boolean)
   {
     this._editMode = value;
-    if(this.editMode)
+    if (this.editMode)
       this.titleInput.nativeElement.focus();
   }
   /**
@@ -105,12 +110,10 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   /**
    * Event handler: validates the category to reset the error when the title is changed
    */
-  handleTitleChanged() 
+  handleTitleChanged(value: string) 
   { 
-    if (this.validateModel() && this.invalidCategoryId == this.model.id)
-      this.store.dispatch(new CategoryValidityChangeAction(null));
-    else
-      this.store.dispatch(new CategoryValidityChangeAction(this.model.id));
+    this.model.title = value;
+    this.validateModel() 
   }
 
   /**
@@ -194,6 +197,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
       this.model.isEditing = false;
       if (this.invalidCategoryId == this.model.id)
         this.store.dispatch(new CategoryValidityChangeAction(null));
+      this._titleError = null;
       return true;
     }
   }

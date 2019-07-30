@@ -2,9 +2,9 @@
   (click)="handleCategoryClicked()" #container>
   <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
     [readonly]="!editMode"
-    [(ngModel)] ="model.title" 
+    [value] ="title" 
     (focusout)=handleFocusLeaving()
-    (input)="handleTitleChanged()" 
+    (input)="handleTitleChanged($event.target.value)" 
     (keydown.enter)="handleSaveShortcut()"
     (keydown.control.s)="handleSaveShortcut($event)"
     placeholder="{{titleError == null ? Titel : titleError}}"
