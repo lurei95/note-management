@@ -1,15 +1,15 @@
 <div class="grid">
-    <div id="topBar">
-        <label class="categoryLabel">{{title}}</label>
-        <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
-        <button class="addButton" 
-            (click)="handleAddButtonClicked()">
-            <i class="fa fa-plus"></i>
-        </button>
-    </div>
-    <hr>
-    <div class="panel">
-        <app-note *ngFor="let note of filteredNotes;" [model]="note">
-        </app-note>    
-    </div>
+  <div id="topBar">
+    <label class="categoryLabel">{{title}}</label>
+    <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
+    <button class="addButton" 
+      (click)="handleAddButtonClicked()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <hr>
+  <div class="panel">
+    <app-note *ngFor="let note of filteredNotes;" [model]="note">
+    </app-note>    
+  </div>
 </div>

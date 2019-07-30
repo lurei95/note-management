@@ -1,12 +1,15 @@
 import { FilterCategoriesService } from '../category/filter-categories.service';
 import { CategoryModel } from 'src/app/models/categoryModel';
 
+/**
+ * Mock service for {@link FilterCategoriesService}
+ */
 export class FilterCategoriesServiceMock extends FilterCategoriesService
 {
   /**
    * The categories the service was called with
    */
-  categories: CategoryModel[];
+  categories: CategoryModel[] = [];
   /**
    * The filterText the service was called with
    */

@@ -19,7 +19,7 @@ import { NoteModel } from 'src/app/models/noteModel';
 })
 export class NotePanelComponent
 {
-  private notes: NoteModel[];
+  private notes: NoteModel[] = [];
   private filterText: string;
   private selectedCategory: CategoryModel;
   private invalidCategoryId: string;
@@ -49,9 +49,8 @@ export class NotePanelComponent
     private addService: AddNoteService, store: Store<IApplicationState>, 
     private filterService: FilterNotesService) 
   {
-    store.select(getNotes).subscribe(
-      (x: NoteModel[]) => this.handleNotesChanged(x));
-    store.select(state => getSelectedCatgeory(state)).subscribe(
+    store.select(getNotes).subscribe((x: NoteModel[]) => this.handleNotesChanged(x));
+    store.select(getSelectedCatgeory).subscribe(
       (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
     store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
