@@ -1,23 +1,28 @@
 <div class="test" 
-    (focusout)=handleFocusLeaving()
-    (keydown.control.s)="handleSaveShortcut($event)"
-    (dblclick)="openEditDialog()"
-    (doubleTap)="openEditDialog()">
-    <div class="headerLine">
-        <input i18n-placeholder [className]="titleError == null ? 'hiddenInput' : 'invalid'"
-            type="text" 
-            (pointerenter)="handlePointerEnter()" 
-            (pointerleave)="handlePointerLeave()"
-            placeholder="{{titleError == null ? Titel : titleError}}"
-            (input)="validateModel()"  
-            (keydown.enter)="handleSaveShortcut()"
-            [(ngModel)] ="model.title" #titleInput/>
-        <button (click)="handleDeleteButtonClicked()">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
-    </div>
-    <hr>
-    <div id="textAreaDiv">
-        <ckeditor id="textEditor" disabled="true" [(ngModel)]="model.text" [config]="{toolbar: []}" [editor]="editor"></ckeditor>
-    </div>
+  (focusout)=handleFocusLeaving()
+  (keydown.control.s)="handleSaveShortcut($event)"
+  (dblclick)="openEditDialog()"
+  (doubleTap)="openEditDialog()">
+  <div class="headerLine">
+    <input i18n-placeholder [className]="titleError == null ? 'hiddenInput' : 'invalid'"
+      type="text" 
+      (pointerenter)="handlePointerEnter()" 
+      (pointerleave)="handlePointerLeave()"
+      placeholder="{{titleError == null ? Titel : titleError}}"
+      (input)="validateModel()"  
+      (keydown.enter)="handleSaveShortcut()"
+      [(ngModel)] ="model.title" #titleInput/>
+    <button (click)="handleDeleteButtonClicked()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+  <hr>
+  <div id="textAreaDiv">
+    <ckeditor id="textEditor" 
+      disabled="true" 
+      [(ngModel)]="model.text" 
+      [config]="{toolbar: []}" 
+      [editor]="editor">
+    </ckeditor>
+  </div>
 </div>

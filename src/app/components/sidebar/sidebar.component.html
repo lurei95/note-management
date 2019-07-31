@@ -1,11 +1,12 @@
 <div id="container">
-    <div id="searchArea">
-        <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
-        <button class="addButton" 
-            (click)="handleAddButtonClicked()">
-            <i class="fa fa-plus"></i>
-        </button>
-    </div>
-    <app-category *ngFor="let category of filteredCategories;" [model]="category">
-    </app-category>
+  <div id="searchArea">
+    <app-filter-input (textChanged)="handleFilterTextChanged($event)"></app-filter-input>
+    <button class="addButton" 
+      (click)="handleAddButtonClicked()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <app-category *ngFor="let category of filteredCategories;" 
+    [model]="category">
+  </app-category>
 </div>

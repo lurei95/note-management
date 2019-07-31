@@ -28,10 +28,10 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
 {
   @ViewChild("titleInput", {static: false}) private titleInput: ElementRef;
 
-  private isButtonPointingOver: boolean;
-  private selectedCategory: CategoryModel;
-  private invalidCategoryId: string;
-  private invalidNoteId: string;
+  private isButtonPointingOver: boolean = false;
+  private selectedCategory: CategoryModel = null;
+  private invalidCategoryId: string = null;
+  private invalidNoteId: string = null;
 
   /**
    * @returns {string} The title of the model

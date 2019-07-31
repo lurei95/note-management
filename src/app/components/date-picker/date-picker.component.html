@@ -1,17 +1,17 @@
 <div id="container">
-    <input id="dateInput" 
-      [min]="minDate" [max]="maxDate"
-      [value]="selectedDate"
-      [matDatepicker]="picker" 
-      class="hiddenInput" 
-      (dateInput)="handleDateChange($event.target.value)" 
-      (dateChange)="handleDateChange($event.target.value)" 
-      placeholder="Choose a date">
-    <mat-datepicker-toggle id="toggle" 
-      matSuffix [for]="picker">
-    </mat-datepicker-toggle>
-    <mat-datepicker [startView]="startView" 
-      id="datePicker"
-      [startAt]="startDate" #picker>
-    </mat-datepicker>
+  <input id="dateInput" 
+    [min]="minDate" [max]="maxDate"
+    [value]="selectedDate"
+    [matDatepicker]="picker" 
+    class="hiddenInput" 
+    (dateInput)="handleDateChange($event.target.value)" 
+    (dateChange)="handleDateChange($event.target.value)" 
+    placeholder="Choose a date">
+  <mat-datepicker-toggle id="toggle" 
+    matSuffix [for]="picker">
+  </mat-datepicker-toggle>
+  <mat-datepicker [startView]="startView" 
+    id="datePicker"
+    [startAt]="startDate" #picker>
+  </mat-datepicker>
 </div>

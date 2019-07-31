@@ -59,8 +59,8 @@ describe('DeleteNoteService', () =>
 
     service.execute(model);
 
-    expect(localizationService.name).toBe(MessageKind.DeleteNoteMessage);
-    expect(localizationService.parameter).toEqual({ title: "" });
+    expect(localizationService.names[0]).toBe(MessageKind.DeleteNoteMessage);
+    expect(localizationService.parameters[0]).toEqual({ title: "" });
     expect(notificationService.successMessage).toBe("test-notification");
   });
 
@@ -71,6 +71,6 @@ describe('DeleteNoteService', () =>
 
     service.execute(model);
 
-    expect(localizationService.parameter).toEqual({ title: "test-title..." });
+    expect(localizationService.parameters[0]).toEqual({ title: "test-title..." });
   });
 });

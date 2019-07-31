@@ -31,7 +31,7 @@ describe('ValidateNoteService', () =>
     const result = service.execute(model);
 
     expect(result.keys.length).toBe(1);
-    expect(mockService.name).toBe(MessageKind.RequiredField);
+    expect(mockService.names[0]).toBe(MessageKind.RequiredField);
     expect(result["title"]).toBe("test-error");
   });
 });

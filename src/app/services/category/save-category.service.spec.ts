@@ -40,8 +40,8 @@ describe('SaveCategoryService', () =>
 
     service.execute(model);
 
-    expect(localizationService.name).toBe(MessageKind.SaveCategoryMessage);
-    expect(localizationService.parameter).toEqual({ title: "test-title" });
+    expect(localizationService.names[0]).toBe(MessageKind.SaveCategoryMessage);
+    expect(localizationService.parameters[0]).toEqual({ title: "test-title" });
     expect(notificationService.successMessage).toBe("test-notification");
   });
 
@@ -52,6 +52,6 @@ describe('SaveCategoryService', () =>
 
     service.execute(model);
 
-    expect(localizationService.parameter).toEqual({ title: "test-title..." });
+    expect(localizationService.parameters[0]).toEqual({ title: "test-title..." });
   });
 });

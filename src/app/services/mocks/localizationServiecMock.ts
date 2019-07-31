@@ -8,11 +8,11 @@ export class LocalizationServiceMock extends LocalizationService
   /**
    * Name passed to the service
    */
-  name: string;
+  names: string[] = [];
   /**
    * Interpolate parameters passed to the service
    */
-  parameter: Object;
+  parameters: Object[] = [];
   /**
    * The value the service should return
    */
@@ -32,8 +32,8 @@ export class LocalizationServiceMock extends LocalizationService
    */
   execute(name: string, parameter?: Object): string 
   {
-    this.name = name;
-    this.parameter = parameter;
+    this.names.push(name);
+    this.parameters.push(parameter);
     return this.returnValue;
   }
 }

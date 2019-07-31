@@ -8,6 +8,11 @@ import { TemplateRef } from '@angular/core';
 export class MatDialogMock extends MatDialog
 {
   /**
+   * Whether the dialog was opened
+   */
+  wasOpened: boolean = false;
+
+  /**
    * Constructor
    */
   constructor() { super(null, null, null, null, null, null, null); }
@@ -21,5 +26,8 @@ export class MatDialogMock extends MatDialog
    */
   open<T, D = any, R = any>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, 
     config?: MatDialogConfig<D>): MatDialogRef<T, R>
-  { return null; }
+  {
+    this.wasOpened = true; 
+    return null; 
+  }
 }

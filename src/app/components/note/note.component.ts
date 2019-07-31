@@ -1,5 +1,4 @@
 import { MessageDialogService } from './../../services/message-dialog.service';
-import { NoteModel } from 'src/app/models/noteModel';
 import { LocalizationService } from './../../services/localization.service';
 import { ValidateNoteService } from './../../services/note/validate-note.service';
 import { SaveNoteService } from '../../services/note/save-note.service';
@@ -7,7 +6,7 @@ import { DialogResult } from '../dialogs/dialogResult';
 import { Component } from '@angular/core';
 import { DeleteNoteService } from 'src/app/services/note/delete-note.service';
 import { MatDialog } from '@angular/material/dialog';
-import { clone, coalesce } from 'src/app/util/utility';
+import { coalesce } from 'src/app/util/utility';
 import { NoteDialogComponent } from '../dialogs/note-dialog/note-dialog.component';
 import { NoteComponentBase } from '../noteComponentBase';
 import { MessageKind } from 'src/app/messageKind';

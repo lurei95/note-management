@@ -1,3 +1,4 @@
+import { SaveServiceMock } from './../../services/mocks/saveServiceMock';
 import { CategoryAction } from './../../redux/actions/category/categoryAction';
 import { DeleteServiceMock } from './../../services/mocks/deleteServiceMock';
 import { ValidateNoteService } from './../../services/note/validate-note.service';
@@ -20,12 +21,12 @@ import { CategoryValidityChangeAction } from 'src/app/redux/actions/category/cat
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { nullOrEmpty } from 'src/app/util/utility';
 import { DialogResult } from '../dialogs/dialogResult';
-import { By } from '@angular/platform-browser';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
   let validationService: ValidationServiceMock<NoteModel>
+  let saveService: SaveServiceMock<CategoryModel>;
   let deleteService: DeleteServiceMock<CategoryModel>;
   let category: CategoryModel;
   let storeMock: StoreMock;
@@ -36,6 +37,7 @@ describe('CategoryComponent', () => {
   beforeEach(async(() => 
   {
     validationService = new ValidationServiceMock<NoteModel>();
+    saveService = new SaveServiceMock<CategoryModel>();
     deleteService = new DeleteServiceMock<CategoryModel>();
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
@@ -59,7 +61,7 @@ describe('CategoryComponent', () => {
         { provide: Store, useValue: storeMock },
         { provide: ValidateNoteService, useValue: validationService },
         { provide: LocalizationService, useValue: { } },
-        { provide: SaveCategoryService, useValue: { } },
+        { provide: SaveCategoryService, useValue: saveService },
         { provide: MessageDialogService, useValue: { } },
         { provide: DeleteCategoryService, useValue: deleteService },
       ],
@@ -159,7 +161,7 @@ describe('CategoryComponent', () => {
     expect(deleteService.parameter).toBe(category);
   });
 
-  it("handleDeleteDialogFinished does not execute the delete service when then result was not to delete", () => 
+  it("handleDeleteDialogFinished does not execute the delete service when then result was cancel", () => 
   {
     component.editMode = true;
 
@@ -199,7 +201,37 @@ describe('CategoryComponent', () => {
     selectedCategory.next(category);
     selectedCategory.next(new CategoryModel("2"));
 
-
     expect(component.isSelected).toBe(false);
+  });
+
+  it("does save changes on focus leaving", () => 
+  {
+    component.editMode = true;
+    let spy = spyOn<any>(component, "trySaveChanges");
+
+    component.handleFocusLeaving();
+ 
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it("does not save changes on focus leaving when not in edit mode", () => 
+  {
+    component.editMode = false;
+    let spy = spyOn<any>(component, "trySaveChanges");
+
+    component.handleFocusLeaving();
+ 
+    expect(spy.calls.count()).toBe(0);
+  });
+
+  it("does not save changes on focus leaving when pointer still over component", () => 
+  {
+    component.editMode = true;
+    component.handlePointerEnter();
+    let spy = spyOn<any>(component, "trySaveChanges");
+
+    component.handleFocusLeaving();
+ 
+    expect(spy.calls.count()).toBe(0);
   });
 });

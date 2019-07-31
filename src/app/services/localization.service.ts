@@ -1,6 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
-import { IServiceBase } from './base/iServiceBase';
 
 /**
  * Service for retrieving a localized string

@@ -39,8 +39,8 @@ describe('SaveNoteService', () =>
 
     service.execute(model);
 
-    expect(localizationService.name).toBe(MessageKind.SaveNoteMessage);
-    expect(localizationService.parameter).toEqual({ title: "test-title" });
+    expect(localizationService.names[0]).toBe(MessageKind.SaveNoteMessage);
+    expect(localizationService.parameters[0]).toEqual({ title: "test-title" });
     expect(notificationService.successMessage).toBe("test-notification");
   });
 
@@ -51,6 +51,6 @@ describe('SaveNoteService', () =>
 
     service.execute(model);
 
-    expect(localizationService.parameter).toEqual({ title: "test-title..." });
+    expect(localizationService.parameters[0]).toEqual({ title: "test-title..." });
   });
 });
