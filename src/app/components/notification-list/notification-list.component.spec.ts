@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationListComponent } from './notification-list.component';
 import { StoreMock } from 'src/app/services/mocks/storeMock';
-import { NotificationModel, NotificationKind } from 'src/app/models/notificationModel';
+import { NotificationModel } from 'src/app/models/notificationModel';
+import { NotificationKind } from 'src/app/models/notificationKind';
 import { getNotifications } from 'src/app/redux/state';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';

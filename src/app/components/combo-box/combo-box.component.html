@@ -1,0 +1,6 @@
+<mat-select class="hiddenInput" [(value)]="selectedValue">
+  <mat-option *ngFor="let option of options;" 
+    [value]="option.editValue">
+    {{option.displayValue}}
+  </mat-option>
+</mat-select>

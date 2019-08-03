@@ -25,6 +25,12 @@ export class NotePanelComponent
   private invalidCategoryId: string;
   private invalidNoteId: string;
 
+  private _retrievingNotes: boolean = false;
+  /**
+   * @returns {boolean} Whether notes are currently retrieved
+   */
+  get retrievingNotes() { return this._retrievingNotes; }
+
   private _filteredNotes: NoteModel[];
   /**
    * @returns {NoteModel[]} A list of notes filtered by the search text
@@ -34,7 +40,8 @@ export class NotePanelComponent
   /**
    * @returns {string} The title of the selected category
    */
-  get title(): string { return coalesce(this.selectedCategory.title, ""); }
+  get title(): string 
+  { return this.selectedCategory == null ? "" : coalesce(this.selectedCategory.title, ""); }
 
   /**
    * Constructor
@@ -88,8 +95,10 @@ export class NotePanelComponent
 
   private handleSelectedCategoryChanged(category: CategoryModel) 
   {
+    this._retrievingNotes = true;
     this.selectedCategory = category;
     this.filterNotes();
+    setTimeout(() => this._retrievingNotes = false, 1000)
   }
 
   private filterNotes() 

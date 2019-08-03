@@ -6,8 +6,7 @@ import { DeleteServiceMock } from './../../services/mocks/deleteServiceMock';
 import { ValidateNoteService } from './../../services/note/validate-note.service';
 import { MessageDialogService } from './../../services/message-dialog.service';
 import { LocalizationService } from './../../services/localization.service';
-import { getInvalidCategoryId, getInvalidNoteId, getSelectedCatgeory } from 'src/app/redux/state';
-import { CategoryModel } from './../../models/categoryModel';
+import { getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { StoreMock } from './../../services/mocks/storeMock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -22,6 +21,9 @@ import { SaveNoteService } from 'src/app/services/note/save-note.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MessageKind } from 'src/app/messageKind';
 import { SaveServiceMock } from 'src/app/services/mocks/saveServiceMock';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 describe('NoteComponent', () => {
   let component: NoteComponent;
@@ -58,7 +60,7 @@ describe('NoteComponent', () => {
     }
 
     TestBed.configureTestingModule({
-      imports: [ CKEditorModule, FormsModule ],
+      imports: [ CKEditorModule, FormsModule, MatExpansionModule, BrowserAnimationsModule ],
       declarations: [ NoteComponent ],
       providers: [
         { provide: Store, useValue: storeMock },
@@ -86,7 +88,7 @@ describe('NoteComponent', () => {
 
   it('openEditDialog opens the dialog if no invalid category or note exist', () => 
   {
-    component.openEditDialog();
+    component.openEditDialog(new Event("test"));
 
     expect(dialogMock.wasOpened).toBe(true);
   });
@@ -94,7 +96,7 @@ describe('NoteComponent', () => {
   it('openEditDialog opens the dialog if no invalid note is current node', () => 
   {
     invalidNoteId.next("1");
-    component.openEditDialog();
+    component.openEditDialog(new Event("test"));
 
     expect(dialogMock.wasOpened).toBe(true);
   });
@@ -102,15 +104,15 @@ describe('NoteComponent', () => {
   it('openEditDialog does not open the dialog if invalid category or note exist', () => 
   {
     invalidCategoryId.next("1");
-    component.openEditDialog();
+    component.openEditDialog(new Event("test"));
     expect(dialogMock.wasOpened).toBe(false);
 
     invalidNoteId.next("2");
-    component.openEditDialog();
+    component.openEditDialog(new Event("test"));
     expect(dialogMock.wasOpened).toBe(false);
 
     invalidCategoryId.next(null);
-    component.openEditDialog();
+    component.openEditDialog(new Event("test"));
     expect(dialogMock.wasOpened).toBe(false);
   });
 
@@ -159,5 +161,52 @@ describe('NoteComponent', () => {
     component.handleFocusLeaving();
  
     expect(spy.calls.count()).toBe(0);
+  });
+
+  it("getRemainingTime returns null if dueDate is not set", () => 
+  { expect(component.getRemainingTime()).toBeNull(); });
+
+  it("getRemainingTime returns the right amount of days if dueDate is set", () => 
+  { 
+    let now = new Date();
+    note.dueDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6, now.getHours() + 1);
+    let label = fixture.debugElement.query(By.css("#remainingTimeLabel")).nativeElement;
+    fixture.detectChanges();
+
+    expect(component.getRemainingTime()).toBe("6d");
+    expect(label.innerHTML).toContain("6d");
+  });
+
+  it("getRemainingTime returns the right amount of weeks if dueDate is set", () => 
+  { 
+    let now = new Date();
+    note.dueDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 16);
+    let label = fixture.debugElement.query(By.css("#remainingTimeLabel")).nativeElement;
+    fixture.detectChanges();
+
+    expect(component.getRemainingTime()).toBe("2w");
+    expect(label.innerHTML).toContain("2w");
+  });
+
+  it("getRemainingTime returns the right amount of months if dueDate is set", () => 
+  { 
+    let now = new Date();
+    note.dueDate = new Date(now.getFullYear(), now.getMonth() + 4, now.getDay() + 16);
+    let label = fixture.debugElement.query(By.css("#remainingTimeLabel")).nativeElement;
+    fixture.detectChanges();
+
+    expect(component.getRemainingTime()).toBe("4M");
+    expect(label.innerHTML).toContain("4M");
+  });
+
+  it("getRemainingTime returns the right amount of months if dueDate is set", () => 
+  { 
+    let now = new Date();
+    note.dueDate = new Date(now.getFullYear() + 3, now.getMonth() + 4, now.getDay() + 16);
+    let label = fixture.debugElement.query(By.css("#remainingTimeLabel")).nativeElement;
+    fixture.detectChanges();
+
+    expect(component.getRemainingTime()).toBe("3y");
+    expect(label.innerHTML).toContain("3y");
   });
 });

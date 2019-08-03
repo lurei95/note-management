@@ -26,6 +26,9 @@ import { NoteModel } from 'src/app/models/noteModel';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { NotificationService } from 'src/app/services/notification/notificationService';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NotePanelComponent', () => 
 {
@@ -67,7 +70,13 @@ describe('NotePanelComponent', () =>
 
     TestBed.configureTestingModule({
       declarations: [ NotePanelComponent, FilterInputComponent, NoteComponent ],
-      imports: [ CKEditorModule, FormsModule ],
+      imports: [ 
+        CKEditorModule, 
+        FormsModule, 
+        MatProgressSpinnerModule, 
+        MatExpansionModule, 
+        BrowserAnimationsModule 
+      ],
       providers: [
         { provide: RetrieveCategoriesService, useValue: categoriesService },
         { provide: RetrieveNotesService, useValue: notesService },
@@ -88,7 +97,7 @@ describe('NotePanelComponent', () =>
   {
     fixture = TestBed.createComponent(NotePanelComponent);
     selectedCategory.next(new CategoryModel("1", "title1"));
-    notes.next([new NoteModel("1", "title1", "text1", "1"),new NoteModel("2", "title2", "text2", "1")])
+    notes.next([new NoteModel("1", "title1", "text1", "1"), new NoteModel("2", "title2", "text2", "1")])
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

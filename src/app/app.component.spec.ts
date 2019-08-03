@@ -1,3 +1,4 @@
+import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MessageDialogService } from './services/message-dialog.service';
@@ -33,19 +34,21 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './redux/state';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule } from '@angular/material/input';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        ComboBoxComponent,
         FilterInputComponent,
         HeaderBarComponent,
         SidebarComponent,
@@ -59,6 +62,8 @@ describe('AppComponent', () => {
         TagListComponent
       ],
       imports: [
+        MatSelectModule,
+        MatExpansionModule,
         HttpClientModule,
         TranslateModule.forRoot({
           loader: {
@@ -73,9 +78,8 @@ describe('AppComponent', () => {
         StoreModule.forRoot(reducers),
         FormsModule,
         BrowserAnimationsModule,
-        MatInputModule,
+        MatProgressSpinnerModule,
         MatDialogModule,
-        MatGridListModule,
         MatDatepickerModule,
         MatNativeDateModule,
         CKEditorModule,

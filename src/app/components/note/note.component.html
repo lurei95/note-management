@@ -1,28 +1,34 @@
-<div class="test" 
+<mat-expansion-panel #expansionPanel
   (focusout)=handleFocusLeaving()
   (keydown.control.s)="handleSaveShortcut($event)"
-  (dblclick)="openEditDialog()"
-  (doubleTap)="openEditDialog()">
-  <div class="headerLine">
-    <input i18n-placeholder [className]="titleError == null ? 'hiddenInput' : 'invalid'"
-      type="text" 
-      (pointerenter)="handlePointerEnter()" 
-      (pointerleave)="handlePointerLeave()"
-      placeholder="{{titleError == null ? Titel : titleError}}"
-      (input)="validateModel()"  
-      (keydown.enter)="handleSaveShortcut()"
-      [(ngModel)] ="model.title" #titleInput/>
-    <button (click)="handleDeleteButtonClicked()">
-      <i class="fa fa-times" aria-hidden="true"></i>
-    </button>
-  </div>
-  <hr>
-  <div id="textAreaDiv">
-    <ckeditor id="textEditor" 
-      disabled="true" 
-      [(ngModel)]="model.text" 
-      [config]="{toolbar: []}" 
-      [editor]="editor">
-    </ckeditor>
-  </div>
-</div>
+  (dblclick)="openEditDialog($event)"
+  (doubleTap)="openEditDialog($event)">
+  <mat-expansion-panel-header (click)="togglePanel(expansionPanel, $event)">
+    <div class="headerLine">
+      <input i18n-placeholder 
+        [className]="titleError == null ? 'hiddenInput' : 'invalid'"
+        type="text" 
+        (click)="handleInputClicked($event)"
+        (pointerenter)="handlePointerEnter()" 
+        (pointerleave)="handlePointerLeave()"
+        placeholder="{{titleError == null ? Titel : titleError}}"
+        (input)="validateModel()"  
+        (keydown.enter)="handleSaveShortcut()"
+        [(ngModel)] ="model.title" #titleInput/>
+      <label id="remainingTimeLabel">{{getRemainingTime()}}</label>
+      <button (click)="handleDeleteButtonClicked()" id="deleteButton">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+  </mat-expansion-panel-header>
+  <ng-template matExpansionPanelContent>
+    <div id="textAreaDiv">
+      <ckeditor id="textEditor" 
+        disabled="true" 
+        [(ngModel)]="model.text" 
+        [config]="{toolbar: []}" 
+        [editor]="editor">
+      </ckeditor>
+    </div>
+  </ng-template>
+</mat-expansion-panel>

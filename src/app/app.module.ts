@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FilterInputComponent } from './components/filter-input/filter-input.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -19,12 +20,10 @@ import { SaveNoteService } from './services/note/save-note.service';
 import { DeleteNoteService } from './services/note/delete-note.service';
 import { RetrieveCategoriesService } from './services/category/retrieve-categories.service';
 import { DeleteCategoryService } from './services/category/delete-category.service';
-import { MatInputModule } from '@angular/material/input';
 import { MessageDialogComponent } from './components/dialogs/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { NoteDialogComponent } from './components/dialogs/note-dialog/note-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -40,6 +39,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { reducers } from './redux/state';
 import { TagListComponent } from './components/tag-list/tag-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -58,13 +60,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     NoteDialogComponent,
     DatePickerComponent,
     NotificationListComponent,
-    TagListComponent
+    TagListComponent,
+    ComboBoxComponent
   ],
   entryComponents: [
     MessageDialogComponent, 
     NoteDialogComponent
   ],
   imports: [
+    MatSelectModule,
+    MatExpansionModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -78,10 +83,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserModule,
     StoreModule.forRoot(reducers),
     FormsModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    MatInputModule,
     MatDialogModule,
-    MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
     CKEditorModule,

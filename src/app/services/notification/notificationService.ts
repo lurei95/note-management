@@ -1,5 +1,5 @@
-import { NotificationKind } from './../../models/notificationModel';
 import { NotificationModel } from 'src/app/models/notificationModel';
+import { NotificationKind } from 'src/app/models/notificationKind';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';

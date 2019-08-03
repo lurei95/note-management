@@ -1,4 +1,5 @@
-import { NotificationModel, NotificationKind } from './../../models/notificationModel';
+import { NotificationModel } from './../../models/notificationModel';
+import { NotificationKind } from './../../models/notificationKind';
 import { Component} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';

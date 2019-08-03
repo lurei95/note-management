@@ -1,3 +1,4 @@
+import { PriorityKind } from './priorityKind';
 import { IEditableModel } from './iEditableModel';
 import { clone } from '../util/utility';
 
@@ -6,6 +7,15 @@ import { clone } from '../util/utility';
  */
 export class NoteModel implements IEditableModel<NoteModel>
 {
+  /**
+   * @returns {PriorityKind} Priority of the note
+   */
+  get priority(): PriorityKind { return this._priority; }
+  /**
+   * @param {PriorityKind} value Priority of the note
+   */
+  set priority(value: PriorityKind) { this._priority = value; }
+
   private _tags: string[] = [];
   /**
    * @returns {string[]} Tags assigned to the note
@@ -65,9 +75,11 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @param {string} _text Content of the note
    * @param {string} _categoryId ID of the category the note belongs to
    * @param {Date} _dueDate Due date of the note
+   * @param {PriorityKind} _priority Priority of the note (default: Low)
    */
   constructor(private _id?: string, private _title?: string, private _text: string = "", 
-    private _categoryId?: string, private _dueDate?: Date) 
+    private _categoryId?: string, private _dueDate?: Date, 
+    private _priority: PriorityKind = PriorityKind.Low) 
   { }
 
   /**
@@ -78,11 +90,16 @@ export class NoteModel implements IEditableModel<NoteModel>
    */
   equals(item: NoteModel): boolean 
   {
+    let time1 = this.dueDate == null ? null : this.dueDate.getTime();
+    let time2 = item.dueDate == null ? null : item.dueDate.getTime();
+
     let isEqual = this.id == item.id 
       && this.text == item.text 
       && this.title == item.title
-      && this.dueDate == item.dueDate 
-      && this.tags.length == item.tags.length;
+      && time1 == time2 
+      && this.tags.length == item.tags.length
+      && this.priority == item.priority
+      && this.categoryId == item.categoryId;
     if (!isEqual)
       return false;
 
@@ -101,6 +118,8 @@ export class NoteModel implements IEditableModel<NoteModel>
   { 
     let copy = clone<NoteModel>(this, NoteModel);
     copy.tags = [...this.tags];
+    if (this.dueDate != null)
+      copy.dueDate = new Date(this.dueDate.getTime());
     return copy;
   }
 }

@@ -1,21 +1,4 @@
-/**
- * Possible kinds of notifications 
- */
-export enum NotificationKind
-{
-  /**
-   * A success notification
-   */
-  Success,
-  /**
-   * A warning notification
-   */
-  Warning,
-  /**
-   * An error notification
-   */
-  Error
-}
+import { NotificationKind } from 'src/app/models/notificationKind';
 
 /**
  * Model for a notification message

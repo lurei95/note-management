@@ -1,6 +1,6 @@
 <mat-dialog-content id=content 
   class="mat-typography" 
-  (keydown.esc)="handleCloseButtonClicked($evtn)"
+  (keydown.esc)="handleCloseButtonClicked($event)"
   (keydown.control.s)="handleSaveShortcut($event)"
   (keydown.control.Enter)="handleSaveAndCloseShortcut()">
   <div #container id="noteContainer" 
@@ -22,15 +22,23 @@
         [(ngModel)] ="model.title" #titleInput/>
     </div>
     <div id="propertyArea" #propertyAreaDiv>
-      <label class="propertyLabel">Fällig am:</label>
+      <label class="propertyLabel" style="grid-row: 1">Fällig am:</label>
       <app-date-picker [minDate]="now" 
+        style="grid-row: 1"
         (dateChanged)="handleDateChanged($event)"
         [selectedDate] ="model.dueDate">
       </app-date-picker>
-      <label class="propertyLabel">Tags:</label>
-      <app-tag-list (tagsChanged)="handleTagsChanged($event)"
+      <label class="propertyLabel" style="grid-row: 1">Tags:</label>
+      <app-tag-list style="grid-row: 1 / 4"
+        (tagsChanged)="handleTagsChanged($event)"
         [tags]="model.tags">
       </app-tag-list>
+      <label class="propertyLabel" style="grid-row: 2">Priority:</label>
+      <app-combo-box style="grid-row: 2" 
+        (selectedValueChanged)="onPriorityChanged($event)"
+        [enumType]="priorityEnumType"
+        [selectedValue]="model.priority">
+      </app-combo-box>
     </div>
     <div #textAreaDiv [className]="isExpanded ? 'textAreaExpanded' : 'textAreaNormal'">
       <ckeditor id="textEditor" [(ngModel)]="model.text" [editor]="editor"></ckeditor>

@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent 
 {
+  sidebarExpanded = true;
+
   title = 'note-management';
 
   constructor(translate: TranslateService) 

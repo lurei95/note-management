@@ -8,8 +8,15 @@
     </button>
   </div>
   <hr>
-  <div class="panel">
-    <app-note *ngFor="let note of filteredNotes;" [model]="note">
-    </app-note>    
+  <div id="panelParent">
+    <div id="waitPanel">
+      <mat-progress-spinner
+        [hidden]="!retrievingNotes"
+        [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </div>
+    <div id="panel" [hidden]="retrievingNotes">
+      <app-note *ngFor="let note of filteredNotes;" [model]="note"></app-note>    
+    </div>
   </div>
 </div>

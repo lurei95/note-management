@@ -1,18 +1,26 @@
-/* Style the navigation bar */
 .navbar {
-    width: 100%;
-    background-color: var(--themeDarkGray);
-    overflow: auto;
+  width: 100%;
+  background-color: var(--themeDarkGray);
+  overflow: auto;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+button {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 8px
 }
 
 .user {
-    background: transparent;
-    float: right;
-    border: none;
-    font-size: 20px;
-    padding: 8px
+  float: right;
 }
 
 .fa-user {
-    color: var(--themeRed);
+  color: var(--themeRed);
+}
+
+.fa-bars {
+  color: var(--themeRed);
 }

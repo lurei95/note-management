@@ -12,6 +12,8 @@ import { NoteComponentBase } from '../noteComponentBase';
 import { MessageKind } from 'src/app/messageKind';
 import { IApplicationState } from 'src/app/redux/state';
 import { Store } from '@ngrx/store';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { getDateDifferenceString } from 'src/app/util/dateUtility';
 
 /**
  * Component for displaying and editing a note
@@ -45,8 +47,10 @@ export class NoteComponent extends NoteComponentBase
   /**
    * Event handler: opens the note in a more detailed edit dialog
    */
-  openEditDialog() 
+  openEditDialog(e: Event) 
   { 
+    e.preventDefault();
+    e.stopPropagation();
     if ((this.invalidNoteId == null || this.invalidNoteId == this.model.id) 
       && this.invalidCategoryId == null)
     {
@@ -90,9 +94,46 @@ export class NoteComponent extends NoteComponentBase
     this.trySaveChanges();
   }
 
+  /**
+   * Event handler: prevents clicking the input from opening the dialog
+   */
+  handleInputClicked(e: Event) { e.stopPropagation(); }
+
+  /**
+   * Returns the remaining time to the due date of the note
+   * 
+   * @returns {string} The remaining time to the due date of the note
+   */
+  getRemainingTime(): string 
+  { 
+    if (this.model == null || this.model.dueDate == null)
+      return null;
+    return getDateDifferenceString(new Date(), this.model.dueDate);
+  }
+
+  /**
+   * Toggles the expansion panel when clicking on the expander button
+   * 
+   * @param {MatExpansionPanel} expansionPanel The expansion panel
+   * @param {Event} event The click event
+   */
+  togglePanel(expansionPanel: MatExpansionPanel, event: Event): void
+  {
+    event.stopPropagation(); // Preventing event bubbling
+    
+    if (!this.isExpansionIndicator(event.target))
+      expansionPanel.toggle(); // Here's the magic
+  }
+
   private handleDeleteDialogFinished(result: string)
   {
     if(result == DialogResult.Delete)
       this.deleteService.execute(this.model); 
+  }
+  
+  private isExpansionIndicator(target: EventTarget): boolean 
+  {
+    const expansionIndicatorClass = 'mat-expansion-indicator';
+    return (target && (target as HTMLElement).classList.contains(expansionIndicatorClass));
   }
 }

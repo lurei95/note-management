@@ -1,12 +1,12 @@
 #container {
-    display: grid;
-    grid-template-columns: 1fr 36px;
+  display: grid;
+  grid-template-columns: 1fr 36px;
 }
 
 #dateInput {
-    grid-column: 1 / 3; 
-    grid-row: 1; 
-    height: 28px; 
+  grid-column: 1 / 3; 
+  grid-row: 1; 
+  height: 28px; 
 }
 
 mat-datepicker{ 
@@ -14,11 +14,11 @@ mat-datepicker{
 }
 
 #toggle {
-    grid-column: 2; 
-    width: 28px;
-    height: 28px; 
-    grid-row: 1; 
-    margin-bottom: 5px
+  grid-column: 2; 
+  width: 28px;
+  height: 28px; 
+  grid-row: 1; 
+  margin-bottom: 5px
 }
 
 ::ng-deep .mat-icon-button {

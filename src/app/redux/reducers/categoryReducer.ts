@@ -5,7 +5,6 @@ import { CategoryActionKind } from '../actions/category/categoryActionKind';
 import { CategoriesRetrievedAction } from '../actions/category/categoriesRetrievedAction';
 import { CategoryAction } from '../actions/category/categoryAction';
 import { CategoryModel } from 'src/app/models/categoryModel';
-import { stat } from 'fs';
 
 /**
  * Reducer-function for changing the state related to {@link CategoryModel}
@@ -18,10 +17,13 @@ export function categoryReducer(state: SelectableList<CategoryModel>
 {
   let newState: SelectableList<CategoryModel>;
   let category = (<CategoryAction>action).payload;
+  let items: CategoryModel[];
+
   switch (action.type) 
   {
     case CategoryActionKind.SelectedCategoryChange:
-      newState = new SelectableList([...state.items], category);
+      items = [...state.items];
+      newState = new SelectableList(items, items.filter(item => item.id == category.id)[0]);
       return newState;
     case CategoryActionKind.CategoryUpdate:
       let index = state.findIndex(category1 => category1.id == category.id);
@@ -36,7 +38,7 @@ export function categoryReducer(state: SelectableList<CategoryModel>
       newState.remove(item => item.id == category.id);
       return newState; 
     case CategoryActionKind.CategoriesRetrieved:
-      let items = (<CategoriesRetrievedAction>action).payload
+      items = (<CategoriesRetrievedAction>action).payload
       state = new SelectableList<CategoryModel>(items, state.selectedItem);
       return state;
     default:

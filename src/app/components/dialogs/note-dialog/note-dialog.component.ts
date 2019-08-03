@@ -3,9 +3,6 @@ import { ValidateNoteService } from './../../../services/note/validate-note.serv
 import { SaveNoteService } from './../../../services/note/save-note.service';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
-import { nullOrEmpty } from 'src/app/util/utility';
 import { NoteComponentBase } from '../../noteComponentBase';
 import { NoteModel } from 'src/app/models/noteModel';
 import { Store } from '@ngrx/store';
@@ -13,6 +10,7 @@ import { IApplicationState } from 'src/app/redux/state';
 import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../dialogResult';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
+import { PriorityKind } from 'src/app/models/priorityKind';
 
 /**
  * Dialog for editing a note
@@ -30,6 +28,11 @@ export class NoteDialogComponent extends NoteComponentBase
   @ViewChild("headerLine", {static: false}) private headerLine: ElementRef;
   @ViewChild("container", {static: false}) private container: ElementRef;
   @ViewChild("titleInput", {static: false}) private titleInput: ElementRef;
+
+  /**
+   * @returns Type of PriorityKind
+   */
+  get priorityEnumType() { return PriorityKind; }
 
   private _now: Date = new Date();
   /**
@@ -87,12 +90,21 @@ export class NoteDialogComponent extends NoteComponentBase
 
   /**
    * Event handler: changes the tags of the note
+   * 
+   * @param {string[]} tags The new tags
    */
   handleTagsChanged(tags: string[]) 
   {
     this.model.tags = tags; 
     this.calculateEditorHeight();
   }
+
+  /**
+   * Event handler: changes the priority of the note
+   * 
+   * @param {PriorityKind} priority The new priority
+   */
+  onPriorityChanged(priority: PriorityKind) { this.model.priority = priority; }
 
   /**
    * Event handler: closes the dialog
@@ -137,7 +149,7 @@ export class NoteDialogComponent extends NoteComponentBase
       - this.headerLine.nativeElement.offsetHeight
       - this.propertyAreaDiv.nativeElement.offsetHeight;
 
-      this.textAreaDiv.nativeElement.style.maxHeight = (maxHeight - 20 + "px");
+      this.textAreaDiv.nativeElement.style.maxHeight = (maxHeight - 60 + "px");
     });
   }
 

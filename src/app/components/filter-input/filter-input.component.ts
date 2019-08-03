@@ -18,8 +18,7 @@ export class FilterInputComponent
   /**
    * @param {string} value The filter text
    */
-  @Input()
-  set filterText(value: string) { this._filterText = value; }
+  @Input() set filterText(value: string) { this._filterText = value; }
 
   /**
    * Text change event

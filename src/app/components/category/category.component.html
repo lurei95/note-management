@@ -9,15 +9,21 @@
     (keydown.control.s)="handleSaveShortcut($event)"
     placeholder="{{titleError == null ? Titel : titleError}}"
     #titleInput>
-  <button *ngIf="editMode"
+  <div *ngIf="editMode; then deleteButton else editButton"></div>
+</div>
+
+<ng-template #deleteButton>
+  <button
     (click)="handleDeleteButtonClicked()" 
     (pointerenter)="handlePointerEnter()" 
     (pointerleave)="handlePointerLeave()">
     <i class="fa fa-times"></i>
   </button>
-  <button class="editButton" 
-    *ngIf="!editMode" #editButton
+</ng-template>
+  
+<ng-template #editButton>
+  <button class="editButton"  
     (click)="handleEditButtonClicked()">
     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
   </button>
-</div>
+</ng-template>
