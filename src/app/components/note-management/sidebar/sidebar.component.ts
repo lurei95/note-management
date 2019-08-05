@@ -74,7 +74,11 @@ export class SidebarComponent
 
   private filterCategories() 
   {
-    this._filteredCategories = this.filterService.filter(this.categories, this.filterText, 
-      this.selectedCategory == null ? null : this.selectedCategory.id).slice(0, 19);
+    let result = this.filterService.filter(this.categories, this.filterText, 
+      this.selectedCategory == null ? null : this.selectedCategory.id);
+    if (result != null)
+      this._filteredCategories = result.slice(0, 19);
+    else
+      this._filteredCategories = [];
   }
 }

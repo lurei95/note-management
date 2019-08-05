@@ -24,6 +24,10 @@ export class AuthenticationServiceMock extends AuthenticationService
    */
   result: any;
   /**
+   * Whether the call should fail
+   */
+  shouldFail: boolean = false;
+  /**
    * If the user was logged out
    */
   wasLoggedOut: boolean;
@@ -44,7 +48,10 @@ export class AuthenticationServiceMock extends AuthenticationService
   {
     this.email = email;
     this.password = password;
-    return new Promise<any>((resolve) => resolve(this.result));
+    if (this.shouldFail)
+      return Promise.reject(this.result);
+    else
+      return Promise.resolve(this.result);
   }
 
   /**
@@ -58,7 +65,10 @@ export class AuthenticationServiceMock extends AuthenticationService
   {
     this.email = email;
     this.password = password;
-    return new Promise<any>((resolve) => resolve(this.result));
+    if (this.shouldFail)
+      return Promise.reject(this.result);
+    else
+      return Promise.resolve(this.result);
   }
 
   /**
