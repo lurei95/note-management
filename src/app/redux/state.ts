@@ -1,35 +1,44 @@
-import { CategoryModel } from './../models/categoryModel';
+import { UserModel } from './../models/users/userModel';
+import { CategoryModel } from '../models/categories/categoryModel';
 import { SelectableList } from '../util/selectableList';
 import { noteReducer } from './reducers/noteReducer';
 import { categoryReducer } from './reducers/categoryReducer';
-import { NotificationModel } from 'src/app/models/notificationModel';
+import { NotificationModel } from 'src/app/models/notifications/notificationModel';
 import { notificationReducer } from './reducers/notificationReducer';
 import { noteValidityReducer } from './reducers/noteValidityReducer';
 import { categoryValidityReducer } from './reducers/categoryValidityReducer';
-import { NoteModel } from '../models/noteModel';
+import { NoteModel } from '../models/notes/noteModel';
+import { userReducer } from './reducers/userReducer';
 
 /**
  * Interface defining the state of the application 
  */
 export interface IApplicationState 
 {
-    notes: NoteModel[],
-    notifications: NotificationModel[],
-    categoryInformation: SelectableList<CategoryModel>
-    invalidCategoryId: string,
-    invalidNoteId: string
+  user: UserModel,
+  notes: NoteModel[],
+  notifications: NotificationModel[],
+  categoryInformation: SelectableList<CategoryModel>
+  invalidCategoryId: string,
+  invalidNoteId: string
 }
 
 /**
  * Combination of the existing reducer functions 
  */
 export const reducers = {
-    notes: noteReducer,
-    categoryInformation: categoryReducer,
-    notifications: notificationReducer,
-    invalidCategoryId: categoryValidityReducer,
-    invalidNoteId: noteValidityReducer
+  user: userReducer,
+  notes: noteReducer,
+  categoryInformation: categoryReducer,
+  notifications: notificationReducer,
+  invalidCategoryId: categoryValidityReducer,
+  invalidNoteId: noteValidityReducer
 }
+
+/**
+ * Returns the current user
+ */
+export const getUser = (state: IApplicationState) => state.user;
 
 /**
  * Returns the id of the invalid note

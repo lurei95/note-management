@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { IServiceBase } from '../base/iServiceBase';
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { IApplicationState } from 'src/app/redux/state';
 
 /**

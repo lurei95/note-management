@@ -1,0 +1,43 @@
+<div id="container">
+  <mat-toolbar></mat-toolbar>
+  <app-wait-panel [show]="showWaitPanel">
+    <div id="body" [hidden]="showWaitPanel">
+      <div id="loginContainer">
+        <label id="headerLabel">Login</label>
+          <form [formGroup]="formGroup">
+            <div id="formContent">
+              <input type="email" formControlName="email" placeholder="E-Mail">
+              <input type="password" formControlName="password" placeholder="Password">
+              <label class="errorLabel" [hidden]="errorMessage == null">{{errorMessage}}</label>
+              <div style="grid-row: 4">
+              <button type="submit" 
+                (click)="tryLogin(formGroup.value)" 
+                id="loginButton">
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+        <button type="button" 
+          (click)="tryFacebookLogin()"
+          id="facebookButton">
+          <i class="fab fa-facebook-square" aria-hidden="true"></i>
+          Login with Facebook
+        </button>
+        <button type="button" 
+          (click)="tryGoogleLogin()"
+          id="googleButton">
+          <i class="fab fa-google" aria-hidden="true"></i>
+          Login with Google
+        </button>
+        <button type="button"
+          (click)="tryTwitterLogin()"
+          id="twitterButton">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
+          Login with Twitter
+        </button>
+        <p>No account yet? <a href="/register">Create an account</a></p>
+      </div>
+    </div>
+  </app-wait-panel>
+</div>

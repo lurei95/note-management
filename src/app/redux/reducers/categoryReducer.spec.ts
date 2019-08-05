@@ -4,7 +4,7 @@ import { NoteAction } from '../actions/note/noteAction';
 import { NoteActionKind } from '../actions/note/noteActionKind';
 import { CategoryAction } from '../actions/category/categoryAction';
 import { CategoryActionKind } from '../actions/category/categoryActionKind';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { categoryReducer } from './categoryReducer';
 import { CategoriesRetrievedAction } from '../actions/category/categoriesRetrievedAction';
 

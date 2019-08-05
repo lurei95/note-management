@@ -1,5 +1,5 @@
-import { CategoryModel } from 'src/app/models/categoryModel';
-import { LocalizationServiceMock } from './../mocks/localizationServiecMock';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
+import { LocalizationServiceMock } from './../mocks/localizationServiceMock';
 import { ValidateCategoryService } from './validate-category.service';
 import { MessageKind } from 'src/app/messageKind';
 

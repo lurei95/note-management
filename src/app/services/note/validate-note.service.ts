@@ -2,8 +2,8 @@ import { Dictionary } from 'src/app/util/dictionary';
 import { Injectable } from '@angular/core';
 import { IValidationService } from '../base/iValidationService';
 import { nullOrEmpty } from 'src/app/util/utility';
-import { NoteModel } from 'src/app/models/noteModel';
 import { LocalizationService } from '../localization.service';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { MessageKind } from 'src/app/messageKind';
 
 /**

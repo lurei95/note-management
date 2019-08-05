@@ -1,5 +1,5 @@
 import { ValidationServiceMock } from './../services/mocks/validationServiceMock';
-import { NoteModel } from '../models/noteModel';
+import { NoteModel } from '../models/notes/noteModel';
 import { EditableComponent } from './editableComponent';
 import { SaveServiceMock } from '../services/mocks/saveServiceMock';
 import { Dictionary } from '../util/dictionary';

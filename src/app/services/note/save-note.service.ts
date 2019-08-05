@@ -1,14 +1,14 @@
-import { MessageKind } from 'src/app/messageKind';
-import { LocalizationService } from 'src/app/services/localization.service';
-import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { truncate } from 'src/app/util/utility';
-import { NotificationService } from '../notification/notificationService';
+import { Injectable } from '@angular/core';
 import { ISaveService } from '../base/iSaveService';
+import { NoteModel } from 'src/app/models/notes/noteModel';
+import { IApplicationState } from 'src/app/redux/state';
+import { Store } from '@ngrx/store';
+import { NotificationService } from '../notification/notificationService';
+import { LocalizationService } from '../localization.service';
 import { NoteAction } from 'src/app/redux/actions/note/noteAction';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
-import { IApplicationState } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/noteModel';
+import { MessageKind } from 'src/app/messageKind';
 
 /**
  * Service for saving changes to a note

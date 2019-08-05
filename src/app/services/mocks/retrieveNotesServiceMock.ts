@@ -1,4 +1,3 @@
-import { NoteModel } from 'src/app/models/noteModel';
 import { RetrieveNotesService } from '../note/retrieve-notes.service';
 
 /**

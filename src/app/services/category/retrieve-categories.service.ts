@@ -5,7 +5,7 @@ import { CategoriesRetrievedAction } from 'src/app/redux/actions/category/catego
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { IApplicationState } from 'src/app/redux/state';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Service for retrieving all exisiting categories

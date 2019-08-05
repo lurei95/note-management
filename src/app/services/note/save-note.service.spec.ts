@@ -1,9 +1,9 @@
-import { LocalizationServiceMock } from '../mocks/localizationServiecMock';
+import { LocalizationServiceMock } from '../mocks/localizationServiceMock';
 import { NotificationServiceMock } from '../mocks/notificationServiceMock';
 import { StoreMock } from '../mocks/storeMock';
 import { MessageKind } from 'src/app/messageKind';
 import { SaveNoteService } from './save-note.service';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
 import { NoteAction } from 'src/app/redux/actions/note/noteAction';
 

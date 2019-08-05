@@ -1,0 +1,20 @@
+<div class="container">
+  <app-header-bar style="grid-row: 1; grid-column-start: 1; grid-column-end: 3"></app-header-bar>
+  <app-sidebar style="grid-row: 2; grid-column: 1" [hidden]="!sidebarExpanded"></app-sidebar>
+  <div *ngIf="sidebarExpanded; then reduce else expand"></div>
+  <app-note-panel style="grid-row: 2; grid-column: 2"></app-note-panel>
+</div>
+<app-notification-list></app-notification-list>
+  
+<ng-template #expand>
+  <button style="grid-row: 2; grid-column: 2;" 
+    (click)="sidebarExpanded = true">
+    <i class="fa fa-angle-right" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<ng-template #reduce>
+  <button style="grid-row: 2; grid-column: 2" 
+    (click)="sidebarExpanded = false">
+    <i class="fa fa-angle-left" aria-hidden="true"></i>
+  </button>
+</ng-template>

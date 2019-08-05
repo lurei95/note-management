@@ -1,7 +1,7 @@
-import { DialogResult } from './../components/dialogs/dialogResult';
-import { DialogInformation } from '../components/dialogs/dialogInformation';
+import { DialogResult } from '../components/utiltity/dialogResult';
+import { DialogInformation } from '../components/utiltity/dialogInformation';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageDialogComponent } from '../components/dialogs/message-dialog/message-dialog.component';
+import { MessageDialogComponent } from '../components/utiltity/message-dialog/message-dialog.component';
 
 /**
  * Service for showing a message dialog

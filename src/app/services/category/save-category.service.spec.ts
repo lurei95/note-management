@@ -1,7 +1,7 @@
 import { CategoryAction } from './../../redux/actions/category/categoryAction';
-import { CategoryModel } from './../../models/categoryModel';
+import { CategoryModel } from '../../models/categories/categoryModel';
 import { SaveCategoryService } from './save-category.service';
-import { LocalizationServiceMock } from '../mocks/localizationServiecMock';
+import { LocalizationServiceMock } from '../mocks/localizationServiceMock';
 import { NotificationServiceMock } from '../mocks/notificationServiceMock';
 import { StoreMock } from '../mocks/storeMock';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';

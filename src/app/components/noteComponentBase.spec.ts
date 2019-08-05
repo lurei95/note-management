@@ -1,7 +1,7 @@
 import { getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { StoreMock } from 'src/app/services/mocks/storeMock';
 import { ValidationServiceMock } from './../services/mocks/validationServiceMock';
-import { NoteModel } from '../models/noteModel';
+import { NoteModel } from '../models/notes/noteModel';
 import { SaveServiceMock } from '../services/mocks/saveServiceMock';
 import { Dictionary } from '../util/dictionary';
 import { NoteComponentBase } from './noteComponentBase';

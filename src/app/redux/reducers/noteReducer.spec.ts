@@ -1,7 +1,7 @@
 import { clone } from 'src/app/util/utility';
 import { NoteAction } from '../actions/note/noteAction';
 import { NoteActionKind } from '../actions/note/noteActionKind';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { CategoryAction } from '../actions/category/categoryAction';
 import { CategoryActionKind } from '../actions/category/categoryActionKind';
 import { noteReducer } from './noteReducer';

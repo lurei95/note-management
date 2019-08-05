@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IServiceBase } from '../base/iServiceBase';
 import { NotesRetrievedAction } from 'src/app/redux/actions/note/notesRetrievedAction';
 import { IApplicationState } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 /**
  * Service for retrieving all exisiting notes

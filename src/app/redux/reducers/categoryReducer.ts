@@ -4,7 +4,7 @@ import { clone } from 'src/app/util/utility';
 import { CategoryActionKind } from '../actions/category/categoryActionKind';
 import { CategoriesRetrievedAction } from '../actions/category/categoriesRetrievedAction';
 import { CategoryAction } from '../actions/category/categoryAction';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Reducer-function for changing the state related to {@link CategoryModel}

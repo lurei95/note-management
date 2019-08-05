@@ -1,0 +1,14 @@
+#waitPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 0;
+  grid-row: 0;
+}
+
+#panelParent {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  height: 100%;
+}

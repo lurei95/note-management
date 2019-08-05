@@ -1,4 +1,4 @@
-import { CategoryModel } from './../../models/categoryModel';
+import { CategoryModel } from '../../models/categories/categoryModel';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { truncate } from 'src/app/util/utility';

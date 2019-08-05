@@ -1,8 +1,8 @@
 import { CategoryValidityChangeAction } from './../../redux/actions/category/categoryValidityChangeAction';
 import { getInvalidCategoryId } from './../../redux/state';
 import { CategoryAction } from './../../redux/actions/category/categoryAction';
-import { CategoryModel } from './../../models/categoryModel';
-import { LocalizationServiceMock } from '../mocks/localizationServiecMock';
+import { CategoryModel } from '../../models/categories/categoryModel';
+import { LocalizationServiceMock } from '../mocks/localizationServiceMock';
 import { NotificationServiceMock } from '../mocks/notificationServiceMock';
 import { StoreMock } from '../mocks/storeMock';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';

@@ -23,5 +23,11 @@
   "Medium": "mittel",
   "Low": "niedrig",
 
-  "RequiredField" : "Pflichtfeld"
+  "RequiredField" : "Pflichtfeld",
+
+  "Login_InvalidEmailOrPassword" : "Invalide E-Mail oder Password",
+  "Login_InvalidEmail" : "Invalide E-Mail",
+  "Login_WrongPassword" : "Fehlerhaftes Password",
+  "Login_WeakPassword" : "Das Password muss mindestens 6 Zeichen lang sein",
+  "Login_UserAlreadyExsits" : "Es existiert bereits ein Nutzer mit der gleichen E-Mail-Adresse"
 }

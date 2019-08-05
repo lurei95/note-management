@@ -1,5 +1,5 @@
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IApplicationState } from 'src/app/redux/state';
 
 /**
@@ -14,7 +14,7 @@ export class StoreMock extends Store<IApplicationState>
   /**
    * The selector for the select result
    */
-  resultSelector: (obj: any) => Observable<any>;
+  resultSelector: (obj: any) => Observable<any> = () => of(null);
 
   /**
    * Constructor

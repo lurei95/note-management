@@ -1,5 +1,5 @@
 import { FilterNotesService } from './filter-notes.service';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 describe('FilterNotesService', () => 
 {

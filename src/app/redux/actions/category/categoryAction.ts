@@ -1,6 +1,6 @@
 import { CategoryActionKind } from './categoryActionKind';
 import { ActionBase } from '../actionBase';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Action performed on the state related to {@link CategoryModel}

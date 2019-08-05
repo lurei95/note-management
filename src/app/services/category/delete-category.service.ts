@@ -7,7 +7,7 @@ import { IDeleteService } from '../base/iDeleteService';
 import { NotesOfCategoryDeleteAction } from 'src/app/redux/actions/note/notesOfCategoryDeleteAction';
 import { CategoryAction } from 'src/app/redux/actions/category/categoryAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { IApplicationState, getInvalidCategoryId } from 'src/app/redux/state';
 import { LocalizationService } from '../localization.service';
 import { MessageKind } from 'src/app/messageKind';

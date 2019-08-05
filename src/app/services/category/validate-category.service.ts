@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Dictionary } from 'src/app/util/dictionary';
 import { IValidationService } from '../base/iValidationService';
 import { nullOrEmpty } from 'src/app/util/utility';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { LocalizationService } from '../localization.service';
 
 /**

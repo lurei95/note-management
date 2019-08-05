@@ -1,7 +1,7 @@
-import { LocalizationServiceMock } from './../mocks/localizationServiecMock';
+import { LocalizationServiceMock } from '../mocks/localizationServiceMock';
 import { MessageKind } from 'src/app/messageKind';
 import { ValidateNoteService } from './validate-note.service';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 describe('ValidateNoteService', () => 
 {

@@ -1,4 +1,4 @@
-import { NotificationModel } from '../../models/notificationModel';
+import { NotificationModel } from '../../models/notifications/notificationModel';
 import { Action } from '@ngrx/store';
 import { NotificationActionKind } from '../actions/notification/notificationActionKind';
 import { NotificationAction } from '../actions/notification/notificationAction';

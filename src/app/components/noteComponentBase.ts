@@ -1,7 +1,7 @@
 import { EditableComponent } from './editableComponent';
 import { Dictionary } from '../util/dictionary';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { NoteModel } from '../models/noteModel';
+import { NoteModel } from '../models/notes/noteModel';
 import { getInvalidNoteId, getInvalidCategoryId, IApplicationState } from '../redux/state';
 import { Store } from '@ngrx/store';
 import { NoteValidityChangeAction } from '../redux/actions/note/noteValidityChangeAction';

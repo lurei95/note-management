@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDeleteService } from '../base/iDeleteService';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { IEditableModel } from 'src/app/models/iEditableModel';
 
 /**

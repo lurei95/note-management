@@ -1,11 +1,11 @@
 import { notificationReducer } from "./notificationReducer";
 import { NotificationAction } from '../actions/notification/notificationAction';
 import { NotificationActionKind } from '../actions/notification/notificationActionKind';
-import { NotificationModel } from 'src/app/models/notificationModel';
+import { NotificationModel } from 'src/app/models/notifications/notificationModel';
 import { clone } from 'src/app/util/utility';
 import { NoteAction } from '../actions/note/noteAction';
 import { NoteActionKind } from '../actions/note/noteActionKind';
-import { NotificationKind } from 'src/app/models/notificationKind';
+import { NotificationKind } from 'src/app/models/notifications/notificationKind';
 
 describe("notificationReducer", () =>
 {

@@ -23,5 +23,11 @@
   "Medium": "medium",
   "Low": "low",
 
-  "RequiredField" : "required"
+  "RequiredField" : "required",
+
+  "Login_InvalidEmailOrPassword" : "Invalid e-mail or password",
+  "Login_InvalidEmail" : "Invalid e-mail",
+  "Login_WrongPassword" : "Wrong password",
+  "Login_WeakPassword" : "The password must be at least 6 characters long",
+  "Login_UserAlreadyExsits" : "A user with the same e-mail already exists"
 }

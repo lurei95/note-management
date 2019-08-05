@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { nullOrEmpty } from 'src/app/util/utility';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 /**
  * Service for filtering the notes of a category by a search text

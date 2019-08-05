@@ -1,6 +1,6 @@
 import { NoteActionKind } from './noteActionKind';
 import { ActionBase } from '../actionBase';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 /**
  * Action: notes are retrieved

@@ -1,5 +1,5 @@
 import { FilterCategoriesService } from '../category/filter-categories.service';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Mock service for {@link FilterCategoriesService}

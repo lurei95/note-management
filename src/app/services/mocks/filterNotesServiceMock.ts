@@ -1,5 +1,5 @@
 import { FilterNotesService } from '../note/filter-notes.service';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 /**
  * Mock service for {@link FilterNotesService}

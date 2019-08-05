@@ -1,11 +1,11 @@
 
-import { LocalizationServiceMock } from '../mocks/localizationServiecMock';
+import { LocalizationServiceMock } from '../mocks/localizationServiceMock';
 import { NotificationServiceMock } from '../mocks/notificationServiceMock';
 import { StoreMock } from '../mocks/storeMock';
 import { MessageKind } from 'src/app/messageKind';
 import { of } from 'rxjs';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { DeleteNoteService } from './delete-note.service';
 import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
 import { getInvalidNoteId } from 'src/app/redux/state';

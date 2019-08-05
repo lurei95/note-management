@@ -5,9 +5,9 @@ import { IServiceBase } from '../base/iServiceBase';
 import { NoteAction } from 'src/app/redux/actions/note/noteAction';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
 import { IApplicationState } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { MatDialog } from '@angular/material/dialog';
-import { NoteDialogComponent } from 'src/app/components/dialogs/note-dialog/note-dialog.component';
+import { NoteDialogComponent } from 'src/app/components/note-management/note-dialog/note-dialog.component';
 
 /**
  * Service for adding a new note

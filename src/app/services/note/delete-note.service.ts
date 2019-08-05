@@ -7,7 +7,7 @@ import { IDeleteService } from '../base/iDeleteService';
 import { NoteAction } from 'src/app/redux/actions/note/noteAction';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
 import { IApplicationState, getInvalidNoteId } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 import { MessageKind } from 'src/app/messageKind';
 import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
 

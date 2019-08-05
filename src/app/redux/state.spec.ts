@@ -1,7 +1,8 @@
-import { CategoryModel } from './../models/categoryModel';
-import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getNotes, getNote, getCategories, getSelectedCatgeory, getNotesOfCategory } from "./state";
-import { NoteModel } from '../models/noteModel';
-import { NotificationModel } from '../models/notificationModel';
+import { UserModel } from './../models/users/userModel';
+import { CategoryModel } from '../models/categories/categoryModel';
+import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getNotes, getNote, getCategories, getSelectedCatgeory, getNotesOfCategory, getUser } from "./state";
+import { NoteModel } from '../models/notes/noteModel';
+import { NotificationModel } from '../models/notifications/notificationModel';
 import { SelectableList } from '../util/selectableList';
 
 describe("getterFunctions", () =>
@@ -11,6 +12,7 @@ describe("getterFunctions", () =>
   beforeEach(() =>
   {
     state = {
+      user: new UserModel({ uid: "1", email: "test" }),
       notes: [
         new NoteModel("1", "title1", "text1", "1"), 
         new NoteModel("2", "title2", "text2", "1"),
@@ -28,6 +30,13 @@ describe("getterFunctions", () =>
       invalidNoteId: "3"
     }
   })
+
+  it("getUser returns the current user", () =>
+  { 
+    let user = getUser(state);
+    expect(user.id).toBe("1");
+    expect(user.email).toBe("test");
+  });
 
   it("getInvalidNoteId returns the id of the invalid note", () =>
   { expect(getInvalidNoteId(state)).toBe("3"); });

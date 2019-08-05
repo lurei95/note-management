@@ -4,7 +4,7 @@ import { NoteAction } from '../actions/note/noteAction';
 import { NoteActionKind } from '../actions/note/noteActionKind';
 import { NotesRetrievedAction } from '../actions/note/notesRetrievedAction';
 import { NotesOfCategoryDeleteAction } from '../actions/note/notesOfCategoryDeleteAction';
-import { NoteModel } from 'src/app/models/noteModel';
+import { NoteModel } from 'src/app/models/notes/noteModel';
 
 /**
  * Reducer-function for changing the state related to {@link NoteModel}

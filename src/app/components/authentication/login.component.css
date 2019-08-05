@@ -1,0 +1,113 @@
+#container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+#waitPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#headerLabel {
+  font-size: 28px;
+  color: var(--themeRed);
+  margin-bottom: 30px;
+  font-weight: bolder;
+}
+
+#body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#parent {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr
+}
+
+button {
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+}
+
+#loginContainer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 40px;
+  display: grid;
+  grid-template-rows: auto auto 36px 36px 36px 36px;
+  grid-row-gap: 15px;
+}
+
+#facebookButton {
+  background-color: #3B5998;
+}
+
+#twitterButton {
+  background-color: #00aced;
+}
+
+#googleButton {
+  background-color: #DB4437;
+}
+
+.errorLabel {
+  color: var(--themeRed);
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+i {
+  float: left;
+  font-size: 18px;
+  margin-left: 3px;
+}
+
+#formContent {
+  display: grid;
+  grid-template-rows: 36px 36px auto 34px;
+  grid-row-gap: 10px;
+  margin-bottom: 30px;
+}
+
+#loginButton {
+  height: 100%;
+  float: right;
+  width: 100px;
+  background: var(--themeRed);
+  border: none;
+}
+
+.fab {
+  color: white;
+}
+
+button:hover {
+  font-size: 15px;
+}
+
+input {
+  width: 300px
+}
+
+.header {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+.propertyLabel {
+  margin-top: 5px;
+  width: 120px
+}

@@ -1,4 +1,14 @@
-<div class="navbar">
-    <button><i class="fa fa-bars"></i></button>
-    <button class="user"><i class="far fa-user"></i></button>
-</div>
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item>View Profile</button>
+  <button mat-menu-item>Edit Profile</button>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
+
+<mat-toolbar>
+  <div class="navbar">
+    <button [matMenuTriggerFor]="userMenu" 
+      id="userMenuButton">
+      <i class="far fa-user"></i>
+    </button>
+  </div>
+</mat-toolbar>

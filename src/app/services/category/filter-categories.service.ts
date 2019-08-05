@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { nullOrEmpty } from 'src/app/util/utility';
-import { CategoryModel } from 'src/app/models/categoryModel';
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Service for filtering the categories by a search text

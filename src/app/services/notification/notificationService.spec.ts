@@ -1,4 +1,4 @@
-import { NotificationKind } from 'src/app/models/notificationKind';
+import { NotificationKind } from 'src/app/models/notifications/notificationKind';
 import { NotificationService } from './notificationService';
 import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
 import { StoreMock } from '../mocks/storeMock';
