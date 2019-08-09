@@ -1,3 +1,5 @@
+import { UserModel } from './../../../models/users/userModel';
+import { AddUserService } from './../../../services/user/add-user.service';
 import { LocalizationServiceMock } from './../../../services/mocks/localizationServiceMock';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,24 +22,29 @@ describe('RegisterComponent', () =>
   let fixture: ComponentFixture<RegisterComponent>;
   let authenticationService: AuthenticationServiceMock;
   let localizationService: LocalizationServiceMock
+  let spy: jasmine.Spy<any>;
+  let addUserService = { execute(user: { id: string, email: string }): any { return user; } };
   let router: RouterMock;
 
   beforeEach(async(() => 
   {
     authenticationService = new AuthenticationServiceMock();
     authenticationService.result = true;
+    authenticationService.user = { uid: "1", email: "test@test.com" };
     localizationService = new LocalizationServiceMock();
     localizationService.returnValue = "test";
     router = new RouterMock();
+    spy = spyOn<any>(addUserService, "execute");
     TestBed.configureTestingModule(
     {
       declarations: [ RegisterComponent, WaitPanelComponent ],
       imports: [ MatToolbarModule, MatProgressSpinnerModule, ReactiveFormsModule, FormsModule ],
       providers: [
-        {provide: AuthenticationService, useValue: authenticationService},
-        {provide: Router, useValue: router},
-        {provide: LocalizationService, useValue: localizationService},
-        FormBuilder
+        { provide: AuthenticationService, useValue: authenticationService},
+        { provide: Router, useValue: router},
+        { provide: LocalizationService, useValue: localizationService},
+        FormBuilder,
+        { provide: AddUserService, useValue: addUserService }
       ]
     }).compileComponents();
   }));
@@ -58,6 +65,18 @@ describe('RegisterComponent', () =>
     expect(authenticationService.email).toBe("test@test.com");
     expect(authenticationService.password).toBe("test123");
   });
+
+  it("successful registration creates a new user", fakeAsync(() =>
+  {
+    component.onSuccessfulAuthentication();
+
+    tick();
+    fixture.detectChanges();
+
+    let user = spy.calls.first().args[0] as UserModel;
+    expect(user.id).toBe("1");
+    expect(user.email).toBe("test@test.com");
+  }));
 
   it("tryRegister sets the correct error message for invalid email", fakeAsync(() =>
   { errorMessageTestCore(AuthenticationErrorKind.InvalidEmail, MessageKind.Login_InvalidEmail); }));

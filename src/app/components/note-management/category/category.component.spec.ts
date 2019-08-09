@@ -1,44 +1,47 @@
-import { SaveServiceMock } from '../../../services/mocks/saveServiceMock';
-import { CategoryAction } from '../../../redux/actions/category/categoryAction';
-import { DeleteServiceMock } from '../../../services/mocks/deleteServiceMock';
-import { ValidateNoteService } from '../../../services/note/validate-note.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { CategoriesService } from 'src/app/services/category/categories.service';
 import { MessageDialogService } from '../../../services/message-dialog.service';
-import { LocalizationService } from '../../../services/localization.service';
-import { getInvalidCategoryId, getInvalidNoteId, getSelectedCatgeory } from 'src/app/redux/state';
+import { getInvalidCategoryId, getInvalidNoteId, getSelectedCategory } from 'src/app/redux/state';
 import { CategoryModel } from '../../../models/categories/categoryModel';
 import { StoreMock } from '../../../services/mocks/storeMock';
 import { CategoryComponent } from './category.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { SaveCategoryService } from 'src/app/services/category/save-category.service';
-import { DeleteCategoryService } from 'src/app/services/category/delete-category.service';
 import { FormsModule } from '@angular/forms';
-import { ValidationServiceMock } from 'src/app/services/mocks/validationServiceMock';
-import { NoteModel } from 'src/app/models/notes/noteModel';
 import { Dictionary } from 'src/app/util/dictionary';
 import { CategoryValidityChangeAction } from 'src/app/redux/actions/category/categoryValidityChangeAction';
 import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
 import { nullOrEmpty } from 'src/app/util/utility';
+import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
+import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
 
-describe('CategoryComponent', () => {
+describe('CategoryComponent', () => 
+{
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
-  let validationService: ValidationServiceMock<NoteModel>
-  let saveService: SaveServiceMock<CategoryModel>;
-  let deleteService: DeleteServiceMock<CategoryModel>;
   let category: CategoryModel;
   let storeMock: StoreMock;
   let invalidCategoryId: Subject<string>;
   let invalidNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
+  let categoryServiceMock: any = {
+    validate() {},
+    save() {},
+    delete() {}
+  };
+  let deleteSpy: jasmine.Spy<any>;
+  let localizationSpy: jasmine.Spy<any>;
+  let messageDialogSpy: jasmine.Spy<any>;
+  let localizationServiceMock = { execute(): any { } }
+  let messageDialogService = { execute(): any { } }
 
   beforeEach(async(() => 
   {
-    validationService = new ValidationServiceMock<NoteModel>();
-    saveService = new SaveServiceMock<CategoryModel>();
-    deleteService = new DeleteServiceMock<CategoryModel>();
+    deleteSpy = spyOn(categoryServiceMock, "delete");
+    messageDialogSpy = spyOn(messageDialogService, "execute");
+    localizationSpy = spyOn(localizationServiceMock, "execute").and.returnValue("test");
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
     selectedCategory = new Subject();
@@ -49,21 +52,20 @@ describe('CategoryComponent', () => {
         return invalidCategoryId;
       if (selector == getInvalidNoteId)
         return invalidNoteId;
-      if (selector == getSelectedCatgeory)
+      if (selector == getSelectedCategory)
         return selectedCategory;
       return null;  
     }
 
-    TestBed.configureTestingModule({
+    TestBed.configureTestingModule(
+    {
       imports: [ FormsModule ],
       declarations: [ CategoryComponent ],
       providers: [
         { provide: Store, useValue: storeMock },
-        { provide: ValidateNoteService, useValue: validationService },
-        { provide: LocalizationService, useValue: { } },
-        { provide: SaveCategoryService, useValue: saveService },
-        { provide: MessageDialogService, useValue: { } },
-        { provide: DeleteCategoryService, useValue: deleteService },
+        { provide: LocalizationService, useValue: localizationServiceMock },
+        { provide: MessageDialogService, useValue: messageDialogService },
+        { provide: CategoriesService, useValue: categoryServiceMock },
       ],
     }).compileComponents();
   }));
@@ -98,6 +100,30 @@ describe('CategoryComponent', () => {
   {
     component.handleEditButtonClicked();
     expect(component.editMode).toBe(true);
+  });
+
+  it('handleDeleteButtonClicked shows the message dialog to ask the user if they really want to delete the category', () => 
+  {
+    component.handleDeleteButtonClicked();
+
+    expect(localizationSpy.calls.all()[0].args[0]).toBe(MessageKind.DeleteCategoryDialogText);
+    expect(localizationSpy.calls.all()[1].args[0]).toBe(MessageKind.DeleteCategoryDialogTitle);
+    expect(messageDialogSpy.calls.first().args[0]).toBe("test");
+    expect(messageDialogSpy.calls.first().args[1]).toBe("test");
+    expect(messageDialogSpy.calls.first().args[2]).toContain(DialogResult.Delete);
+    expect(messageDialogSpy.calls.first().args[2]).toContain(DialogResult.Cancel);
+  });
+
+  it('handleDeleteDialogFinished deletes the category on positive dialog result', () => 
+  {
+    (component as any).handleDeleteDialogFinished(DialogResult.Delete);
+    expect(deleteSpy).toHaveBeenCalledWith(category);
+  });
+
+  it('handleDeleteDialogFinished does not delete the category on negative dialog result', () => 
+  {
+    (component as any).handleDeleteDialogFinished(DialogResult.Cancel);
+    expect(deleteSpy.calls.count()).toBe(0);
   });
 
   it("does validate the model on title changed", () => 
@@ -154,28 +180,12 @@ describe('CategoryComponent', () => {
     expect(action.payload).toBeNull();
   });
 
-  it("handleDeleteDialogFinished does execute the delete service when then result was to delete", () => 
-  {
-    (component as any).handleDeleteDialogFinished(DialogResult.Delete);
-
-    expect(deleteService.parameter).toBe(category);
-  });
-
-  it("handleDeleteDialogFinished does not execute the delete service when then result was cancel", () => 
-  {
-    component.editMode = true;
-
-    (component as any).handleDeleteDialogFinished(DialogResult.Cancel);
-
-    expect(deleteService.parameter).toBeUndefined();
-    expect(component.editMode).toBe(false);
-  });
-
   it("handleCategoryClicked sets the category selected if not in edit mode", () => 
   {
     component.handleCategoryClicked();
 
-    let action: CategoryAction = (storeMock.dispatchedActions[0] as CategoryAction);
+    let action: SelectedCategoryChangeAction 
+      = (storeMock.dispatchedActions[0] as SelectedCategoryChangeAction);
     expect(action.type).toBe(CategoryActionKind.SelectedCategoryChange);
     expect(action.payload).toBe(category);
   });

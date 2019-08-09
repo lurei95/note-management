@@ -1,9 +1,11 @@
+import { CategoriesService } from './../../../services/category/categories.service';
 import { FilterCategoriesService } from '../../../services/category/filter-categories.service';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { AddCategoryService } from 'src/app/services/category/add-category.service';
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { IApplicationState, getCategories, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { v4 as uuid } from 'uuid';
+import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
 
 /**
  * Component for a sidbar containing categories
@@ -15,13 +17,13 @@ import { IApplicationState, getCategories, getSelectedCatgeory, getInvalidCatego
 })
 export class SidebarComponent
 {
-  private categories: CategoryModel[];
-  private filterText: string;
-  private selectedCategory: CategoryModel;
-  private invalidCategoryId: string;
-  private invalidNoteId: string;
+  private categories: CategoryModel[] = [];
+  private filterText: string  = null;
+  private selectedCategory: CategoryModel = null;
+  private invalidCategoryId: string = null;
+  private invalidNoteId: string = null;
 
-  private _filteredCategories: CategoryModel[];
+  private _filteredCategories: CategoryModel[] = [];
   /**
    * @returns {CategoryModel[]} A list of categories filtered by the search text
    */
@@ -30,19 +32,19 @@ export class SidebarComponent
   /**
    * Constructor
    * 
-   * @param {AddCategoryService} addService Injected: service for adding a new category
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {FilterCategoriesService} filterService Injected: service for filtering the categories
+   * @param {CategoriesService} categoriesService Injected: service for providing the categories
    */
-  constructor(private addService: AddCategoryService, private store: Store<IApplicationState>, 
-    private filterService: FilterCategoriesService) 
+  constructor(private store: Store<IApplicationState>, 
+    private filterService: FilterCategoriesService, categoriesService: CategoriesService) 
   {
     this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
-    this.store.select(getCategories).subscribe(
-      (x: CategoryModel[]) => this.handleCategoriesChanged(x));
-    this.store.select(getSelectedCatgeory).subscribe(
+    this.store.select(getSelectedCategory).subscribe(
       (x: CategoryModel) => this.selectedCategory = x);
+
+    categoriesService.get((x: CategoryModel[]) => this.handleCategoriesChanged(x));
   }
 
   /**
@@ -51,7 +53,11 @@ export class SidebarComponent
   handleAddButtonClicked() 
   { 
     if (this.invalidCategoryId == null && this.invalidNoteId == null)
-      this.addService.execute(); 
+    {
+      let model = new CategoryModel(uuid());
+      model.isEditing = true;
+      this._filteredCategories.push(model);
+    }     
   }
 
   /**
@@ -68,7 +74,9 @@ export class SidebarComponent
 
   private handleCategoriesChanged(categories: CategoryModel[]) 
   {
-    this.categories = categories;
+    this.categories = categories.sort((a, b) => a.timestamp - b.timestamp);
+    if (categories.length > 0 && this.selectedCategory == null)
+      this.store.dispatch(new SelectedCategoryChangeAction(categories[0]));
     this.filterCategories(); 
   }
 

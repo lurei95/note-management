@@ -1,3 +1,5 @@
+import { CategoriesService } from './../../services/category/categories.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { StoreMock } from './../../services/mocks/storeMock';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -17,14 +19,11 @@ import { NotePanelComponent } from '../note-management/note-panel/note-panel.com
 import { NotificationListComponent } from '../utiltity/notification-list/notification-list.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { Store } from '@ngrx/store';
-import { ValidateNoteService } from 'src/app/services/note/validate-note.service';
 import { LocalizationService } from 'src/app/services/localization.service';
-import { SaveCategoryService } from 'src/app/services/category/save-category.service';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
-import { DeleteCategoryService } from 'src/app/services/category/delete-category.service';
-import { SaveNoteService } from 'src/app/services/note/save-note.service';
-import { DeleteNoteService } from 'src/app/services/note/delete-note.service';
 import { MatDialog } from '@angular/material/dialog';
+import { NotificationService } from 'src/app/services/notification/notificationService';
+import { NotesService } from 'src/app/services/note/notes.service';
 
 describe('MainPageComponent', () => 
 {
@@ -59,15 +58,13 @@ describe('MainPageComponent', () =>
       providers: [
         { provide: AuthenticationService, useValue: {}},
         { provide: Store, useValue: store},
-        { provide: ValidateNoteService, useValue: {}},
         { provide: LocalizationService, useValue: {}},
-        { provide: SaveCategoryService, useValue: {}},
         { provide: MessageDialogService, useValue: {}},
-        { provide: DeleteCategoryService, useValue: {}},
-        { provide: MessageDialogService, useValue: {}},
-        { provide: SaveNoteService, useValue: {}},
-        { provide: DeleteNoteService, useValue: {}},
+        { provide: NotificationService, useValue: {}},
         { provide: MatDialog, useValue: {}},
+        { provide: AngularFirestore, useValue: {}},
+        { provide: CategoriesService, useValue: { get() {} }},
+        { provide: NotesService, useValue: { get() {} }},
       ]
     }).compileComponents();
   }));

@@ -1,7 +1,5 @@
-import { ValidationServiceMock } from './../services/mocks/validationServiceMock';
 import { NoteModel } from '../models/notes/noteModel';
 import { EditableComponent } from './editableComponent';
-import { SaveServiceMock } from '../services/mocks/saveServiceMock';
 import { Dictionary } from '../util/dictionary';
 
 describe('EditableComponent', () =>
@@ -22,15 +20,15 @@ describe('EditableComponent', () =>
   }
 
   let component: TestEditableComponent;
-  let saveService: SaveServiceMock<NoteModel>
-  let validationService: ValidationServiceMock<NoteModel>
   let model: NoteModel;
+  let noteServiceMock: any = {
+    validate() {},
+    save() {}
+  };
 
   beforeEach(() =>
   {
-    saveService = new SaveServiceMock();
-    validationService = new ValidationServiceMock();
-    component = new TestEditableComponent(validationService, saveService);
+    component = new TestEditableComponent(noteServiceMock);
     model = new NoteModel("1", "title1", "text1", "1");
     component.model = model;
   });
@@ -55,26 +53,24 @@ describe('EditableComponent', () =>
   { 
     model.title = "newTitle";
     let validationResult = new Dictionary<string>([{ key: "title", value: "title is wrong"}]);
-    validationService.result = validationResult;
+    let spy = spyOn(noteServiceMock, "validate").and.returnValue(validationResult);
 
     let result = component.executeTrySaveChanges();
 
+    expect(spy).toHaveBeenCalledWith(model);
     expect(result).toBe(false); 
-    expect(validationService.parameter).toBe(model);
-    expect(saveService.parameter).toBeUndefined();
     expect(component.validationResult).toBe(validationResult);
   });
 
   it("trySaveChanges returns true but does not call the save service if there are no changes", () => 
   { 
     let validationResult = new Dictionary<string>();
-    validationService.result = validationResult;
+    let spy = spyOn(noteServiceMock, "validate").and.returnValue(validationResult);
 
     let result = component.executeTrySaveChanges();
 
+    expect(spy).toHaveBeenCalledWith(model);
     expect(result).toBe(true); 
-    expect(validationService.parameter).toBe(model);
-    expect(saveService.parameter).toBeUndefined();
     expect(component.validationResult).toBe(validationResult);
   });
 
@@ -82,20 +78,20 @@ describe('EditableComponent', () =>
   { 
     model.title = "newTitle";
     let validationResult = new Dictionary<string>();
-    validationService.result = validationResult;
+    let spy1 = spyOn(noteServiceMock, "validate").and.returnValue(validationResult);
+    let spy2 = spyOn(noteServiceMock, "save");
 
     let result = component.executeTrySaveChanges();
 
+    expect(spy1).toHaveBeenCalledWith(model);
+    expect(spy2).toHaveBeenCalledWith(model);
     expect(result).toBe(true); 
-    expect(validationService.parameter).toBe(model);
-    expect(saveService.parameter).toBe(model);
     expect(component.validationResult).toBe(validationResult);
+    expect(component.unmodifiedModel).toEqual(model);
   });
 
   it("handleSaveChanges calls trySaveChanges and disables the propagation of the event", () => 
   { 
-    let validationResult = new Dictionary<string>();
-    validationService.result = validationResult;
     let event = new Event("test");
     let spy1 = spyOn<any>(component, "trySaveChanges");
     let spy2 = spyOn<any>(event, "stopPropagation");

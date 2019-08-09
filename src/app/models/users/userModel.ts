@@ -1,5 +1,3 @@
-import { User } from 'firebase';
-
 /**
  * Model for a user
  */

@@ -1,11 +1,11 @@
+import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { CategoryActionKind } from './categoryActionKind';
 import { ActionBase } from '../actionBase';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
 
 /**
  * Action performed on the state related to {@link CategoryModel}
  */
-export class CategoryAction extends ActionBase<CategoryModel>
+export class SelectedCategoryChangeAction extends ActionBase<CategoryModel>
 {
   /**
    * Constructor
@@ -13,6 +13,6 @@ export class CategoryAction extends ActionBase<CategoryModel>
    * @param {CategoryActionKind} actionKind Type of the action
    * @param {CategoryModel} payload The category involved in the action
    */
-  constructor(actionKind: CategoryActionKind, public payload: CategoryModel) 
-  { super(actionKind, payload)}
+  constructor(public payload: CategoryModel) 
+  { super(CategoryActionKind.SelectedCategoryChange, payload)}
 }

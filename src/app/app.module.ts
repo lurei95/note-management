@@ -1,10 +1,8 @@
+import { CategoriesService } from './services/category/categories.service';
 import { UserObserver } from './services/authentication/userObserver';
 import { ApplicationGuard } from './services/authentication/applicationGuard';
 import { LoginGuard } from './services/authentication/loginGuard';
 import { MessageDialogService } from './services/message-dialog.service';
-import { SaveCategoryService } from 'src/app/services/category/save-category.service';
-import { AddCategoryService } from 'src/app/services/category/add-category.service';
-import { AddNoteService } from './services/note/add-note.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,13 +14,9 @@ import { HeaderBarComponent } from './components/header-bar/header-bar.component
 import { SidebarComponent } from './components/note-management/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-management/note-panel/note-panel.component';
 import { NoteComponent } from './components/note-management/note/note.component'
-import { RetrieveNotesService } from './services/note/retrieve-notes.service';
+import { NotesService } from './services/note/notes.service';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CategoryComponent } from './components/note-management/category/category.component';
-import { SaveNoteService } from './services/note/save-note.service';
-import { DeleteNoteService } from './services/note/delete-note.service';
-import { RetrieveCategoriesService } from './services/category/retrieve-categories.service';
-import { DeleteCategoryService } from './services/category/delete-category.service';
 import { MessageDialogComponent } from './components/utiltity/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ComboBoxComponent } from './components/utiltity/combo-box/combo-box.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AngularFireModule } from "angularfire2"
-import { AngularFireDatabaseModule } from "angularfire2/database"
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from "angularfire2/auth"
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router'
@@ -86,9 +80,8 @@ export var declarations = [
 
 export var imports = [
   AngularFireModule.initializeApp(environment.firebase),
-  AngularFireDatabaseModule,
+  AngularFirestoreModule,
   AngularFireAuthModule,
-  RouterModule.forRoot(rootRouterConfig),
   ReactiveFormsModule,
   MatToolbarModule,
   MatSelectModule,
@@ -121,14 +114,8 @@ export var providers = [
   UserObserver,
   ApplicationGuard,
   LoginGuard,
-  RetrieveNotesService,
-  SaveNoteService,
-  AddNoteService,
-  DeleteNoteService,
-  RetrieveCategoriesService,
-  DeleteCategoryService,
-  AddCategoryService,
-  SaveCategoryService,
+  NotesService,
+  CategoriesService,
   NotificationService,
   MatDialog,
   HttpClientModule,
@@ -142,7 +129,7 @@ export var providers = [
     MessageDialogComponent, 
     NoteDialogComponent
   ],
-  imports: imports,
+  imports: [RouterModule.forRoot(rootRouterConfig), ...imports],
   providers: providers,
   bootstrap: [AppComponent]
 })

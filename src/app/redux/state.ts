@@ -1,13 +1,10 @@
 import { UserModel } from './../models/users/userModel';
 import { CategoryModel } from '../models/categories/categoryModel';
-import { SelectableList } from '../util/selectableList';
-import { noteReducer } from './reducers/noteReducer';
 import { categoryReducer } from './reducers/categoryReducer';
 import { NotificationModel } from 'src/app/models/notifications/notificationModel';
 import { notificationReducer } from './reducers/notificationReducer';
 import { noteValidityReducer } from './reducers/noteValidityReducer';
 import { categoryValidityReducer } from './reducers/categoryValidityReducer';
-import { NoteModel } from '../models/notes/noteModel';
 import { userReducer } from './reducers/userReducer';
 
 /**
@@ -16,9 +13,8 @@ import { userReducer } from './reducers/userReducer';
 export interface IApplicationState 
 {
   user: UserModel,
-  notes: NoteModel[],
   notifications: NotificationModel[],
-  categoryInformation: SelectableList<CategoryModel>
+  selectedCategory: CategoryModel,
   invalidCategoryId: string,
   invalidNoteId: string
 }
@@ -28,8 +24,7 @@ export interface IApplicationState
  */
 export const reducers = {
   user: userReducer,
-  notes: noteReducer,
-  categoryInformation: categoryReducer,
+  selectedCategory: categoryReducer,
   notifications: notificationReducer,
   invalidCategoryId: categoryValidityReducer,
   invalidNoteId: noteValidityReducer
@@ -51,32 +46,11 @@ export const getInvalidNoteId = (state: IApplicationState) => state.invalidNoteI
 export const getInvalidCategoryId = (state: IApplicationState) => state.invalidCategoryId;
 
 /**
- * Returns the existing notes of the current state 
- */
-export const getNotes = (state: IApplicationState) => state.notes;
-
-/**
- * Returns the existing notes of the category
- */
-export const getNotesOfCategory = (state: IApplicationState, id: string) => 
-{ return state.notes.filter(note => note.categoryId == id); }
-
-/**
- * Returns a specific note of the current state specified by its id
- */
-export const getNote = (state: IApplicationState, id: string) => state.notes.find(note => note.id == id);
-
-/**
  * Returns the existing notifications of the current state 
  */
 export const getNotifications = (state: IApplicationState) => state.notifications;
 
 /**
- * Returns the existing categories of the current state 
- */
-export const getCategories = (state: IApplicationState) => state.categoryInformation.items;
-
-/**
  * Returns the selected category of the current state 
  */
-export const getSelectedCatgeory = (state: IApplicationState) => state.categoryInformation.selectedItem;
+export const getSelectedCategory = (state: IApplicationState) => state.selectedCategory

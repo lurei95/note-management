@@ -1,8 +1,6 @@
 import { getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { StoreMock } from 'src/app/services/mocks/storeMock';
-import { ValidationServiceMock } from './../services/mocks/validationServiceMock';
 import { NoteModel } from '../models/notes/noteModel';
-import { SaveServiceMock } from '../services/mocks/saveServiceMock';
 import { Dictionary } from '../util/dictionary';
 import { NoteComponentBase } from './noteComponentBase';
 import { Subject } from 'rxjs';
@@ -22,10 +20,12 @@ describe('NoteComponentBase', () =>
   }
 
   let component: TestNoteComponent;
-  let saveService: SaveServiceMock<NoteModel>
-  let validationService: ValidationServiceMock<NoteModel>
   let store: StoreMock;
   let model: NoteModel;
+  let noteServiceMock: any = {
+    validate() {},
+    save() {}
+  };
   let invalidCategoryId: Subject<string>;
   let invalidNoteId: Subject<string>;
 
@@ -33,8 +33,6 @@ describe('NoteComponentBase', () =>
   {
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
-    saveService = new SaveServiceMock();
-    validationService = new ValidationServiceMock();
     store = new StoreMock();
     store.resultSelector = (selector) => 
     {
@@ -44,7 +42,7 @@ describe('NoteComponentBase', () =>
         return invalidNoteId;
       return null;
     }
-    component = new TestNoteComponent(validationService, saveService, store);
+    component = new TestNoteComponent(noteServiceMock, store);
     model = new NoteModel("1", "title1", "text1", "1");
     component.model = model;
   });

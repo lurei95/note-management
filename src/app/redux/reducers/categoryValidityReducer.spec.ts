@@ -1,7 +1,7 @@
+import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
 import { categoryValidityReducer } from './categoryValidityReducer';
 import { CategoryValidityChangeAction } from '../actions/category/categoryValidityChangeAction';
-import { NoteActionKind } from '../actions/note/noteActionKind';
-import { NoteAction } from '../actions/note/noteAction';
+import { NotificationAction } from '../actions/notification/notificationAction';
 
 describe("categoryValidityReducer", () =>
 {
@@ -11,7 +11,7 @@ describe("categoryValidityReducer", () =>
 
   it("other action shouldn't change the state", () =>
   {
-    let action = new NoteAction(NoteActionKind.NotesOfCategoryDelete, null);
+    let action = new NotificationAction(NotificationActionKind.NotificationAdd, null);
     let result = categoryValidityReducer(state, action);
 
     expect(result).toBe(state);

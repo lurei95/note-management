@@ -2,8 +2,6 @@ import { Component, ViewChild, ElementRef, Inject } from "@angular/core";
 import { NoteComponentBase } from '../../noteComponentBase';
 import { PriorityKind } from 'src/app/models/notes/priorityKind';
 import { NoteModel } from 'src/app/models/notes/noteModel';
-import { SaveNoteService } from 'src/app/services/note/save-note.service';
-import { ValidateNoteService } from 'src/app/services/note/validate-note.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { IApplicationState } from 'src/app/redux/state';
@@ -11,6 +9,7 @@ import { LocalizationService } from 'src/app/services/localization.service';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
+import { NotesService } from 'src/app/services/note/notes.service';
 
 
 /**
@@ -58,12 +57,12 @@ export class NoteDialogComponent extends NoteComponentBase
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
-  constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, validationService: ValidateNoteService,
-    saveService: SaveNoteService, private self: MatDialogRef<NoteDialogComponent>, 
+  constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, notesService: NotesService, 
+    private self: MatDialogRef<NoteDialogComponent>, 
     store: Store<IApplicationState>, private localizationService: LocalizationService, 
     private dialogService: MessageDialogService) 
   { 
-    super(validationService, saveService, store);
+    super(notesService, store);
     this.model = data;
   }
 

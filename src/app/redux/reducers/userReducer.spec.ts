@@ -1,8 +1,8 @@
-import { NoteAction } from '../actions/note/noteAction';
-import { NoteActionKind } from '../actions/note/noteActionKind';
 import { UserModel } from 'src/app/models/users/userModel';
 import { userReducer } from './userReducer';
 import { UserChangeAction } from '../actions/user/userChangeAction';
+import { NotificationAction } from '../actions/notification/notificationAction';
+import { NotificationActionKind } from '../actions/notification/notificationActionKind';
 
 describe("userReducer", () =>
 {
@@ -12,7 +12,7 @@ describe("userReducer", () =>
 
   it("other action shouldn't change the state", () =>
   {
-    let action = new NoteAction(NoteActionKind.NotesOfCategoryDelete, null);
+    let action = new NotificationAction(NotificationActionKind.NotificationAdd, null);
     let result = userReducer(state, action);
 
     expect(result).toBe(state);

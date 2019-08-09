@@ -1,13 +1,14 @@
 import { FilterNotesService } from '../../../services/note/filter-notes.service';
-import { AddNoteService } from '../../../services/note/add-note.service';
 import { Component } from '@angular/core';
-import { RetrieveNotesService } from 'src/app/services/note/retrieve-notes.service';
+import { NotesService } from 'src/app/services/note/notes.service';
 import { Store } from '@ngrx/store';
-import { RetrieveCategoriesService } from 'src/app/services/category/retrieve-categories.service';
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { coalesce } from 'src/app/util/utility';
-import { IApplicationState, getNotes, getSelectedCatgeory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { NoteModel } from 'src/app/models/notes/noteModel';
+import { v4 as uuid } from 'uuid';
+import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 /**
  * Component pf panel for displaying notes
@@ -29,7 +30,7 @@ export class NotePanelComponent
   /**
    * @returns {boolean} Whether notes are currently retrieved
    */
-  get retrievingNotes() { return this._retrievingNotes; }
+  get retrievingNotes(): boolean { return this._retrievingNotes; }
 
   private _filteredNotes: NoteModel[];
   /**
@@ -46,24 +47,19 @@ export class NotePanelComponent
   /**
    * Constructor
    * 
-   * @param {RetrieveNotesService} notesService Injected: service for retrieving all notes
-   * @param {RetrieveCategoriesService} categoriesService Injected: service for retrieving all categories
-   * @param {AddNoteService} addService Injected: service for adding a new note
+   * @param {NotesService} notesService Injected: service for retrieving all notes
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {FilterNotesService} filterService Injected: service for filtering the notes
    */
-  constructor(notesService: RetrieveNotesService, categoriesService: RetrieveCategoriesService,
-    private addService: AddNoteService, store: Store<IApplicationState>, 
-    private filterService: FilterNotesService) 
+  constructor(notesService: NotesService, store: Store<IApplicationState>, 
+    private filterService: FilterNotesService, private dialog: MatDialog) 
   {
-    store.select(getNotes).subscribe((x: NoteModel[]) => this.handleNotesChanged(x));
-    store.select(getSelectedCatgeory).subscribe(
+    store.select(getSelectedCategory).subscribe(
       (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
     store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
 
-    categoriesService.execute();
-    notesService.execute();
+    notesService.get((x: NoteModel[]) => this.handleNotesChanged(x));
   }
 
   /**
@@ -84,12 +80,25 @@ export class NotePanelComponent
   handleAddButtonClicked() 
   { 
     if (this.invalidCategoryId == null && this.invalidNoteId == null)
-      this.addService.execute(this.selectedCategory.id); 
+    {
+      let model = new NoteModel(uuid(), "", "", this.selectedCategory.id);
+      this.filteredNotes.push(model);
+      this.openEditDialog(model);
+    }
+  }
+
+  private openEditDialog(model: NoteModel)
+  {
+    this.dialog.open(NoteDialogComponent, { 
+      data: model,
+      panelClass: 'fullscreenDialog',
+      disableClose: true
+    });
   }
 
   private handleNotesChanged(notes: NoteModel[]) 
   {
-    this.notes = notes;
+    this.notes = notes.sort((a, b) => a.timestamp - b.timestamp);
     this.filterNotes(); 
   }
 
@@ -101,7 +110,7 @@ export class NotePanelComponent
     setTimeout(() => this._retrievingNotes = false, 1000)
   }
 
-  private filterNotes() 
+  private filterNotes()
   {
     if (this.selectedCategory == null)
       return;

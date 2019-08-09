@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { resolve } from 'url';
 
 /**
  * Service for handling authentication matters
@@ -31,11 +29,23 @@ export class AuthenticationServiceMock extends AuthenticationService
    * If the user was logged out
    */
   wasLoggedOut: boolean;
+  /**
+   * The user the service should retrun
+   */
+  user: {uid: string, email:string}
 
   /**
    * Constructor
    */
   constructor() { super(null, null); }
+
+  /**
+   * Gets the current user
+   * 
+   * @returns {Promise<{uid: string, email:string}>} The current user
+   */
+  getUser(): Promise<{uid: string, email:string}>
+  { return Promise.resolve(this.user); }
 
   /**
    * Registers a new user with an email and a password

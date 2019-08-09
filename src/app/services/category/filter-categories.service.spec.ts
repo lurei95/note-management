@@ -1,5 +1,4 @@
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { TestBed } from '@angular/core/testing';
 import { FilterCategoriesService } from './filter-categories.service';
 
 describe('FilterCategoriesService', () => 

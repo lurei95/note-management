@@ -1,7 +1,7 @@
 import { noteValidityReducer } from './noteValidityReducer';
 import { NoteValidityChangeAction } from '../actions/note/noteValidityChangeAction';
-import { NoteAction } from '../actions/note/noteAction';
-import { NoteActionKind } from '../actions/note/noteActionKind';
+import { NotificationAction } from '../actions/notification/notificationAction';
+import { NotificationActionKind } from '../actions/notification/notificationActionKind';
 
 describe("noteValidityReducer", () =>
 {
@@ -11,7 +11,7 @@ describe("noteValidityReducer", () =>
 
   it("other action shouldn't change the state", () =>
   {
-    let action = new NoteAction(NoteActionKind.NotesOfCategoryDelete, null);
+    let action = new NotificationAction(NotificationActionKind.NotificationAdd, null);
     let result = noteValidityReducer(state, action);
 
     expect(result).toBe(state);

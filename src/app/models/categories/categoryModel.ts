@@ -1,10 +1,10 @@
 import { clone } from 'src/app/util/utility';
-import { IEditableModel } from '../iEditableModel';
+import { EditableModel } from '../editableModel';
 
 /**
  * Model for a category containing multiple notes
  */
-export class CategoryModel implements IEditableModel<CategoryModel>
+export class CategoryModel extends EditableModel
 {
   private _isEditing: boolean;
   /**
@@ -15,11 +15,6 @@ export class CategoryModel implements IEditableModel<CategoryModel>
    * @param {boolean} value Whether the model is currently edited
    */
   set isEditing(value: boolean) { this._isEditing = value; }
-
-  /**
-   * @returns {string} ID of the category
-   */
-  get id(): string { return this._id; }
 
   /**
    * @returns {string} Title of the category
@@ -36,7 +31,7 @@ export class CategoryModel implements IEditableModel<CategoryModel>
    * @param {string} _id ID of the category
    * @param {string} _title Title of the category
    */
-  constructor(private _id?: string, private _title? : string) { }
+  constructor(_id?: string, private _title? : string) { super(_id); }
 
   /**
    * Tests if the model is equal to the other model

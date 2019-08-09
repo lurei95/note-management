@@ -1,8 +1,6 @@
 import { LocalizationService } from 'src/app/services/localization.service';
-import { ValidateNoteService } from '../../../services/note/validate-note.service';
-import { SaveNoteService } from '../../../services/note/save-note.service';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoteComponentBase } from '../../noteComponentBase';
 import { NoteModel } from 'src/app/models/notes/noteModel';
 import { Store } from '@ngrx/store';
@@ -11,6 +9,7 @@ import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { PriorityKind } from 'src/app/models/notes/priorityKind';
+import { NotesService } from 'src/app/services/note/notes.service';
 
 /**
  * Dialog for editing a note
@@ -50,19 +49,18 @@ export class NoteDialogComponent extends NoteComponentBase
    * Constructor
    * 
    * @param {NoteModel} data Injected: the note passed into the dialog
-   * @param {ValidateNoteService} validationService Injected: service for validating the note
-   * @param {SaveNoteService} saveService Injected: service for saving the changes of the note
+   * @param {NotesService} service Injected: service for the model
    * @param {MatDialogRef<NoteDialogComponent>} self Injected: reference to the own dialog
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {MessageDialogService} dialogService Injected: Service for displaying a message dialog
    */
-  constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, validationService: ValidateNoteService,
-    saveService: SaveNoteService, private self: MatDialogRef<NoteDialogComponent>, 
-    store: Store<IApplicationState>, private localizationService: LocalizationService, 
+  constructor(@Inject(MAT_DIALOG_DATA) data: NoteModel, service: NotesService, 
+    private self: MatDialogRef<NoteDialogComponent>, store: Store<IApplicationState>, 
+    private localizationService: LocalizationService, 
     private dialogService: MessageDialogService) 
   { 
-    super(validationService, saveService, store);
+    super(service, store);
     this.model = data;
   }
 

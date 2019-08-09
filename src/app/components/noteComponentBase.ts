@@ -5,8 +5,7 @@ import { NoteModel } from '../models/notes/noteModel';
 import { getInvalidNoteId, getInvalidCategoryId, IApplicationState } from '../redux/state';
 import { Store } from '@ngrx/store';
 import { NoteValidityChangeAction } from '../redux/actions/note/noteValidityChangeAction';
-import { IValidationService } from '../services/base/iValidationService';
-import { ISaveService } from '../services/base/iSaveService';
+import { ModelService } from '../services/base/modelService';
 
 export abstract class NoteComponentBase extends EditableComponent<NoteModel>
 {
@@ -36,14 +35,12 @@ export abstract class NoteComponentBase extends EditableComponent<NoteModel>
   /**
    * Constructor
    * 
-   * @param {IValidationService<NoteModel>} validationService Injected: service for validating the note
-   * @param {ISaveService<NoteModel>} saveService Injected: service for saving changes to the note
+   * @param {Model<ModelService>} service Injected: service for the model
    * @param {Store<IApplicationState>} store Injected: redux store
    */
-  constructor(validationService: IValidationService<NoteModel>, saveService: ISaveService<NoteModel>, 
-    private store: Store<IApplicationState>) 
+  constructor(service: ModelService<NoteModel>, private store: Store<IApplicationState>) 
   { 
-    super(validationService, saveService);
+    super(service);
     store.select(getInvalidCategoryId).subscribe((x: string) => this._invalidCategoryId = x);
     store.select(getInvalidNoteId).subscribe((x: string) => this._invalidNoteId = x);
   }

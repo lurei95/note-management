@@ -1,13 +1,12 @@
 import { Dictionary } from 'src/app/util/dictionary';
-import { IValidationService } from './../services/base/iValidationService';
-import { IEditableModel } from '../models/iEditableModel';
-import { ISaveService } from '../services/base/iSaveService';
 import { Input } from '@angular/core';
+import { EditableModel } from '../models/editableModel';
+import { ModelService } from '../services/base/modelService';
 
 /**
  * Base class for all components for editing a certain type of model
  */
-export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
+export abstract class EditableComponent<TModel extends EditableModel>
 {
   private _model: TModel
   /**
@@ -16,7 +15,7 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   @Input() set model(value: TModel) 
   {
     this._model = value; 
-    this.unmodified = value.clone();
+    this.unmodified = (value.clone() as TModel);
   }
   /**
    * @returns {TModel} The model which is edited in the component
@@ -29,23 +28,11 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
   protected unmodified: TModel
 
   /**
-   * @returns {IValidationService<TModel>} Service for validating the model
-   */
-  protected get validationService(): IValidationService<TModel> { return this._validationService; }
-
-  /**
-   * @returns {ISaveService<TModel>} Service for saving changes to the model
-   */
-  protected get saveService(): ISaveService<TModel> { return this._saveService; }
-
-  /**
    * Constructor
    * 
-   * @param {IValidationService<TModel>} _validationService Injected: service for validating the model
-   * @param {ISaveService<TModel>} _saveService Injected: service for saving changes to the model
+   * @param {Model<ModelService>} service Injected: service for the model
    */
-  constructor(private _validationService: IValidationService<TModel>, 
-    private _saveService: ISaveService<TModel>)
+  constructor(protected service: ModelService<TModel>)
   { }
 
   /**
@@ -93,8 +80,8 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
    */
   protected saveChanges()
   {
-    this.unmodified = this.model.clone();
-    this.saveService.execute(this.model);
+    this.unmodified = (this.model.clone() as TModel);
+    this.service.save(this.model);
   }
 
   /**
@@ -104,7 +91,7 @@ export abstract class EditableComponent<TModel extends IEditableModel<TModel>>
    */
   protected validateModel(): boolean
   {
-    let result = this.validationService.execute(this.model);
+    let result = this.service.validate(this.model);
     return this.handleValidationResult(result);
   }
 

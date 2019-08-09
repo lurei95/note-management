@@ -20,6 +20,17 @@ export class AuthenticationService
   constructor(private authentication: AngularFireAuth, private router: Router) { }
 
   /**
+   * Gets the current user
+   * 
+   * @returns {Promise<User>} The current user
+   */
+  getUser(): Promise<{uid: string, email:string}>
+  {
+    return new Promise<{uid: string, email:string}>((resolve) => 
+    { this.authentication.user.subscribe(user => resolve(user)); });
+  }
+
+  /**
    * Registers a new user with an email and a password
    * 
    * @param {string} email Email of the new user

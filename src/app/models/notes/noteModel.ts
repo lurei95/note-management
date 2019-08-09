@@ -1,11 +1,11 @@
 import { PriorityKind } from './priorityKind';
-import { IEditableModel } from '../iEditableModel';
+import { EditableModel } from '../editableModel';
 import { clone } from 'src/app/util/utility';
 
 /**
  * Model for a note
  */
-export class NoteModel implements IEditableModel<NoteModel>
+export class NoteModel extends EditableModel
 {
   /**
    * @returns {PriorityKind} Priority of the note
@@ -25,11 +25,6 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @param {string[]} value Tags assigned to the note
    */
   set tags(value: string[]) { this._tags = value; }
-
-  /**
-   * @returns {string} ID of the note
-   */
-  get id(): string { return this._id; }
 
   /**
    * @returns {string} ID of the category the note belongs to
@@ -77,10 +72,10 @@ export class NoteModel implements IEditableModel<NoteModel>
    * @param {Date} _dueDate Due date of the note
    * @param {PriorityKind} _priority Priority of the note (default: Low)
    */
-  constructor(private _id?: string, private _title?: string, private _text: string = "", 
-    private _categoryId?: string, private _dueDate?: Date, 
+  constructor(_id?: string, private _title?: string, private _text: string = "", 
+    private _categoryId?: string, private _dueDate: Date = null, 
     private _priority: PriorityKind = PriorityKind.Low) 
-  { }
+  { super(_id); }
 
   /**
    * Tests if the model is equal to the other model

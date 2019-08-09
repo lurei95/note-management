@@ -59,7 +59,7 @@ export class LoginComponentBase
   { this.authenticationService.loginWithGoogle().then(() => this.onSuccessfulAuthentication()); }
 
   /**
-   * Handles a successful login
+   * Handles a successful login/registration
    */
   protected onSuccessfulAuthentication() 
   { 

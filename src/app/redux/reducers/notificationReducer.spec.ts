@@ -1,9 +1,9 @@
+import { CategoryValidityChangeAction } from './../actions/category/categoryValidityChangeAction';
 import { notificationReducer } from "./notificationReducer";
 import { NotificationAction } from '../actions/notification/notificationAction';
 import { NotificationActionKind } from '../actions/notification/notificationActionKind';
 import { NotificationModel } from 'src/app/models/notifications/notificationModel';
 import { clone } from 'src/app/util/utility';
-import { NoteAction } from '../actions/note/noteAction';
 import { NoteActionKind } from '../actions/note/noteActionKind';
 import { NotificationKind } from 'src/app/models/notifications/notificationKind';
 
@@ -20,7 +20,7 @@ describe("notificationReducer", () =>
 
   it("other action shouldn't change the state", () =>
   {
-    let action = new NoteAction(NoteActionKind.NotesOfCategoryDelete, null);
+    let action = new CategoryValidityChangeAction(null);
     let result = notificationReducer(state, action);
 
     expect(result).toBe(state);

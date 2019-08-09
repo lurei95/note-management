@@ -1,3 +1,4 @@
+import { AddUserService } from './../../../services/user/add-user.service';
 import { LoginComponentBase } from './../loginComponentBase';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -6,6 +7,7 @@ import { Router } from '@angular/router';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { AuthenticationErrorKind } from 'src/app/services/authentication/authenticationErrorKind';
 import { MessageKind } from 'src/app/messageKind';
+import { UserModel } from 'src/app/models/users/userModel';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +25,8 @@ export class RegisterComponent extends LoginComponentBase
    * @param {LocalizationService} localizationservice Injected: service for providing localized strings
    */
   constructor(authenticationService: AuthenticationService, router: Router,
-    formBuilder: FormBuilder, private localizationservice: LocalizationService) 
+    formBuilder: FormBuilder, private localizationservice: LocalizationService, 
+    private addService: AddUserService) 
   { super(authenticationService, router, formBuilder); }
 
   /**
@@ -38,13 +41,22 @@ export class RegisterComponent extends LoginComponentBase
       .then(() => this.onSuccessfulAuthentication(), err => this.handleError(err));
   }
 
+  onSuccessfulAuthentication()
+  {
+    super.onSuccessfulAuthentication();
+    this.authenticationService.getUser()
+      .then((user) => 
+      {
+        this.addService.execute(new UserModel(user))
+      });
+  }
+
   private handleError(error: any)
   {
     this._showWaitPanel = false;
     this._errorMessage = null;
     if (error.code == null)
       return;
-    console.log(error.code);
 
     if (error.code == AuthenticationErrorKind.InvalidEmail)
       this._errorMessage = this.localizationservice.execute(MessageKind.Login_InvalidEmail);
