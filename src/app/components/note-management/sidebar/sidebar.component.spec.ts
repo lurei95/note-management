@@ -17,7 +17,9 @@ import { Subject } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CategoriesService } from 'src/app/services/category/categories.service';
-import { NotesService } from 'src/app/services/note/notes.service';
+import { MessageKind } from 'src/app/messageKind';
+import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
+import { OtherActionKind } from 'src/app/redux/actions/other/otherActionKind';
 
 describe('SidebarComponent', () => 
 {
@@ -25,15 +27,18 @@ describe('SidebarComponent', () =>
   let fixture: ComponentFixture<SidebarComponent>;
   let storeMock: StoreMock;
   let filterService: FilterCategoriesServiceMock;
+  let localizationServiceMock = { execute(): any { } }
   let invalidCategoryId: Subject<string>;
   let invalidNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
   let categoriesServiceMock: any = { get() {} };
   let getSpy: jasmine.Spy<any>;
+  let localizationSpy: jasmine.Spy<any>;
   let categories: CategoryModel[];
 
   beforeEach(async(() => 
   {
+    localizationSpy = spyOn(localizationServiceMock, "execute").and.returnValue("test");
     getSpy = spyOn(categoriesServiceMock, "get");
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
@@ -95,6 +100,17 @@ describe('SidebarComponent', () =>
     let action = storeMock.dispatchedActions[0] as SelectedCategoryChangeAction;
     expect(action.type).toBe(CategoryActionKind.SelectedCategoryChange);
     expect(action.payload).toBe(categories[0])
+  });
+
+  it("does set title on category changed", () => 
+  {
+    selectedCategory.next(new CategoryModel("1", "test-title"))
+
+    expect(localizationSpy.calls.first().args[0]).toBe(MessageKind.CategoryTitle);
+    expect(localizationSpy.calls.first().args[1]).toEqual({title: "test-title"});
+    let action: TitleChangeAction = storeMock.dispatchedActions[0] as TitleChangeAction;
+    expect(action.type).toBe(OtherActionKind.TitleChange);
+    expect(action.payload).toBe("test");
   });
 
   it('handleFilterTextChanged does call the filter service', () => 

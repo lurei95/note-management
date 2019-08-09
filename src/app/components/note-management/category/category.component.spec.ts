@@ -16,6 +16,8 @@ import { nullOrEmpty } from 'src/app/util/utility';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
 import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
+import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
+import { OtherActionKind } from 'src/app/redux/actions/other/otherActionKind';
 
 describe('CategoryComponent', () => 
 {
@@ -129,9 +131,7 @@ describe('CategoryComponent', () =>
   it("does validate the model on title changed", () => 
   {
     let spy = spyOn<any>(component, "validateModel");
-
     component.handleTitleChanged("test");
-
     expect(component.title).toBe("test")
     expect(spy).toHaveBeenCalled();
   });
@@ -139,9 +139,7 @@ describe('CategoryComponent', () =>
   it("does set title error on handleValidationResult if title is empty", () => 
   {
     let error = new Dictionary<string>([{ key: "title", value: "testError" }]);
-
     let result = (component as any).handleValidationResult(error);
-
     expect(result).toBe(false);
     expect(component.titleError).toBe("testError");
   });
@@ -190,19 +188,16 @@ describe('CategoryComponent', () =>
     expect(action.payload).toBe(category);
   });
 
-  it("handleCategoryClicked does not set the category selected if in edit mode", () => 
+  it("handleCategoryClicked does not set the category selected or the new title if in edit mode", () => 
   {
     component.editMode = true;
-
     component.handleCategoryClicked();
-
     expect(storeMock.dispatchedActions.length).toBe(0);
   });
 
   it("does set isSelected on selectedCategory change", () => 
   {
     selectedCategory.next(category);
-
     expect(component.isSelected).toBe(true);
   });
 
@@ -210,7 +205,6 @@ describe('CategoryComponent', () =>
   {
     selectedCategory.next(category);
     selectedCategory.next(new CategoryModel("2"));
-
     expect(component.isSelected).toBe(false);
   });
 
@@ -218,9 +212,7 @@ describe('CategoryComponent', () =>
   {
     component.editMode = true;
     let spy = spyOn<any>(component, "trySaveChanges");
-
     component.handleFocusLeaving();
- 
     expect(spy).toHaveBeenCalled();
   });
 
@@ -228,9 +220,7 @@ describe('CategoryComponent', () =>
   {
     component.editMode = false;
     let spy = spyOn<any>(component, "trySaveChanges");
-
     component.handleFocusLeaving();
- 
     expect(spy.calls.count()).toBe(0);
   });
 
@@ -239,9 +229,7 @@ describe('CategoryComponent', () =>
     component.editMode = true;
     component.handlePointerEnter();
     let spy = spyOn<any>(component, "trySaveChanges");
-
     component.handleFocusLeaving();
- 
     expect(spy.calls.count()).toBe(0);
   });
 });

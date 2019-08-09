@@ -1,3 +1,4 @@
+import { TitleChangeAction } from './../../../redux/actions/other/titleChangeAction';
 import { CategoriesService } from './../../../services/category/categories.service';
 import { CategoryValidityChangeAction } from '../../../redux/actions/category/categoryValidityChangeAction';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -109,7 +110,7 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   handleTitleChanged(value: string) 
   { 
     this.model.title = value;
-    this.validateModel() 
+    this.validateModel();
   }
 
   /**

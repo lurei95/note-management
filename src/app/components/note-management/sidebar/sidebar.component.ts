@@ -6,6 +6,9 @@ import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
 import { v4 as uuid } from 'uuid';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
+import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
+import { MessageKind } from 'src/app/messageKind';
+import { LocalizationService } from 'src/app/services/localization.service';
 
 /**
  * Component for a sidbar containing categories
@@ -33,16 +36,18 @@ export class SidebarComponent
    * Constructor
    * 
    * @param {Store<IApplicationState>} store Injected: redux store
+   * @param {LocalizationService} localizationService Injected: service for getting localized strings
    * @param {FilterCategoriesService} filterService Injected: service for filtering the categories
    * @param {CategoriesService} categoriesService Injected: service for providing the categories
    */
   constructor(private store: Store<IApplicationState>, 
+    private localizationService: LocalizationService,
     private filterService: FilterCategoriesService, categoriesService: CategoriesService) 
   {
     this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
     this.store.select(getSelectedCategory).subscribe(
-      (x: CategoryModel) => this.selectedCategory = x);
+      (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
 
     categoriesService.get((x: CategoryModel[]) => this.handleCategoriesChanged(x));
   }
@@ -70,6 +75,14 @@ export class SidebarComponent
       this.filterText = filterText;
       this.filterCategories(); 
     }
+  }
+
+  private handleSelectedCategoryChanged(category: CategoryModel)
+  {
+    let newTitle = this.localizationService.execute(MessageKind.CategoryTitle, 
+      { title: category == null ? null : category.title });
+    this.store.dispatch(new TitleChangeAction(newTitle));
+    this.selectedCategory = category;
   }
 
   private handleCategoriesChanged(categories: CategoryModel[]) 

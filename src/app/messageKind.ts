@@ -23,5 +23,7 @@ export enum MessageKind
   Login_InvalidEmail = "Login_InvalidEmail",
   Login_WrongPassword = "Login_WrongPassword",
   Login_WeakPassword = "Login_WeakPassword",
-  Login_UserAlreadyExsits = "Login_UserAlreadyExists"
+  Login_UserAlreadyExsits = "Login_UserAlreadyExists",
+
+  CategoryTitle = "CategoryTitle"
 }

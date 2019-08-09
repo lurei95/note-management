@@ -8,9 +8,16 @@
   border: none;
   font-size: 20px;
   padding: 8px;
+  margin-top: 5px;
   float: right;
 }
 
 .fa-user {
   color: var(--themeRed);
+}
+
+#title {
+  font-size: 20px;
+  color: white;
+  padding-top: 8px;
 }

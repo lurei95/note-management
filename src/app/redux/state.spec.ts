@@ -1,6 +1,6 @@
 import { CategoryModel } from './../models/categories/categoryModel';
 import { UserModel } from './../models/users/userModel';
-import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getSelectedCategory, getUser } from "./state";
+import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getSelectedCategory, getUser, getTitle } from "./state";
 import { NotificationModel } from '../models/notifications/notificationModel';
 
 describe("getterFunctions", () =>
@@ -10,6 +10,7 @@ describe("getterFunctions", () =>
   beforeEach(() =>
   {
     state = {
+      title: "testTitle",
       user: new UserModel({ uid: "1", email: "test" }),
       notifications: [
         new NotificationModel("1"),
@@ -19,7 +20,9 @@ describe("getterFunctions", () =>
       invalidCategoryId: "2",
       invalidNoteId: "3"
     }
-  })
+  });
+
+  it("getTitle returns the current title", () => expect(getTitle(state)).toBe("testTitle"));
 
   it("getUser returns the current user", () =>
   { 

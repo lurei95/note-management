@@ -111,16 +111,6 @@ describe('NotePanelComponent', () =>
     expect(filterService.notes).toBe(notes);
   });
 
-  it('changing the selcted category calls the filter service', () => 
-  {
-    (component as any).notes = notes;
-    selectedCategory.next(new CategoryModel("2", "title2"));
-
-    expect(component.title).toBe("title2");
-    expect(filterService.categoryId).toBe("2")
-    expect(filterService.notes).toBe(notes);
-  });
-
   it('handleAddButtonClicked adds a new note', () => 
   {
     component.handleAddButtonClicked();

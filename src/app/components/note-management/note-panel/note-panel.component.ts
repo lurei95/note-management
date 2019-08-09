@@ -39,12 +39,6 @@ export class NotePanelComponent
   get filteredNotes(): NoteModel[] { return this._filteredNotes; }
 
   /**
-   * @returns {string} The title of the selected category
-   */
-  get title(): string 
-  { return this.selectedCategory == null ? "" : coalesce(this.selectedCategory.title, ""); }
-
-  /**
    * Constructor
    * 
    * @param {NotesService} notesService Injected: service for retrieving all notes

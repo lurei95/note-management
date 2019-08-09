@@ -6,12 +6,14 @@ import { notificationReducer } from './reducers/notificationReducer';
 import { noteValidityReducer } from './reducers/noteValidityReducer';
 import { categoryValidityReducer } from './reducers/categoryValidityReducer';
 import { userReducer } from './reducers/userReducer';
+import { titleReducer } from './reducers/titleReducer';
 
 /**
  * Interface defining the state of the application 
  */
 export interface IApplicationState 
 {
+  title: string,
   user: UserModel,
   notifications: NotificationModel[],
   selectedCategory: CategoryModel,
@@ -22,13 +24,20 @@ export interface IApplicationState
 /**
  * Combination of the existing reducer functions 
  */
-export const reducers = {
+export const reducers = 
+{
+  title: titleReducer,
   user: userReducer,
   selectedCategory: categoryReducer,
   notifications: notificationReducer,
   invalidCategoryId: categoryValidityReducer,
   invalidNoteId: noteValidityReducer
 }
+
+/**
+ * Returns the currently displayed title
+ */
+export const getTitle = (state: IApplicationState) => state.title;
 
 /**
  * Returns the current user

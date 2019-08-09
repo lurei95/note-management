@@ -4,10 +4,10 @@
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>
 
-<mat-toolbar>
+<mat-toolbar class="shadow">
   <div class="navbar">
-    <button [matMenuTriggerFor]="userMenu" 
-      id="userMenuButton">
+    <label id="title">{{title}}</label>
+    <button [matMenuTriggerFor]="userMenu" id="userMenuButton">
       <i class="far fa-user"></i>
     </button>
   </div>

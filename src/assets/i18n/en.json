@@ -1,33 +1,35 @@
 {
-  "DeleteNoteDialogTitle" : "Delete note?",
-  "DeleteNoteDialogText" : "Are you sure that you want to delete the note \"{{title}}\"?",
+  "DeleteNoteDialogTitle": "Delete note?",
+  "DeleteNoteDialogText": "Are you sure that you want to delete the note \"{{title}}\"?",
 
-  "DeleteCategoryDialogTitle" : "Delete category?",
-  "DeleteCategoryDialogText" : "Are you sure that you want to delete the category \"{{title}}\" and all its notes?",
+  "DeleteCategoryDialogTitle": "Delete category?",
+  "DeleteCategoryDialogText": "Are you sure that you want to delete the category \"{{title}}\" and all its notes?",
 
-  "NoteSaveChangesDialogTitle" : "Save changes?",
-  "NoteSaveChangesDialogText" : "The note has changes. Do you wish to save them before proceeding?",
+  "NoteSaveChangesDialogTitle": "Save changes?",
+  "NoteSaveChangesDialogText": "The note has changes. Do you wish to save them before proceeding?",
 
-  "SaveCategoryMessage" : "Category \"{{title}}\" saved successfully",
-  "SaveNoteMessage" : "Note \"{{title}}\" saved successfully",
+  "SaveCategoryMessage": "Category \"{{title}}\" saved successfully",
+  "SaveNoteMessage": "Note \"{{title}}\" saved successfully",
 
-  "DeleteCategoryMessage" : "Category \"{{title}}\" deleted successfully",
-  "DeleteNoteMessage" : "Note \"{{title}}\" deleted successfully",
+  "DeleteCategoryMessage": "Category \"{{title}}\" deleted successfully",
+  "DeleteNoteMessage": "Note \"{{title}}\" deleted successfully",
 
-  "Delete" : "Delete",
-  "Yes" : "Yes",
-  "No" : "No",
-  "Cancel" : "Cancel",
+  "Delete": "Delete",
+  "Yes": "Yes",
+  "No": "No",
+  "Cancel": "Cancel",
 
   "High": "high",
   "Medium": "medium",
   "Low": "low",
 
-  "RequiredField" : "required",
+  "RequiredField": "required",
 
-  "Login_InvalidEmailOrPassword" : "Invalid e-mail or password",
-  "Login_InvalidEmail" : "Invalid e-mail",
-  "Login_WrongPassword" : "Wrong password",
-  "Login_WeakPassword" : "The password must be at least 6 characters long",
-  "Login_UserAlreadyExsits" : "A user with the same e-mail already exists"
+  "Login_InvalidEmailOrPassword": "Invalid e-mail or password",
+  "Login_InvalidEmail": "Invalid e-mail",
+  "Login_WrongPassword": "Wrong password",
+  "Login_WeakPassword": "The password must be at least 6 characters long",
+  "Login_UserAlreadyExsits": "A user with the same e-mail already exists",
+
+  "CategoryTitle": "Category: \"{{title}}\""
 }
