@@ -1,13 +1,13 @@
 <div [className]="isSelected ? 'selected' : 'normal'" 
   (click)="handleCategoryClicked()" #container>
-  <input i18n-placeholder [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
+  <input [className]="editMode ? (titleError == null ? null : 'invalid') : 'hidden'"
     [readonly]="!editMode"
     [value] ="title" 
     (focusout)=handleFocusLeaving()
     (input)="handleTitleChanged($event.target.value)" 
     (keydown.enter)="handleSaveShortcut()"
     (keydown.control.s)="handleSaveShortcut($event)"
-    placeholder="{{titleError == null ? Titel : titleError}}"
+    placeholder="{{titleError == null ? ('General.Title' | translate) : titleError}}"
     #titleInput>
   <div *ngIf="editMode; then deleteButton else editButton"></div>
 </div>

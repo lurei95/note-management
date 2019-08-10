@@ -3,7 +3,7 @@
   <app-wait-panel [show]="showWaitPanel">
     <div id="body" [hidden]="showWaitPanel">
       <div id="loginContainer">
-        <label id="headerLabel">Register</label>
+        <label id="headerLabel">{{ 'RegisterComponent.Register' | translate }}</label>
         <form [formGroup]="formGroup">
           <div id="formContent">
             <input type="email" formControlName="email" placeholder="E-Mail">
@@ -13,7 +13,7 @@
               <button type="submit" 
                 (click)="tryRegister(formGroup.value)" 
                 id="loginButton">
-                Register
+                {{ 'RegisterComponent.Register' | translate }}
               </button>
             </div>
           </div>
@@ -22,21 +22,21 @@
           (click)="tryFacebookLogin()"
           id="facebookButton">
           <i class="fab fa-facebook-square" aria-hidden="true"></i>
-          Register with Facebook
+          {{ 'RegisterComponent.RegisterWithFacebook' | translate }}
         </button>
         <button type="button" 
           (click)="tryGoogleLogin()"
           id="googleButton">
           <i class="fab fa-google" aria-hidden="true"></i>
-          Register with Google
+          {{ 'RegisterComponent.RegisterWithGoogle' | translate }}
         </button>
         <button type="button"
           (click)="tryTwitterLogin()"
           id="twitterButton">
           <i class="fab fa-twitter" aria-hidden="true"></i>
-          Register with Twitter
+          {{ 'RegisterComponent.RegisterWithTwitter' | translate }}
         </button>
-        <p>Already have an account? <a href="/login">Login</a></p>
+        <p [innerHTML]="'RegisterComponent.LoginLink' | translate"></p>
       </div>
     </div>
   </app-wait-panel>

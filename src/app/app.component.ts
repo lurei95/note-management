@@ -1,10 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IApplicationState } from './redux/state';
-import { Store } from '@ngrx/store';
-import { User } from 'firebase';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Router } from '@angular/router';
 import { UserObserver } from './services/authentication/userObserver';
 
 @Component({

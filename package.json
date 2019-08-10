@@ -27,6 +27,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^8.1.0",
     "@ngrx/store": "^8.1.0",
+    "@ngrx/store-devtools": "^8.2.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "angular-gridster2": "^8.0.0",

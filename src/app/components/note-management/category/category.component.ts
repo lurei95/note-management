@@ -13,7 +13,6 @@ import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedC
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
-import { NotesService } from 'src/app/services/note/notes.service';
 
 /**
  * Component for displaying and editing a category

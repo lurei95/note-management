@@ -1,6 +1,6 @@
 <mat-menu #userMenu="matMenu">
-  <button mat-menu-item>View Profile</button>
-  <button mat-menu-item>Edit Profile</button>
+  <button mat-menu-item>{{ 'HeaderBarComponent.ShowUserProfile' | translate }}</button>
+  <button mat-menu-item>{{ 'HeaderBarComponent.EditUserProfile' | translate }}</button>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>
 

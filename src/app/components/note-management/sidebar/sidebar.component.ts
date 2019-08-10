@@ -79,8 +79,10 @@ export class SidebarComponent
 
   private handleSelectedCategoryChanged(category: CategoryModel)
   {
-    let newTitle = this.localizationService.execute(MessageKind.CategoryTitle, 
-      { title: category == null ? null : category.title });
+    let newTitle: string = null;
+    if (category != null)
+      newTitle = this.localizationService.execute(MessageKind.CategoryTitle, 
+        { title: category == null ? null : category.title });
     this.store.dispatch(new TitleChangeAction(newTitle));
     this.selectedCategory = category;
   }

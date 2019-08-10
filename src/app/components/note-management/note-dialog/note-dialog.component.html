@@ -14,26 +14,32 @@
       </button>
     </div>
     <div id="titleArea" #titleAreaDiv>
-      <label id="titleLabel">Titel:</label>
+      <label id="titleLabel">{{ 'General.Title' | translate }}:</label>
       <input [className]="titleError == null ? 'hiddenInput' : 'invalid'"
         type="text" id="titleInput"
-        placeholder="{{titleError == null ? Titel : titleError}}"
+        placeholder="{{titleError == null ? ('General.Title' | translate) : titleError}}"
         (input)="handleTitleChanged()"  
         [(ngModel)] ="model.title" #titleInput/>
     </div>
     <div id="propertyArea" #propertyAreaDiv>
-      <label class="propertyLabel" style="grid-row: 1">Fällig am:</label>
+      <label class="propertyLabel" style="grid-row: 1">
+        {{ 'NoteDialogComponent.DueDate' | translate }}:
+      </label>
       <app-date-picker [minDate]="now" 
         style="grid-row: 1"
         (dateChanged)="handleDateChanged($event)"
         [selectedDate] ="model.dueDate">
       </app-date-picker>
-      <label class="propertyLabel" style="grid-row: 1">Tags:</label>
+      <label class="propertyLabel" style="grid-row: 1">
+        {{ 'NoteDialogComponent.Tags' | translate }}:
+      </label>
       <app-tag-list style="grid-row: 1 / 4"
         (tagsChanged)="handleTagsChanged($event)"
         [tags]="model.tags">
       </app-tag-list>
-      <label class="propertyLabel" style="grid-row: 2">Priority:</label>
+      <label class="propertyLabel" style="grid-row: 2">
+        {{ 'NoteDialogComponent.Priority' | translate }}:
+      </label>
       <app-combo-box style="grid-row: 2" 
         (selectedValueChanged)="onPriorityChanged($event)"
         [enumType]="priorityEnumType"

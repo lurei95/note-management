@@ -5,13 +5,12 @@
   (doubleTap)="openEditDialog($event)">
   <mat-expansion-panel-header (click)="togglePanel(expansionPanel, $event)">
     <div class="headerLine">
-      <input i18n-placeholder 
-        [className]="titleError == null ? 'hiddenInput' : 'invalid'"
+      <input [className]="titleError == null ? 'hiddenInput' : 'invalid'"
         type="text" 
         (click)="handleInputClicked($event)"
         (pointerenter)="handlePointerEnter()" 
         (pointerleave)="handlePointerLeave()"
-        placeholder="{{titleError == null ? Titel : titleError}}"
+        placeholder="{{titleError == null ? ('General.Title' | translate) : titleError}}"
         (input)="validateModel()"  
         (keydown.enter)="handleSaveShortcut()"
         [(ngModel)] ="model.title" #titleInput/>

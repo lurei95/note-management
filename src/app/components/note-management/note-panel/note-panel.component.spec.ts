@@ -23,7 +23,6 @@ import { NotificationService } from 'src/app/services/notification/notificationS
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoteDialogComponent } from '../../dialogs/note-dialog/note-dialog.component';
 
 describe('NotePanelComponent', () => 
 {

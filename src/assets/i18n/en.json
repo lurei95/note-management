@@ -31,5 +31,36 @@
   "Login_WeakPassword": "The password must be at least 6 characters long",
   "Login_UserAlreadyExsits": "A user with the same e-mail already exists",
 
-  "CategoryTitle": "Category: \"{{title}}\""
+  "CategoryTitle": "Category: \"{{title}}\"",
+
+  "LoginComponent": {
+    "LoginWithTwitter": "Login with Twitter",
+    "LoginWithFacebook": "Login with Facebook",
+    "LoginWithGoogle": "Login with Google",
+    "RegisterLink": "No account yet? <a href=\"/register\">Create an account</a>"
+  },
+
+  "RegisterComponent": {
+    "Register": "Register",
+    "RegisterWithTwitter": "Register with Twitter",
+    "RegisterWithFacebook": "Register with Facebook",
+    "RegisterWithGoogle": "Register with Google",
+    "LoginLink": "Already have an account? <a href=\"/login\">Login</a>"
+  },
+
+  "HeaderBarComponent": {
+    "ShowUserProfile": "Show Profile",
+    "EditUserProfile": "Edit Profile"
+  },
+
+  "NoteDialogComponent": {
+    "DueDate": "Due date",
+    "Priority": "Priority",
+    "Tags": "Tags"
+  },
+
+  "General": {
+    "Title": "Title",
+    "NewTag": "New Tag"
+  }
 }

@@ -51,6 +51,7 @@ import { RegisterComponent } from './components/authentication/register/register
 import { rootRouterConfig } from './app.routes';
 import { MatMenuModule } from '@angular/material/menu';
 import { WaitPanelComponent } from './components/utiltity/wait-panel/wait-panel.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -107,7 +108,8 @@ export var imports = [
   MatNativeDateModule,
   CKEditorModule,
   MatChipsModule,
-  MatIconModule
+  MatIconModule,
+  StoreDevtoolsModule.instrument({ maxAge: 10 })
 ]
 
 export var providers = [

@@ -20,23 +20,25 @@
         </form>
         <button type="button" 
           (click)="tryFacebookLogin()"
-          id="facebookButton">
-          <i class="fab fa-facebook-square" aria-hidden="true"></i>
-          Login with Facebook
+          id="facebookButton" 
+          [translate]="loginWithFacebook">
+          <i class='fab fa-facebook-square' aria-hidden='true'></i>
+          {{ 'LoginComponent.LoginWithFacebook' | translate }}
         </button>
-        <button type="button" 
+        <button type="button"  
           (click)="tryGoogleLogin()"
-          id="googleButton">
+          id="googleButton"
+          [translate]="loginWithGoogle">
           <i class="fab fa-google" aria-hidden="true"></i>
-          Login with Google
+          {{ 'LoginComponent.LoginWithGoogle' | translate }}
         </button>
         <button type="button"
           (click)="tryTwitterLogin()"
           id="twitterButton">
-          <i class="fab fa-twitter" aria-hidden="true"></i>
-          Login with Twitter
+          <i class='fab fa-facebook-square' aria-hidden='true'></i>
+          {{ 'LoginComponent.LoginWithTwitter' | translate }}
         </button>
-        <p>No account yet? <a href="/register">Create an account</a></p>
+        <p [innerHTML]="'LoginComponent.RegisterLink' | translate"></p>
       </div>
     </div>
   </app-wait-panel>
