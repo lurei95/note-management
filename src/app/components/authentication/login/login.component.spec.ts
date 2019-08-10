@@ -13,6 +13,7 @@ import { AuthenticationServiceMock } from 'src/app/services/mocks/authentication
 import { RouterMock } from 'src/app/services/mocks/routerMock';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('LoginComponent', () => 
 {
@@ -31,13 +32,14 @@ describe('LoginComponent', () =>
     router = new RouterMock();
     TestBed.configureTestingModule(
     {
-      declarations: [ LoginComponent, WaitPanelComponent ],
+      declarations: [ LoginComponent, WaitPanelComponent, TranslatePipeMock ],
       imports: [ MatToolbarModule, MatProgressSpinnerModule, ReactiveFormsModule, FormsModule ],
       providers: [
         {provide: AuthenticationService, useValue: authenticationService},
         {provide: Router, useValue: router},
         {provide: LocalizationService, useValue: localizationService},
-        FormBuilder
+        FormBuilder,
+        TranslatePipeMock
       ]
     }).compileComponents();
   }));

@@ -3,8 +3,7 @@ import { CategoryModel } from '../models/categories/categoryModel';
 import { categoryReducer } from './reducers/categoryReducer';
 import { NotificationModel } from 'src/app/models/notifications/notificationModel';
 import { notificationReducer } from './reducers/notificationReducer';
-import { noteValidityReducer } from './reducers/noteValidityReducer';
-import { categoryValidityReducer } from './reducers/categoryValidityReducer';
+import { noteReducer } from './reducers/noteReducer';
 import { userReducer } from './reducers/userReducer';
 import { titleReducer } from './reducers/titleReducer';
 
@@ -16,9 +15,15 @@ export interface IApplicationState
   title: string,
   user: UserModel,
   notifications: NotificationModel[],
-  selectedCategory: CategoryModel,
-  invalidCategoryId: string,
-  invalidNoteId: string
+  categoryInfo: {
+    selectedCategory: CategoryModel,
+    invalidCategoryId: string,
+    newCategoryId: string
+  },
+  noteInfo: {
+    invalidNoteId: string,
+    newNoteId: string
+  }
 }
 
 /**
@@ -28,11 +33,35 @@ export const reducers =
 {
   title: titleReducer,
   user: userReducer,
-  selectedCategory: categoryReducer,
   notifications: notificationReducer,
-  invalidCategoryId: categoryValidityReducer,
-  invalidNoteId: noteValidityReducer
+  noteInfo: noteReducer,
+  categoryInfo: categoryReducer
 }
+
+/**
+ * Returns the selected category of the current state 
+ */
+export const getSelectedCategory = (state: IApplicationState) => state.categoryInfo.selectedCategory
+
+/**
+ * Returns the id of the invalid category
+ */
+export const getInvalidCategoryId = (state: IApplicationState) => state.categoryInfo.invalidCategoryId;
+
+/**
+ * Returns the id of the newly added category
+ */
+export const getNewCategoryId = (state: IApplicationState) => state.categoryInfo.newCategoryId;
+
+/**
+ * Returns the id of the newly added nte
+ */
+export const getNewNoteId = (state: IApplicationState) => state.noteInfo.newNoteId;
+
+/**
+ * Returns the id of the invalid note
+ */
+export const getInvalidNoteId = (state: IApplicationState) => state.noteInfo.invalidNoteId;
 
 /**
  * Returns the currently displayed title
@@ -45,21 +74,6 @@ export const getTitle = (state: IApplicationState) => state.title;
 export const getUser = (state: IApplicationState) => state.user;
 
 /**
- * Returns the id of the invalid note
- */
-export const getInvalidNoteId = (state: IApplicationState) => state.invalidNoteId;
-
-/**
- * Returns the id of the invalid category
- */
-export const getInvalidCategoryId = (state: IApplicationState) => state.invalidCategoryId;
-
-/**
  * Returns the existing notifications of the current state 
  */
 export const getNotifications = (state: IApplicationState) => state.notifications;
-
-/**
- * Returns the selected category of the current state 
- */
-export const getSelectedCategory = (state: IApplicationState) => state.selectedCategory

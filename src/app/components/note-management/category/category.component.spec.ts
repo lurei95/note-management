@@ -16,8 +16,8 @@ import { nullOrEmpty } from 'src/app/util/utility';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
 import { MessageKind } from 'src/app/messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
-import { OtherActionKind } from 'src/app/redux/actions/other/otherActionKind';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { TranslatePipe } from '@ngx-translate/core';
 
 describe('CategoryComponent', () => 
 {
@@ -62,12 +62,13 @@ describe('CategoryComponent', () =>
     TestBed.configureTestingModule(
     {
       imports: [ FormsModule ],
-      declarations: [ CategoryComponent ],
+      declarations: [ CategoryComponent, TranslatePipeMock ],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: LocalizationService, useValue: localizationServiceMock },
         { provide: MessageDialogService, useValue: messageDialogService },
         { provide: CategoriesService, useValue: categoryServiceMock },
+        TranslatePipeMock
       ],
     }).compileComponents();
   }));

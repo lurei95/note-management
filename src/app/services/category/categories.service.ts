@@ -12,6 +12,7 @@ import { MessageKind } from 'src/app/messageKind';
 import { truncate, nullOrEmpty } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { DocumentData } from '@angular/fire/firestore';
+import { NewCategoryChangeAction } from 'src/app/redux/actions/category/newCategoryChangeAction';
 
 /**
  * Service for retrieving all exisiting categories
@@ -65,7 +66,10 @@ export class CategoriesService extends ModelService<CategoryModel>
     this.unsetInvalidCategory(parameter.id);
     this.unsetSelectedCategory(parameter.id)
 
-    super.delete(parameter);
+    if (parameter.timestamp != null)
+      super.delete(parameter);
+    else
+      this.store.dispatch(new NewCategoryChangeAction(null));
 
     this.deleteNotesOfCategory(parameter.id);
 

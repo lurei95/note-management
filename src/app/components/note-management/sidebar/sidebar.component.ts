@@ -1,9 +1,10 @@
+import { NewCategoryChangeAction } from './../../../redux/actions/category/newCategoryChangeAction';
 import { CategoriesService } from './../../../services/category/categories.service';
 import { FilterCategoriesService } from '../../../services/category/filter-categories.service';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId, getNewCategoryId } from 'src/app/redux/state';
 import { v4 as uuid } from 'uuid';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
 import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
@@ -25,6 +26,7 @@ export class SidebarComponent
   private selectedCategory: CategoryModel = null;
   private invalidCategoryId: string = null;
   private invalidNoteId: string = null;
+  private newCategoryId: string = null;
 
   private _filteredCategories: CategoryModel[] = [];
   /**
@@ -48,6 +50,7 @@ export class SidebarComponent
     this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
     this.store.select(getSelectedCategory).subscribe(
       (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
+    this.store.select(getNewCategoryId).subscribe((x: string) => this.handleNewCategoryChanged(x));
 
     categoriesService.get((x: CategoryModel[]) => this.handleCategoriesChanged(x));
   }
@@ -62,6 +65,8 @@ export class SidebarComponent
       let model = new CategoryModel(uuid());
       model.isEditing = true;
       this._filteredCategories.push(model);
+      this.newCategoryId = model.id;
+      this.store.dispatch(new NewCategoryChangeAction(model.id));
     }     
   }
 
@@ -85,6 +90,16 @@ export class SidebarComponent
         { title: category == null ? null : category.title });
     this.store.dispatch(new TitleChangeAction(newTitle));
     this.selectedCategory = category;
+  }
+
+  private handleNewCategoryChanged(categoryId: string)
+  {
+    if (this.newCategoryId != null && this.newCategoryId != categoryId)
+    {
+      let index = this.filteredCategories.findIndex(item => item.id == this.newCategoryId);
+      this.filteredCategories.splice(index);
+    }
+    this.newCategoryId = categoryId;
   }
 
   private handleCategoriesChanged(categories: CategoryModel[]) 

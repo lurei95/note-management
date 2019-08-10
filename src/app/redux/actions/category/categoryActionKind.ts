@@ -10,5 +10,9 @@ export enum CategoryActionKind
   /**
    * The validity of the category is changed
    */
-  CategoryValidityChange = "CategoryValidityChange"
+  CategoryValidityChange = "CategoryValidityChange",
+  /**
+   * The new category is changed
+   */
+  NewCategoryChange = "NewCategoryChange"
 }

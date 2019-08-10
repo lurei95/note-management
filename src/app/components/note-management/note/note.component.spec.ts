@@ -17,6 +17,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { NotesService } from 'src/app/services/note/notes.service';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('NoteComponent', () => {
   let component: NoteComponent;
@@ -57,13 +58,14 @@ describe('NoteComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [ CKEditorModule, FormsModule, MatExpansionModule, BrowserAnimationsModule ],
-      declarations: [ NoteComponent ],
+      declarations: [ NoteComponent, TranslatePipeMock ],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: MessageDialogService, useValue: messageDialogService },
         { provide: LocalizationService, useValue: localizationServiceMock },
         { provide: MatDialog, useValue: dialogMock },
-        { provide: NotesService, useValue: notesServiceMock }
+        { provide: NotesService, useValue: notesServiceMock },
+        TranslatePipeMock
       ],
     }).compileComponents();
   }));

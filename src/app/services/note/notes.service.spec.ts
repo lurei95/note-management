@@ -7,6 +7,7 @@ import { NotesService } from './notes.service';
 import { NoteModel } from 'src/app/models/notes/noteModel';
 import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
 import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
+import { NewNoteChangeAction } from 'src/app/redux/actions/note/newNoteChangeAction';
 
 describe('NotesService', () => 
 {
@@ -29,6 +30,7 @@ describe('NotesService', () =>
   {
     store = new StoreMock();
     model = new NoteModel("1", "title1");
+    model.timestamp = 1;
     store.resultSelector = (selector) =>
     {
       if (selector == getUser)
@@ -63,6 +65,15 @@ describe('NotesService', () =>
       .find(item => item instanceof NoteValidityChangeAction) as NoteValidityChangeAction;
     expect(action.payload).toBeNull();
     expect(action.type).toBe(NoteActionKind.NoteValidityChange);
+  });
+
+  it("delete unsets the newNoteId if note was new", () => 
+  {
+    service.delete(new NoteModel("2"));
+
+    let action: NewNoteChangeAction = store.dispatchedActions[0] as NewNoteChangeAction;
+    expect(action.type).toBe(NoteActionKind.NewNoteChange);
+    expect(action.payload == null).toBe(true);
   });
 
   it("delete displays a success message", () => 

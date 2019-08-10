@@ -1,6 +1,6 @@
 import { WaitPanelComponent } from './../../utiltity/wait-panel/wait-panel.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
+import { Store, ScannedActionsSubject } from '@ngrx/store';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FilterInputComponent } from '../../utiltity/filter-input/filter-input.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -11,7 +11,7 @@ import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { FilterNotesServiceMock } from 'src/app/services/mocks/filterNotesServiceMock';
 import { NotesService } from 'src/app/services/note/notes.service';
 import { FilterNotesService } from 'src/app/services/note/filter-notes.service';
-import { getInvalidCategoryId, getInvalidNoteId, getSelectedCategory } from 'src/app/redux/state';
+import { getInvalidCategoryId, getInvalidNoteId, getSelectedCategory, getNewNoteId } from 'src/app/redux/state';
 import { NoteComponent } from '../note/note.component';
 import { FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -23,6 +23,9 @@ import { NotificationService } from 'src/app/services/notification/notificationS
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewNoteChangeAction } from 'src/app/redux/actions/note/newNoteChangeAction';
+import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('NotePanelComponent', () => 
 {
@@ -33,6 +36,7 @@ describe('NotePanelComponent', () =>
   let filterService: FilterNotesServiceMock;
   let invalidCategoryId: Subject<string>;
   let invalidNoteId: Subject<string>;
+  let newNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
   let notes: NoteModel[];
   let getSpy: jasmine.Spy<any>;
@@ -42,6 +46,7 @@ describe('NotePanelComponent', () =>
   {
     getSpy = spyOn(notesServiceMock, "get");
     selectedCategory = new Subject();
+    newNoteId = new Subject();
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
     filterService = new FilterNotesServiceMock();
@@ -54,11 +59,19 @@ describe('NotePanelComponent', () =>
         return invalidNoteId;
       if (selector == getSelectedCategory)
         return selectedCategory;
+      if (selector == getNewNoteId)
+        return newNoteId;
       return null;
     }
 
     TestBed.configureTestingModule({
-      declarations: [ NotePanelComponent, FilterInputComponent, NoteComponent, WaitPanelComponent ],
+      declarations: [ 
+        NotePanelComponent, 
+        FilterInputComponent, 
+        NoteComponent, 
+        WaitPanelComponent, 
+        TranslatePipeMock 
+      ],
       imports: [ 
         CKEditorModule, 
         FormsModule, 
@@ -73,7 +86,8 @@ describe('NotePanelComponent', () =>
         { provide: LocalizationService, useValue: {} },
         { provide: MatDialog, useValue: { } },
         { provide: NotificationService, useValue: {} },
-        { provide: NotesService, useValue: notesServiceMock }
+        { provide: NotesService, useValue: notesServiceMock },
+        TranslatePipeMock
       ]
     }).compileComponents();
   }));
@@ -137,6 +151,23 @@ describe('NotePanelComponent', () =>
 
     invalidCategoryId.next(null);
     component.handleAddButtonClicked();
+    expect(component.filteredNotes.length).toBe(0);
+  });
+
+  it('handleAddButtonClicked changes the new note', () => 
+  {
+    component.handleAddButtonClicked();
+
+    let action: NewNoteChangeAction = storeMock.dispatchedActions[0] as NewNoteChangeAction;
+    expect(action.type).toBe(NoteActionKind.NewNoteChange);
+    expect(action.payload != null).toBe(true);
+  });
+
+  it('does remove the new note if the new note has changed to null', () => 
+  {
+    component.handleAddButtonClicked();
+    newNoteId.next(null);
+
     expect(component.filteredNotes.length).toBe(0);
   });
 });

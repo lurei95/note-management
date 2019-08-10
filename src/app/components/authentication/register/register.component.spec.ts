@@ -15,6 +15,7 @@ import { RegisterComponent } from './register.component';
 import { AuthenticationErrorKind } from 'src/app/services/authentication/authenticationErrorKind';
 import { MessageKind } from 'src/app/messageKind';
 import { By } from '@angular/platform-browser';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('RegisterComponent', () => 
 {
@@ -37,13 +38,14 @@ describe('RegisterComponent', () =>
     spy = spyOn<any>(addUserService, "execute");
     TestBed.configureTestingModule(
     {
-      declarations: [ RegisterComponent, WaitPanelComponent ],
+      declarations: [ RegisterComponent, WaitPanelComponent, TranslatePipeMock ],
       imports: [ MatToolbarModule, MatProgressSpinnerModule, ReactiveFormsModule, FormsModule ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationService},
         { provide: Router, useValue: router},
         { provide: LocalizationService, useValue: localizationService},
         FormBuilder,
+        TranslatePipeMock,
         { provide: AddUserService, useValue: addUserService }
       ]
     }).compileComponents();

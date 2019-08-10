@@ -11,6 +11,7 @@ import { LocalizationService } from '../localization.service';
 import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
 import { Dictionary } from 'src/app/util/dictionary';
 import { DocumentData } from '@angular/fire/firestore';
+import { NewNoteChangeAction } from 'src/app/redux/actions/note/newNoteChangeAction';
 
 /**
  * Service for retrieving all exisiting notes
@@ -47,7 +48,10 @@ export class NotesService extends ModelService<NoteModel>
   {
     this.unsetInvalidNote(parameter.id);
 
-    super.delete(parameter);
+    if (parameter.timestamp != null)
+      super.delete(parameter);
+    else
+      this.store.dispatch(new NewNoteChangeAction(null));
 
     const message = this.localizationService.execute(MessageKind.DeleteNoteMessage, 
       { title: truncate(parameter.title, 10) });

@@ -117,7 +117,7 @@ export class NoteDialogComponent extends NoteComponentBase
       e.stopPropagation();
     }
 
-    if (this.hasChanges())
+    if (this.hasChanges() || this.model.timestamp == null)
     {
       let text = this.localizationService.execute(MessageKind.NoteSaveChangesDialogText);
       let title = this.localizationService.execute(MessageKind.NoteSaveChangesDialogTitle);
@@ -156,7 +156,11 @@ export class NoteDialogComponent extends NoteComponentBase
     if (result == DialogResult.Yes)
       this.tryCloseDialog();
     else if (result == DialogResult.No)
+    {
+      if (this.model.timestamp == null)
+        this.service.delete(this.model);
       this.tryCloseDialog(false);
+    }
   }
 
   private tryCloseDialog(saveChanges: boolean = true)

@@ -1,3 +1,5 @@
+import { getNewCategoryId } from './../../../redux/state';
+import { NewCategoryChangeAction } from 'src/app/redux/actions/category/newCategoryChangeAction';
 import { CategoryActionKind } from './../../../redux/actions/category/categoryActionKind';
 import { SelectedCategoryChangeAction } from './../../../redux/actions/category/selectedCategoryChangeAction';
 import { MessageDialogService } from '../../../services/message-dialog.service';
@@ -20,6 +22,7 @@ import { CategoriesService } from 'src/app/services/category/categories.service'
 import { MessageKind } from 'src/app/messageKind';
 import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
 import { OtherActionKind } from 'src/app/redux/actions/other/otherActionKind';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('SidebarComponent', () => 
 {
@@ -31,6 +34,7 @@ describe('SidebarComponent', () =>
   let invalidCategoryId: Subject<string>;
   let invalidNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
+  let newCategoryId: Subject<string>;
   let categoriesServiceMock: any = { get() {} };
   let getSpy: jasmine.Spy<any>;
   let localizationSpy: jasmine.Spy<any>;
@@ -43,6 +47,7 @@ describe('SidebarComponent', () =>
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
     selectedCategory = new Subject();
+    newCategoryId = new Subject<string>();
     filterService = new FilterCategoriesServiceMock();
     storeMock = new StoreMock();
     storeMock.resultSelector = (selector) => 
@@ -53,18 +58,21 @@ describe('SidebarComponent', () =>
         return invalidNoteId;
       if (selector == getSelectedCategory)
         return selectedCategory;
+      if (selector == getNewCategoryId)
+        return newCategoryId;
       return null;  
     }
 
     TestBed.configureTestingModule(
     {
-      declarations: [ SidebarComponent, FilterInputComponent, CategoryComponent ],
+      declarations: [ SidebarComponent, FilterInputComponent, CategoryComponent, TranslatePipeMock ],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: FilterCategoriesService, useValue: filterService },
-        { provide: LocalizationService, useValue: { } },
+        { provide: LocalizationService, useValue: localizationServiceMock },
         { provide: MessageDialogService, useValue: { } },
-        { provide: CategoriesService, useValue: categoriesServiceMock }
+        { provide: CategoriesService, useValue: categoriesServiceMock },
+        TranslatePipeMock
       ],
       imports: [ FormsModule ]
     }).compileComponents();
@@ -128,6 +136,23 @@ describe('SidebarComponent', () =>
 
     expect(component.filteredCategories.length).toBe(1);
     expect(component.filteredCategories[0].isEditing).toBe(true);
+  });
+
+  it('does remove the new category if the new category has changed to null', () => 
+  {
+    component.handleAddButtonClicked();
+    newCategoryId.next(null);
+
+    expect(component.filteredCategories.length).toBe(0);
+  });
+
+  it('handleAddButtonClicked changes the new category', () => 
+  {
+    component.handleAddButtonClicked();
+
+    let action: NewCategoryChangeAction = storeMock.dispatchedActions[0] as NewCategoryChangeAction;
+    expect(action.type).toBe(CategoryActionKind.NewCategoryChange);
+    expect(action.payload != null).toBe(true);
   });
 
   it('handleAddButtonClicked does not add a new category if invalid note or category exsits', () => 

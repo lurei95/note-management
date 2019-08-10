@@ -9,6 +9,8 @@ import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActio
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
 import { MessageKind } from 'src/app/messageKind';
 import { QueryDocumentSnapshot, DocumentData } from '@angular/fire/firestore';
+import { NewCategoryChangeAction } from 'src/app/redux/actions/category/newCategoryChangeAction';
+import { invoke } from 'q';
 
 describe('CategoriesService', () => 
 {
@@ -33,6 +35,7 @@ describe('CategoriesService', () =>
   {
     store = new StoreMock();
     model = new CategoryModel("1", "title1");
+    model.timestamp = 1;
     store.resultSelector = (selector) =>
     {
       if (selector == getUser)
@@ -58,6 +61,15 @@ describe('CategoriesService', () =>
     service.delete(model);
 
     expect(spy).toHaveBeenCalledWith("1", "test");
+  });
+
+  it("delete unsets the newCatgeoryId if category was new", () => 
+  {
+    service.delete(new CategoryModel("2"));
+
+    let action: NewCategoryChangeAction = store.dispatchedActions[0] as NewCategoryChangeAction;
+    expect(action.type).toBe(CategoryActionKind.NewCategoryChange);
+    expect(action.payload == null).toBe(true);
   });
 
   it("delete unsets the invalid category", () => 

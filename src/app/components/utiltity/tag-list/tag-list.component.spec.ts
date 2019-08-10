@@ -5,6 +5,7 @@ import { TagListComponent } from './tag-list.component';
 import { MatChipsModule, MatChipInputEvent, MatChip } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { DebugElement } from '@angular/core';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('TagListComponent', () =>
 {
@@ -14,9 +15,11 @@ describe('TagListComponent', () =>
 
   beforeEach(async(() => 
   { 
-    TestBed.configureTestingModule({ 
-      declarations: [ TagListComponent ],
-      imports: [ MatChipsModule, MatIconModule ]
+    TestBed.configureTestingModule(
+    { 
+      declarations: [ TagListComponent, TranslatePipeMock ],
+      imports: [ MatChipsModule, MatIconModule ],
+      providers: [ TranslatePipeMock ]
     }).compileComponents(); 
   }));
 

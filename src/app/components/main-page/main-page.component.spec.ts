@@ -24,6 +24,7 @@ import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services/notification/notificationService';
 import { NotesService } from 'src/app/services/note/notes.service';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('MainPageComponent', () => 
 {
@@ -45,7 +46,8 @@ describe('MainPageComponent', () =>
         NotificationListComponent,
         FilterInputComponent,
         CategoryComponent,
-        NoteComponent
+        NoteComponent,
+        TranslatePipeMock
       ],
       imports: [ 
         MatMenuModule, 
@@ -65,6 +67,7 @@ describe('MainPageComponent', () =>
         { provide: AngularFirestore, useValue: {}},
         { provide: CategoriesService, useValue: { get() {} }},
         { provide: NotesService, useValue: { get() {} }},
+        TranslatePipeMock
       ]
     }).compileComponents();
   }));

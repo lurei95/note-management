@@ -9,6 +9,7 @@ import { AuthenticationServiceMock } from 'src/app/services/mocks/authentication
 import { Store } from '@ngrx/store';
 import { getTitle } from 'src/app/redux/state';
 import { By } from '@angular/platform-browser';
+import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
 
 describe('HeaderBarComponent', () => 
 {
@@ -31,11 +32,12 @@ describe('HeaderBarComponent', () =>
     authenticationService = new AuthenticationServiceMock();
     TestBed.configureTestingModule(
     {
-      declarations: [ HeaderBarComponent ],
+      declarations: [ HeaderBarComponent, TranslatePipeMock ],
       imports: [ MatMenuModule, MatToolbarModule ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationService },
-        { provide: Store, useValue: store }
+        { provide: Store, useValue: store },
+        TranslatePipeMock
       ]
     }).compileComponents();
   }));
