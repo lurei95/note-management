@@ -31,7 +31,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { NotificationListComponent } from './components/utiltity/notification-list/notification-list.component';
 import { NotificationService } from './services/notification/notificationService';
-import { FilterNotesService } from './services/note/filter-notes.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { reducers } from './redux/state';
@@ -121,7 +120,6 @@ export var providers = [
   NotificationService,
   MatDialog,
   HttpClientModule,
-  FilterNotesService,
   MessageDialogService
 ]
 

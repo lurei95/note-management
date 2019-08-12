@@ -1,8 +1,6 @@
 import { NoteActionKind } from '../actions/note/noteActionKind';
 import { Action } from '@ngrx/store';
 import { NoteValidityChangeAction } from '../actions/note/noteValidityChangeAction';
-import { stat } from 'fs';
-import { NewNoteChangeAction } from '../actions/note/newNoteChangeAction';
 
 const defaultState = {
   invalidNoteId: null,
@@ -23,11 +21,6 @@ export function noteReducer(
     case NoteActionKind.NoteValidityChange:
     {
       state.invalidNoteId = (action as NoteValidityChangeAction).payload;
-      return state;
-    }
-    case NoteActionKind.NewNoteChange:
-    {
-      state.newNoteId = (action as NewNoteChangeAction).payload;
       return state;
     }
     default:

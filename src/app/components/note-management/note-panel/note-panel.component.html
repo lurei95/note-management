@@ -9,7 +9,7 @@
   <hr>
   <app-wait-panel [show]="retrievingNotes">
     <div id="panel" [hidden]="retrievingNotes">
-      <app-note *ngFor="let note of filteredNotes;" [model]="note"></app-note>    
+      <app-note *ngFor="let note of notes | async" [model]="note"></app-note>    
     </div>
   </app-wait-panel>
 </div>

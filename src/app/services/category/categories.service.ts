@@ -49,7 +49,13 @@ export class CategoriesService extends ModelService<CategoryModel>
   {
     parameter.isEditing = false;
 
-    super.save(parameter);
+    if (parameter.timestamp != null)
+      super.save(parameter);
+    else
+    {
+      super.save(parameter);
+      this.store.dispatch(new NewCategoryChangeAction(null));
+    }
 
     const message = this.localizationService.execute(MessageKind.SaveCategoryMessage, 
      { title: truncate(parameter.title, 10) });
@@ -101,7 +107,7 @@ export class CategoriesService extends ModelService<CategoryModel>
    * @param {DocumentData} data The data to map to the model
    * @returns {CategoryModel} The mdoel
    */
-  protected map(data: DocumentData): CategoryModel
+  protected mapToModel(data: DocumentData): CategoryModel
   { return Object.assign(new CategoryModel(), data) };
 
   private unsetInvalidCategory(categoryId: string)

@@ -12,7 +12,7 @@ describe('ModelService', () =>
   {
     protected get path() { return "test" }
     
-    protected map(data: DocumentData): NoteModel { return new NoteModel(); }
+    protected mapToModel(data: DocumentData): NoteModel { return new NoteModel(); }
   }
 
   let service: TestModelService;

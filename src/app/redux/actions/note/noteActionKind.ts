@@ -7,9 +7,4 @@ export enum NoteActionKind
    * The validity of a edited note is changed
    */
   NoteValidityChange = 'NoteValidityChange',
-
-  /**
-   * The new note is changed
-   */
-  NewNoteChange = "NewNoteChange"
 }

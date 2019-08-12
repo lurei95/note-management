@@ -2,9 +2,11 @@ import { AngularFirestoreCollection, DocumentData, AngularFirestoreDocument } fr
 import { UserModel } from 'src/app/models/users/userModel';
 import { EditableModel } from 'src/app/models/editableModel';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { IApplicationState, getUser } from 'src/app/redux/state';
 import { DatabaseService } from '../database.service';
 import { Dictionary } from 'src/app/util/dictionary';
+import { Observable } from 'rxjs';
 
 /**
  * Interface of a service for deleting a model
@@ -63,16 +65,15 @@ export abstract class ModelService<TModel extends EditableModel>
   /**
    * Executes the service: Retrieves all exisiting models
    * 
-   * @param {(categories: TModel[]) => void} callback Callback to execute when the items changed
+   * @param {(model: TModel) => boolean} filter Function for filtering the models
    */
-  get(callback: (categories: TModel[]) => void)
+  get(filter: (model: TModel) => boolean = (model) => true): Observable<TModel[]>
   {
     let collection = this.getCollection();   
-    collection.snapshotChanges().subscribe(result => 
-    {
-      let categories = result.map(item => this.map(item.payload.doc.data()));
-      callback(categories);
-    });
+    return collection.snapshotChanges()
+      .pipe(map(value => value.map(item => this.mapToModel(item.payload.doc.data()))
+        .filter(item => filter(item))
+        .sort((a, b) => a.timestamp - b.timestamp)));
   }
 
   /**
@@ -97,5 +98,5 @@ export abstract class ModelService<TModel extends EditableModel>
    * @param {DocumentData} data The data to map to the model
    * @returns {TModel} The mdoel
    */
-  protected abstract map(data: DocumentData) : TModel
+  protected abstract mapToModel(data: DocumentData) : TModel
 }

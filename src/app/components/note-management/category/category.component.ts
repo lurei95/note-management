@@ -1,11 +1,10 @@
-import { TitleChangeAction } from './../../../redux/actions/other/titleChangeAction';
 import { CategoriesService } from './../../../services/category/categories.service';
 import { CategoryValidityChangeAction } from '../../../redux/actions/category/categoryValidityChangeAction';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { EditableComponent } from '../../editableComponent';
 import { Store } from '@ngrx/store';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { coalesce } from 'src/app/util/utility';
+import { coalesce, nullOrEmpty } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';

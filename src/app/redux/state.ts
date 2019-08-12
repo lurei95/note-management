@@ -21,8 +21,7 @@ export interface IApplicationState
     newCategoryId: string
   },
   noteInfo: {
-    invalidNoteId: string,
-    newNoteId: string
+    invalidNoteId: string
   }
 }
 
@@ -52,11 +51,6 @@ export const getInvalidCategoryId = (state: IApplicationState) => state.category
  * Returns the id of the newly added category
  */
 export const getNewCategoryId = (state: IApplicationState) => state.categoryInfo.newCategoryId;
-
-/**
- * Returns the id of the newly added nte
- */
-export const getNewNoteId = (state: IApplicationState) => state.noteInfo.newNoteId;
 
 /**
  * Returns the id of the invalid note

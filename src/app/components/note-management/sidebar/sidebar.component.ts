@@ -1,6 +1,5 @@
 import { NewCategoryChangeAction } from './../../../redux/actions/category/newCategoryChangeAction';
 import { CategoriesService } from './../../../services/category/categories.service';
-import { FilterCategoriesService } from '../../../services/category/filter-categories.service';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
@@ -10,6 +9,8 @@ import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/sel
 import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { nullOrEmpty } from 'src/app/util/utility';
+import { Observable, of, concat, merge } from 'rxjs';
 
 /**
  * Component for a sidbar containing categories
@@ -21,30 +22,32 @@ import { LocalizationService } from 'src/app/services/localization.service';
 })
 export class SidebarComponent
 {
-  private categories: CategoryModel[] = [];
+  private categories: CategoryModel[];
   private filterText: string  = null;
   private selectedCategory: CategoryModel = null;
   private invalidCategoryId: string = null;
   private invalidNoteId: string = null;
-  private newCategoryId: string = null;
+  private newCategory: CategoryModel = null;
 
-  private _filteredCategories: CategoryModel[] = [];
-  /**
-   * @returns {CategoryModel[]} A list of categories filtered by the search text
-   */
-  get filteredCategories(): CategoryModel[] { return this._filteredCategories; }
+  private filterFunc = (category: CategoryModel) => 
+  {
+    if (!nullOrEmpty(this.filterText))
+    return category.id == this.selectedCategory.id 
+      || category.title.toUpperCase().includes(this.filterText.toUpperCase());
+    else
+      return true;
+  }
 
   /**
    * Constructor
    * 
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {LocalizationService} localizationService Injected: service for getting localized strings
-   * @param {FilterCategoriesService} filterService Injected: service for filtering the categories
    * @param {CategoriesService} categoriesService Injected: service for providing the categories
    */
   constructor(private store: Store<IApplicationState>, 
-    private localizationService: LocalizationService,
-    private filterService: FilterCategoriesService, categoriesService: CategoriesService) 
+    private localizationService: LocalizationService, 
+    private categoriesService: CategoriesService) 
   {
     this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
     this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
@@ -52,7 +55,7 @@ export class SidebarComponent
       (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
     this.store.select(getNewCategoryId).subscribe((x: string) => this.handleNewCategoryChanged(x));
 
-    categoriesService.get((x: CategoryModel[]) => this.handleCategoriesChanged(x));
+    this.updateSubscription();
   }
 
   /**
@@ -64,8 +67,8 @@ export class SidebarComponent
     {
       let model = new CategoryModel(uuid());
       model.isEditing = true;
-      this._filteredCategories.push(model);
-      this.newCategoryId = model.id;
+      this.newCategory = model;
+      this.categories = [...this.categories, this.newCategory];
       this.store.dispatch(new NewCategoryChangeAction(model.id));
     }     
   }
@@ -78,7 +81,7 @@ export class SidebarComponent
     if (this.filterText != filterText)
     {
       this.filterText = filterText;
-      this.filterCategories(); 
+      this.updateSubscription();
     }
   }
 
@@ -94,29 +97,27 @@ export class SidebarComponent
 
   private handleNewCategoryChanged(categoryId: string)
   {
-    if (this.newCategoryId != null && this.newCategoryId != categoryId)
+    if (this.newCategory != null && categoryId == null)
     {
-      let index = this.filteredCategories.findIndex(item => item.id == this.newCategoryId);
-      this.filteredCategories.splice(index);
+      this.newCategory = null;
+      this.categories.splice(this.categories.length - 1, 1);
     }
-    this.newCategoryId = categoryId;
   }
 
   private handleCategoriesChanged(categories: CategoryModel[]) 
   {
-    this.categories = categories.sort((a, b) => a.timestamp - b.timestamp);
+    categories = categories;
     if (categories.length > 0 && this.selectedCategory == null)
       this.store.dispatch(new SelectedCategoryChangeAction(categories[0]));
-    this.filterCategories(); 
+    if (this.newCategory != null)
+      this.categories = [...categories, this.newCategory];
+    else
+      this.categories = categories;
   }
 
-  private filterCategories() 
-  {
-    let result = this.filterService.filter(this.categories, this.filterText, 
-      this.selectedCategory == null ? null : this.selectedCategory.id);
-    if (result != null)
-      this._filteredCategories = result.slice(0, 19);
-    else
-      this._filteredCategories = [];
+  private updateSubscription()
+  { 
+    this.categoriesService.get(this.filterFunc)
+      .subscribe((x: CategoryModel[]) => this.handleCategoriesChanged(x));
   }
 }
