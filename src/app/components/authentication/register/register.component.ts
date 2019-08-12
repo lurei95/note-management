@@ -41,14 +41,14 @@ export class RegisterComponent extends LoginComponentBase
       .then(() => this.onSuccessfulAuthentication(), err => this.handleError(err));
   }
 
+  /**
+   * Handles a successful registration
+   */
   onSuccessfulAuthentication()
   {
     super.onSuccessfulAuthentication();
     this.authenticationService.getUser()
-      .then((user) => 
-      {
-        this.addService.execute(new UserModel(user))
-      });
+      .then((user) => this.addService.execute(new UserModel(user)));
   }
 
   private handleError(error: any)

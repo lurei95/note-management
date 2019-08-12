@@ -1,10 +1,10 @@
 import { CategoriesService } from './../../../services/category/categories.service';
 import { CategoryValidityChangeAction } from '../../../redux/actions/category/categoryValidityChangeAction';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { EditableComponent } from '../../editableComponent';
 import { Store } from '@ngrx/store';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { coalesce, nullOrEmpty } from 'src/app/util/utility';
+import { coalesce } from 'src/app/util/utility';
 import { Dictionary } from 'src/app/util/dictionary';
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';
@@ -12,6 +12,7 @@ import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedC
 import { CategoryModel } from 'src/app/models/categories/categoryModel';
 import { MessageDialogService } from 'src/app/services/message-dialog.service';
 import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Component for displaying and editing a category
@@ -75,10 +76,12 @@ export class CategoryComponent extends EditableComponent<CategoryModel>
   { 
     super(service); 
 
-    this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
-    this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
-    this.store.select(getSelectedCategory).subscribe(
-      (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
+    this.store.select(getInvalidCategoryId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidCategoryId = x);
+    this.store.select(getInvalidNoteId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidNoteId = x);
+    this.store.select(getSelectedCategory).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: CategoryModel) => this.handleSelectedCategoryChanged(x));
   }
 
   /**

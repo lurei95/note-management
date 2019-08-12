@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ComponentBase } from '../componentBase';
 
 /**
  * Component for the main page
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
-export class MainPageComponent
+export class MainPageComponent extends ComponentBase
 { }

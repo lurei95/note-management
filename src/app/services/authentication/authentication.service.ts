@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 /**
  * Service for handling authentication matters
@@ -27,7 +28,7 @@ export class AuthenticationService
   getUser(): Promise<{uid: string, email:string}>
   {
     return new Promise<{uid: string, email:string}>((resolve) => 
-    { this.authentication.user.subscribe(user => resolve(user)); });
+    { this.authentication.user.pipe(take(1)).subscribe(user => resolve(user)); });
   }
 
   /**

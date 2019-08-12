@@ -1,6 +1,6 @@
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AuthenticationErrorKind } from 'src/app/services/authentication/authenticationErrorKind';
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';

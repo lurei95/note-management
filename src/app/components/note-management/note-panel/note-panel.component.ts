@@ -8,17 +8,19 @@ import { NoteModel } from 'src/app/models/notes/noteModel';
 import { v4 as uuid } from 'uuid';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, concat, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ComponentBase } from '../../componentBase';
 
 /**
- * Component pf panel for displaying notes
+ * Component of a panel for displaying notes
  */
 @Component({
   selector: 'app-note-panel',
   templateUrl: './note-panel.component.html',
   styleUrls: ['./note-panel.component.css']
 })
-export class NotePanelComponent
+export class NotePanelComponent extends ComponentBase
 {
   private filterText: string;
   private selectedCategory: CategoryModel;
@@ -53,13 +55,16 @@ export class NotePanelComponent
    * @param {Store<IApplicationState>} store Injected: redux store
    * @param {MatDialog} dialog Injected: service for displaying dialogs
    */
-  constructor(private notesService: NotesService, private store: Store<IApplicationState>,
+  constructor(private notesService: NotesService, store: Store<IApplicationState>,
     private dialog: MatDialog) 
   {
-    store.select(getSelectedCategory).subscribe(
-      (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
-    store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
-    store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
+    super();
+    store.select(getSelectedCategory).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: CategoryModel) => this.handleSelectedCategoryChanged(x));
+    store.select(getInvalidCategoryId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidCategoryId = x);
+    store.select(getInvalidNoteId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidNoteId = x);
 
     this.updateSubscription();
   }
@@ -118,7 +123,7 @@ export class NotePanelComponent
     this._notes.subscribe(() => 
     {
       if (this.retrievingNotes)
-        setTimeout(() => this._retrievingNotes = false, 1000)
+        setTimeout(() => this._retrievingNotes = false, 1000);
     });
   }
 }

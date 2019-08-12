@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ComponentBase } from '../../componentBase';
 
 /**
  * Component for a wait panel
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './wait-panel.component.html',
   styleUrls: ['./wait-panel.component.css']
 })
-export class WaitPanelComponent 
+export class WaitPanelComponent extends ComponentBase
 {
   private _show: boolean = false;
   /**

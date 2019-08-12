@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { minDate, maxDate } from 'src/app/util/utility';
+import { ComponentBase } from '../../componentBase';
 
 /**
  * Component for a date picker
@@ -9,7 +10,7 @@ import { minDate, maxDate } from 'src/app/util/utility';
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.css']
 })
-export class DatePickerComponent
+export class DatePickerComponent extends ComponentBase
 {
   private _selectedDate: Date;
   /**

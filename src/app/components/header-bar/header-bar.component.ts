@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { getTitle, IApplicationState } from 'src/app/redux/state';
 import { Store } from '@ngrx/store';
+import { ComponentBase } from '../componentBase';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Component for the header bar of the app
@@ -11,7 +13,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.css']
 })
-export class HeaderBarComponent 
+export class HeaderBarComponent extends ComponentBase
 { 
   private _title: string = null;
   /**
@@ -26,7 +28,11 @@ export class HeaderBarComponent
    * @param {Store<IApplicationState>} store Injected: redux store
    */
   constructor(private authenticationService: AuthenticationService, store: Store<IApplicationState>) 
-  { store.select(getTitle).subscribe((x: string) => this._title = x); }
+  { 
+    super();
+    store.select(getTitle).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this._title = x);
+  }
 
   /**
    * Logs the user out

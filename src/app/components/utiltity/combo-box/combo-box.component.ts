@@ -1,12 +1,16 @@
 import { LocalizationService } from 'src/app/services/localization.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ComponentBase } from '../../componentBase';
 
+/**
+ * Component for combobox
+ */
 @Component({
   selector: 'app-combo-box',
   templateUrl: './combo-box.component.html',
   styleUrls: ['./combo-box.component.css']
 })
-export class ComboBoxComponent
+export class ComboBoxComponent extends ComponentBase
 {
   private _options: {editValue: string, displayValue: string}[] = [];
   /**
@@ -54,5 +58,5 @@ export class ComboBoxComponent
    * 
    * @param {LocalizationService} localizationService Injected: service for providing localized strings
    */
-  constructor(private localizationService: LocalizationService) { }
+  constructor(private localizationService: LocalizationService) { super();}
 }

@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { IApplicationState, getNotifications } from 'src/app/redux/state';
 import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
 import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
+import { ComponentBase } from '../../componentBase';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Component for showing notifications
@@ -21,7 +23,7 @@ import { NotificationActionKind } from 'src/app/redux/actions/notification/notif
     ])
   ]
 })
-export class NotificationListComponent
+export class NotificationListComponent extends ComponentBase
 {
   private _notifications: NotificationModel[] = [];
   /**
@@ -36,8 +38,9 @@ export class NotificationListComponent
    */
   constructor(private store: Store<IApplicationState>) 
   { 
-    store.select(getNotifications).subscribe(
-      (x: NotificationModel[]) => this.handleNotificationsChanged(x)); 
+    super();
+    store.select(getNotifications).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: NotificationModel[]) => this.handleNotificationsChanged(x)); 
   }
 
   /**

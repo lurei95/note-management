@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, ViewChild, ElementRef, Input } from '@
 import { MatChipInputEvent } from '@angular/material/chips';
 import { nullOrEmpty } from 'src/app/util/utility';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ComponentBase } from '../../componentBase';
 
 /**
  * Component for a list of tags
@@ -11,7 +12,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
   templateUrl: './tag-list.component.html',
   styleUrls: ['./tag-list.component.css']
 })
-export class TagListComponent
+export class TagListComponent extends ComponentBase
 {
   @ViewChild("tagInput", {static: false}) private tagInput: ElementRef;
 

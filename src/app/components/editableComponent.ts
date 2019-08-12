@@ -2,11 +2,12 @@ import { Dictionary } from 'src/app/util/dictionary';
 import { Input } from '@angular/core';
 import { EditableModel } from '../models/editableModel';
 import { ModelService } from '../services/base/modelService';
+import { ComponentBase } from './componentBase';
 
 /**
  * Base class for all components for editing a certain type of model
  */
-export abstract class EditableComponent<TModel extends EditableModel>
+export abstract class EditableComponent<TModel extends EditableModel> extends ComponentBase
 {
   private _model: TModel
   /**
@@ -33,7 +34,7 @@ export abstract class EditableComponent<TModel extends EditableModel>
    * @param {Model<ModelService>} service Injected: service for the model
    */
   constructor(protected service: ModelService<TModel>)
-  { }
+  { super(); }
 
   /**
    * Event handler: tries to save the changes on pressing the save shortcut (ctrl + s)

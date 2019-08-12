@@ -1,11 +1,12 @@
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { ComponentBase } from '../componentBase';
 
 /**
  * Base class for a login components
  */
-export class LoginComponentBase
+export class LoginComponentBase extends ComponentBase
 {
   private _formGroup: FormGroup;
   /**
@@ -36,9 +37,19 @@ export class LoginComponentBase
    */
   get errorMessage(): string { return this._errorMessage; }
 
+  /**
+   * Constructor
+   * 
+   * @param {AuthenticationService} _authenticationService Injected: service for authentication means
+   * @param {Router} router Injected: angular router
+   * @param {FormBuilder} formBuilder Injected: from builder
+   */
   constructor(private _authenticationService: AuthenticationService, private router: Router,
     private formBuilder: FormBuilder) 
-  { this.createForm(); }
+  { 
+    super();
+    this.createForm(); 
+  }
 
   /**
    * Tries to log in with facebook account

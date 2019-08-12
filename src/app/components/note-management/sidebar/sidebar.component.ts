@@ -10,7 +10,8 @@ import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction
 import { MessageKind } from 'src/app/messageKind';
 import { LocalizationService } from 'src/app/services/localization.service';
 import { nullOrEmpty } from 'src/app/util/utility';
-import { Observable, of, concat, merge } from 'rxjs';
+import { ComponentBase } from '../../componentBase';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Component for a sidbar containing categories
@@ -20,7 +21,7 @@ import { Observable, of, concat, merge } from 'rxjs';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent
+export class SidebarComponent extends ComponentBase
 {
   private categories: CategoryModel[];
   private filterText: string  = null;
@@ -49,11 +50,15 @@ export class SidebarComponent
     private localizationService: LocalizationService, 
     private categoriesService: CategoriesService) 
   {
-    this.store.select(getInvalidCategoryId).subscribe((x: string) => this.invalidCategoryId = x);
-    this.store.select(getInvalidNoteId).subscribe((x: string) => this.invalidNoteId = x);
-    this.store.select(getSelectedCategory).subscribe(
-      (x: CategoryModel) => this.handleSelectedCategoryChanged(x));
-    this.store.select(getNewCategoryId).subscribe((x: string) => this.handleNewCategoryChanged(x));
+    super();
+    this.store.select(getInvalidCategoryId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidCategoryId = x);
+    this.store.select(getInvalidNoteId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.invalidNoteId = x);
+    this.store.select(getSelectedCategory).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: CategoryModel) => this.handleSelectedCategoryChanged(x));
+    this.store.select(getNewCategoryId).pipe(takeUntil(this.unsubscribe))
+      .subscribe((x: string) => this.handleNewCategoryChanged(x));
 
     this.updateSubscription();
   }
@@ -117,7 +122,7 @@ export class SidebarComponent
 
   private updateSubscription()
   { 
-    this.categoriesService.get(this.filterFunc)
+    this.categoriesService.get(this.filterFunc).pipe(takeUntil(this.unsubscribe))
       .subscribe((x: CategoryModel[]) => this.handleCategoriesChanged(x));
   }
 }
