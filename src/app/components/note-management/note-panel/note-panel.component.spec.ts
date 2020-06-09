@@ -1,6 +1,6 @@
 import { WaitPanelComponent } from './../../utiltity/wait-panel/wait-panel.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Store, ScannedActionsSubject } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FilterInputComponent } from '../../utiltity/filter-input/filter-input.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -35,12 +35,22 @@ describe('NotePanelComponent', () =>
   let newNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
   let notes: NoteModel[];
+  let notesSubject: Subject<NoteModel[]>;
+  let filterFunc: any;
   let getSpy: jasmine.Spy<any>;
   let dialogSpy: jasmine.Spy<any>;
 
   beforeEach(async(() => 
   {
-    getSpy = spyOn(notesServiceMock, "get");
+    let note1: NoteModel = new NoteModel("1", "title1");
+    let note2: NoteModel = new NoteModel("2", "title2");
+    notes = [ note1, note2 ]
+    notesSubject = new Subject<NoteModel[]>();
+    getSpy = spyOn(notesServiceMock, "get").and.callFake((func: any) => 
+    {
+      filterFunc = func;
+      return notesSubject;
+    });
     selectedCategory = new Subject();
     newNoteId = new Subject();
     invalidCategoryId = new Subject();
@@ -96,23 +106,21 @@ describe('NotePanelComponent', () =>
 
   it('should create', () =>  expect(component).toBeTruthy());
 
-  it('listens to note changes', () => expect(getSpy).toHaveBeenCalled());
-
-  it('displays notes on notes changed', () => 
+  it('listens to note changes', () => 
   {
-    (component as any).handleNotesChanged(notes); 
-    fixture.detectChanges();
-    let noteElements: DebugElement[] = fixture.debugElement.queryAll(By.css("app-note"));
-    expect(noteElements.length).toBe(2);
+    expect(getSpy).toHaveBeenCalled();
+    expect(filterFunc).toBeTruthy();
   });
 
+  it('initializes notes correctly', () => 
+  {
+    expect((component as any)._notes).toBe(notesSubject);
+  });
 
   it('handleAddButtonClicked adds a new note', () => 
   {
-    // component.handleAddButtonClicked();
-
-    // expect(component.notes.source).toBe(1);
-    // expect(component.filteredNotes[0].categoryId).toBe("1");
+    component.handleAddButtonClicked();
+    expect(dialogSpy).toHaveBeenCalled();
   });
 
   it('handleAddButtonClicked opens the new note in the edit dialog', () => 
@@ -124,24 +132,16 @@ describe('NotePanelComponent', () =>
 
   it('handleAddButtonClicked does not add a new note if invalid note or category exsits', () => 
   {
-    // invalidCategoryId.next("1");
-    // component.handleAddButtonClicked();
-    // expect(component.filteredNotes.length).toBe(0);
+    invalidCategoryId.next("1");
+    component.handleAddButtonClicked();
+    expect(dialogSpy).not.toHaveBeenCalled();
 
-    // invalidNoteId.next("1");
-    // component.handleAddButtonClicked();
-    // expect(component.filteredNotes.length).toBe(0);
+    invalidNoteId.next("1");
+    component.handleAddButtonClicked();
+    expect(dialogSpy).not.toHaveBeenCalled();
 
-    // invalidCategoryId.next(null);
-    // component.handleAddButtonClicked();
-    // expect(component.filteredNotes.length).toBe(0);
-  });
-
-  it('does remove the new note if the new note has changed to null', () => 
-  {
-    // component.handleAddButtonClicked();
-    // newNoteId.next(null);
-
-    // expect(component.filteredNotes.length).toBe(0);
+    invalidCategoryId.next(null);
+    component.handleAddButtonClicked();
+    expect(dialogSpy).not.toHaveBeenCalled();
   });
 });

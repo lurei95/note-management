@@ -17,7 +17,6 @@ import { SelectedCategoryChangeAction } from '../../../redux/actions/category/se
 import { MessageKind } from '../../../messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
 import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
-import { TranslatePipe } from '@ngx-translate/core';
 
 describe('CategoryComponent', () => 
 {
