@@ -1,13 +1,12 @@
 import { Subject } from 'rxjs';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
-import { UserModel } from 'src/app/models/users/userModel';
-import { getUser, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
-import { MessageKind } from 'src/app/messageKind';
+import { StoreMock } from '../../services/mocks/storeMock';
+import { UserModel } from '../../models/users/userModel';
+import { getUser, getInvalidCategoryId, getInvalidNoteId } from '../../redux/state';
+import { MessageKind } from '../../messageKind';
 import { NotesService } from './notes.service';
-import { NoteModel } from 'src/app/models/notes/noteModel';
-import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
-import { NoteActionKind } from 'src/app/redux/actions/note/noteActionKind';
-import { NewNoteChangeAction } from 'src/app/redux/actions/note/newNoteChangeAction';
+import { NoteModel } from '../../models/notes/noteModel';
+import { NoteValidityChangeAction } from '../../redux/actions/note/noteValidityChangeAction';
+import { NoteActionKind } from '../../redux/actions/note/noteActionKind';
 
 describe('NotesService', () => 
 {
@@ -65,15 +64,6 @@ describe('NotesService', () =>
       .find(item => item instanceof NoteValidityChangeAction) as NoteValidityChangeAction;
     expect(action.payload).toBeNull();
     expect(action.type).toBe(NoteActionKind.NoteValidityChange);
-  });
-
-  it("delete unsets the newNoteId if note was new", () => 
-  {
-    service.delete(new NoteModel("2"));
-
-    let action: NewNoteChangeAction = store.dispatchedActions[0] as NewNoteChangeAction;
-    expect(action.type).toBe(NoteActionKind.NewNoteChange);
-    expect(action.payload == null).toBe(true);
   });
 
   it("delete displays a success message", () => 

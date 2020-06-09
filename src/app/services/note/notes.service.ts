@@ -1,15 +1,15 @@
-import { truncate, nullOrEmpty } from 'src/app/util/utility';
+import { truncate, nullOrEmpty } from '../../util/utility';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { IApplicationState, getInvalidNoteId } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/notes/noteModel';
+import { IApplicationState, getInvalidNoteId } from '../../redux/state';
+import { NoteModel } from '../../models/notes/noteModel';
 import { DatabaseService } from '../database.service';
 import { ModelService } from '../base/modelService';
-import { MessageKind } from 'src/app/messageKind';
+import { MessageKind } from '../../messageKind';
 import { NotificationService } from '../notification/notificationService';
 import { LocalizationService } from '../localization.service';
-import { NoteValidityChangeAction } from 'src/app/redux/actions/note/noteValidityChangeAction';
-import { Dictionary } from 'src/app/util/dictionary';
+import { NoteValidityChangeAction } from '../../redux/actions/note/noteValidityChangeAction';
+import { Dictionary } from '../../util/dictionary';
 import { DocumentData } from '@angular/fire/firestore';
 
 /**

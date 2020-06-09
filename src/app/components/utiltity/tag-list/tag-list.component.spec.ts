@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { nullOrEmpty } from 'src/app/util/utility';
+import { nullOrEmpty } from '../../../util/utility';
 import { TagListComponent } from './tag-list.component';
 import { MatChipsModule, MatChipInputEvent, MatChip } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { DebugElement } from '@angular/core';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
 
 describe('TagListComponent', () =>
 {

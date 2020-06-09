@@ -1,10 +1,10 @@
 import { Subject } from 'rxjs';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
+import { StoreMock } from '../../services/mocks/storeMock';
 import { ModelService } from './modelService';
-import { NoteModel } from 'src/app/models/notes/noteModel';
+import { NoteModel } from '../../models/notes/noteModel';
 import { DocumentData } from '@angular/fire/firestore';
-import { UserModel } from 'src/app/models/users/userModel';
-import { getUser } from 'src/app/redux/state';
+import { UserModel } from '../../models/users/userModel';
+import { getUser } from '../../redux/state';
 
 describe('ModelService', () => 
 {

@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef, Input } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { nullOrEmpty } from 'src/app/util/utility';
+import { nullOrEmpty } from '../../../util/utility';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { ComponentBase } from '../../componentBase';
 

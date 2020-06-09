@@ -1,8 +1,8 @@
-import { NotificationKind } from 'src/app/models/notifications/notificationKind';
+import { NotificationKind } from '../../models/notifications/notificationKind';
 import { NotificationService } from './notificationService';
-import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
+import { NotificationAction } from '../../redux/actions/notification/notificationAction';
 import { StoreMock } from '../mocks/storeMock';
-import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
+import { NotificationActionKind } from '../../redux/actions/notification/notificationActionKind';
 
 describe('ValidateCategoryService', () => 
 {

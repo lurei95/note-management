@@ -1,4 +1,4 @@
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../services/localization.service';
 
 /**
  * Mock service for {@link LocalizationService}

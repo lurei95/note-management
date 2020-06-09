@@ -1,4 +1,4 @@
-import { UserModel } from 'src/app/models/users/userModel';
+import { UserModel } from '../../models/users/userModel';
 import { userReducer } from './userReducer';
 import { UserChangeAction } from '../actions/user/userChangeAction';
 import { NotificationAction } from '../actions/notification/notificationAction';

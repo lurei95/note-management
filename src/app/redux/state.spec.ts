@@ -1,6 +1,6 @@
 import { CategoryModel } from './../models/categories/categoryModel';
 import { UserModel } from './../models/users/userModel';
-import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getSelectedCategory, getUser, getTitle, getNewNoteId } from "./state";
+import { IApplicationState, getInvalidNoteId, getInvalidCategoryId, getSelectedCategory, getUser, getTitle } from "./state";
 import { NotificationModel } from '../models/notifications/notificationModel';
 
 describe("getterFunctions", () =>
@@ -22,8 +22,7 @@ describe("getterFunctions", () =>
         newCategoryId: "4"
       },
       noteInfo: {
-        invalidNoteId: "3",
-        newNoteId: "5"
+        invalidNoteId: "3"
       }
     }
   });
@@ -39,12 +38,6 @@ describe("getterFunctions", () =>
 
   it("getInvalidNoteId returns the id of the invalid note", () =>
   { expect(getInvalidNoteId(state)).toBe("3"); });
-
-  it("getNewNoteId returns the id of the newly added note", () =>
-  { expect(getNewNoteId(state)).toBe("5"); });
-
-  it("getNewCategoryId returns the id of the newly added category", () =>
-  { expect(getNewNoteId(state)).toBe("5"); });
 
   it("getInvalidCategoryId returns the id of the invalid category", () =>
   { expect(getInvalidCategoryId(state)).toBe("2"); });

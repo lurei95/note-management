@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NotesService } from 'src/app/services/note/notes.service';
+import { NotesService } from '../../../services/note/notes.service';
 import { Store } from '@ngrx/store';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { nullOrEmpty } from 'src/app/util/utility';
-import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
-import { NoteModel } from 'src/app/models/notes/noteModel';
+import { CategoryModel } from '../../../models/categories/categoryModel';
+import { nullOrEmpty } from '../../../util/utility';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId } from '../../../redux/state';
+import { NoteModel } from '../../../models/notes/noteModel';
 import { v4 as uuid } from 'uuid';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { MatDialog } from '@angular/material/dialog';

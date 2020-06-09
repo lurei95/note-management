@@ -1,4 +1,4 @@
-import { clone } from 'src/app/util/utility';
+import { clone } from '../../util/utility';
 import { EditableModel } from '../editableModel';
 
 /**

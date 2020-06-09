@@ -3,9 +3,9 @@ import { NotificationKind } from '../../../models/notifications/notificationKind
 import { Component} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';
-import { IApplicationState, getNotifications } from 'src/app/redux/state';
-import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
-import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
+import { IApplicationState, getNotifications } from '../../../redux/state';
+import { NotificationAction } from '../../../redux/actions/notification/notificationAction';
+import { NotificationActionKind } from '../../../redux/actions/notification/notificationActionKind';
 import { ComponentBase } from '../../componentBase';
 import { takeUntil } from 'rxjs/operators';
 

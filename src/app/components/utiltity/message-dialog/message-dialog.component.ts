@@ -1,7 +1,7 @@
 import { DialogInformation } from '../dialogInformation';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { ComponentBase } from '../../componentBase';
 
 /**

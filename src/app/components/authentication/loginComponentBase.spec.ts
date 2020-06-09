@@ -1,6 +1,6 @@
 import { LoginComponentBase } from './loginComponentBase';
-import { AuthenticationServiceMock } from 'src/app/services/mocks/authenticationServiceMock';
-import { RouterMock } from 'src/app/services/mocks/routerMock';
+import { AuthenticationServiceMock } from '../../services/mocks/authenticationServiceMock';
+import { RouterMock } from '../../services/mocks/routerMock';
 import { FormBuilder } from '@angular/forms';
 
 describe('LoginComponentBase', () =>

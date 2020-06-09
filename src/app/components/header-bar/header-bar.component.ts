@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { getTitle, IApplicationState } from 'src/app/redux/state';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { getTitle, IApplicationState } from '../../redux/state';
 import { Store } from '@ngrx/store';
 import { ComponentBase } from '../componentBase';
 import { takeUntil } from 'rxjs/operators';

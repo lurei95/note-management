@@ -39,10 +39,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { ComboBoxComponent } from './components/utiltity/combo-box/combo-box.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AngularFireModule } from "angularfire2"
+import { AngularFireModule } from "@angular/fire/"
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from "angularfire2/auth"
-import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from "@angular/fire/auth"
+import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router'
 import { LoginComponent } from './components/authentication/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';

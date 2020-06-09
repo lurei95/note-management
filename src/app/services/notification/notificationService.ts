@@ -1,10 +1,10 @@
-import { NotificationModel } from 'src/app/models/notifications/notificationModel';
-import { NotificationKind } from 'src/app/models/notifications/notificationKind';
+import { NotificationModel } from '../../models/notifications/notificationModel';
+import { NotificationKind } from '../../models/notifications/notificationKind';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
-import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
-import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
-import { IApplicationState } from 'src/app/redux/state';
+import { NotificationAction } from '../../redux/actions/notification/notificationAction';
+import { NotificationActionKind } from '../../redux/actions/notification/notificationActionKind';
+import { IApplicationState } from '../../redux/state';
 
 /**
  * Service for displaying notification messages

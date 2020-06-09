@@ -1,11 +1,11 @@
 import { AngularFirestoreCollection, DocumentData, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { UserModel } from 'src/app/models/users/userModel';
-import { EditableModel } from 'src/app/models/editableModel';
+import { UserModel } from '../../models/users/userModel';
+import { EditableModel } from '../../models/editableModel';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { IApplicationState, getUser } from 'src/app/redux/state';
+import { IApplicationState, getUser } from '../../redux/state';
 import { DatabaseService } from '../database.service';
-import { Dictionary } from 'src/app/util/dictionary';
+import { Dictionary } from '../../util/dictionary';
 import { Observable } from 'rxjs';
 
 /**

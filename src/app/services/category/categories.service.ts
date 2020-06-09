@@ -1,18 +1,18 @@
 import { LocalizationService } from './../localization.service';
 import { NotificationService } from './../notification/notificationService';
 import { SelectedCategoryChangeAction } from '../../redux/actions/category/selectedCategoryChangeAction';
-import { CategoryValidityChangeAction } from 'src/app/redux/actions/category/categoryValidityChangeAction';
+import { CategoryValidityChangeAction } from '../../redux/actions/category/categoryValidityChangeAction';
 import { DatabaseService } from '../database.service';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IApplicationState, getSelectedCategory, getInvalidCategoryId } from 'src/app/redux/state';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId } from '../../redux/state';
+import { CategoryModel } from '../../models/categories/categoryModel';
 import { ModelService } from '../base/modelService';
-import { MessageKind } from 'src/app/messageKind';
-import { truncate, nullOrEmpty } from 'src/app/util/utility';
-import { Dictionary } from 'src/app/util/dictionary';
+import { MessageKind } from '../../messageKind';
+import { truncate, nullOrEmpty } from '../../util/utility';
+import { Dictionary } from '../../util/dictionary';
 import { DocumentData } from '@angular/fire/firestore';
-import { NewCategoryChangeAction } from 'src/app/redux/actions/category/newCategoryChangeAction';
+import { NewCategoryChangeAction } from '../../redux/actions/category/newCategoryChangeAction';
 
 /**
  * Service for retrieving all exisiting categories

@@ -2,14 +2,14 @@ import { NewCategoryChangeAction } from './../../../redux/actions/category/newCa
 import { CategoriesService } from './../../../services/category/categories.service';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId, getNewCategoryId } from 'src/app/redux/state';
+import { CategoryModel } from '../../../models/categories/categoryModel';
+import { IApplicationState, getSelectedCategory, getInvalidCategoryId, getInvalidNoteId, getNewCategoryId } from '../../../redux/state';
 import { v4 as uuid } from 'uuid';
-import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
-import { TitleChangeAction } from 'src/app/redux/actions/other/titleChangeAction';
-import { MessageKind } from 'src/app/messageKind';
-import { LocalizationService } from 'src/app/services/localization.service';
-import { nullOrEmpty } from 'src/app/util/utility';
+import { SelectedCategoryChangeAction } from '../../../redux/actions/category/selectedCategoryChangeAction';
+import { TitleChangeAction } from '../../../redux/actions/other/titleChangeAction';
+import { MessageKind } from '../../../messageKind';
+import { LocalizationService } from '../../../services/localization.service';
+import { nullOrEmpty } from '../../../util/utility';
 import { ComponentBase } from '../../componentBase';
 import { takeUntil } from 'rxjs/operators';
 

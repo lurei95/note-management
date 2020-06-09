@@ -1,6 +1,6 @@
 import { Action, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { IApplicationState } from 'src/app/redux/state';
+import { IApplicationState } from '../../redux/state';
 
 /**
  * Mock service for {@link Store<T>}

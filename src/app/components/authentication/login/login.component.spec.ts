@@ -1,7 +1,7 @@
-import { MessageKind } from 'src/app/messageKind';
+import { MessageKind } from '../../../messageKind';
 import { AuthenticationErrorKind } from './../../../services/authentication/authenticationErrorKind';
 import { LocalizationServiceMock } from './../../../services/mocks/localizationServiceMock';
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './../../../services/authentication/authentication.service';
 import { WaitPanelComponent } from './../../utiltity/wait-panel/wait-panel.component';
@@ -9,11 +9,11 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 import { LoginComponent } from './login.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthenticationServiceMock } from 'src/app/services/mocks/authenticationServiceMock';
-import { RouterMock } from 'src/app/services/mocks/routerMock';
+import { AuthenticationServiceMock } from '../../../services/mocks/authenticationServiceMock';
+import { RouterMock } from '../../../services/mocks/routerMock';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
 
 describe('LoginComponent', () => 
 {

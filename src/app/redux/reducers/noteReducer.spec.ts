@@ -2,7 +2,6 @@ import { noteReducer } from './noteReducer';
 import { NoteValidityChangeAction } from '../actions/note/noteValidityChangeAction';
 import { NotificationAction } from '../actions/notification/notificationAction';
 import { NotificationActionKind } from '../actions/notification/notificationActionKind';
-import { NewNoteChangeAction } from '../actions/note/newNoteChangeAction';
 
 describe("noteReducer", () =>
 {
@@ -28,12 +27,5 @@ describe("noteReducer", () =>
     let action = new NoteValidityChangeAction("2");
     let result = noteReducer(state, action);
     expect(result.invalidNoteId).toBe("2");
-  });
-
-  it("newNoteChangeAction sets the newNoteId", () =>
-  {
-    let action = new NewNoteChangeAction("2");
-    let result = noteReducer(state, action);
-    expect(result.newNoteId).toBe("2");
   });
 });

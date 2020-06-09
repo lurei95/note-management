@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { DatePickerComponent } from './date-picker.component';
 import {  MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { minDate, maxDate } from 'src/app/util/utility';
+import { minDate, maxDate } from '../../../util/utility';
 
 describe('DatePickerComponent', () =>
 {

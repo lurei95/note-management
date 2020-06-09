@@ -1,15 +1,15 @@
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoteComponentBase } from '../../noteComponentBase';
-import { NoteModel } from 'src/app/models/notes/noteModel';
+import { NoteModel } from '../../../models/notes/noteModel';
 import { Store } from '@ngrx/store';
-import { IApplicationState } from 'src/app/redux/state';
-import { MessageKind } from 'src/app/messageKind';
+import { IApplicationState } from '../../../redux/state';
+import { MessageKind } from '../../../messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { MessageDialogService } from 'src/app/services/message-dialog.service';
-import { PriorityKind } from 'src/app/models/notes/priorityKind';
-import { NotesService } from 'src/app/services/note/notes.service';
+import { MessageDialogService } from '../../../services/message-dialog.service';
+import { PriorityKind } from '../../../models/notes/priorityKind';
+import { NotesService } from '../../../services/note/notes.service';
 
 /**
  * Dialog for editing a note

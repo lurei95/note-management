@@ -1,4 +1,4 @@
-import { Dictionary } from 'src/app/util/dictionary';
+import { Dictionary } from '../util/dictionary';
 import { Input } from '@angular/core';
 import { EditableModel } from '../models/editableModel';
 import { ModelService } from '../services/base/modelService';

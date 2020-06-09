@@ -1,4 +1,4 @@
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
+import { CategoryModel } from '../../../models/categories/categoryModel';
 import { CategoryActionKind } from './categoryActionKind';
 import { ActionBase } from '../actionBase';
 

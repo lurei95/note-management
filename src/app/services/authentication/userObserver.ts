@@ -1,9 +1,9 @@
-import { IApplicationState } from 'src/app/redux/state';
+import { IApplicationState } from '../../redux/state';
 import { Store } from '@ngrx/store';
 import { User } from 'firebase';
-import { UserChangeAction } from 'src/app/redux/actions/user/userChangeAction';
-import { UserModel } from 'src/app/models/users/userModel';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { UserChangeAction } from '../../redux/actions/user/userChangeAction';
+import { UserModel } from '../../models/users/userModel';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 /**
  * Class for observing changes to the current user

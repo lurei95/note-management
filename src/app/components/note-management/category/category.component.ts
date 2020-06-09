@@ -4,14 +4,14 @@ import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { EditableComponent } from '../../editableComponent';
 import { Store } from '@ngrx/store';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { coalesce } from 'src/app/util/utility';
-import { Dictionary } from 'src/app/util/dictionary';
-import { MessageKind } from 'src/app/messageKind';
-import { LocalizationService } from 'src/app/services/localization.service';
-import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedCategory } from 'src/app/redux/state';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { MessageDialogService } from 'src/app/services/message-dialog.service';
-import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
+import { coalesce } from '../../../util/utility';
+import { Dictionary } from '../../../util/dictionary';
+import { MessageKind } from '../../../messageKind';
+import { LocalizationService } from '../../../services/localization.service';
+import { getInvalidNoteId, getInvalidCategoryId, IApplicationState, getSelectedCategory } from '../../../redux/state';
+import { CategoryModel } from '../../../models/categories/categoryModel';
+import { MessageDialogService } from '../../../services/message-dialog.service';
+import { SelectedCategoryChangeAction } from '../../../redux/actions/category/selectedCategoryChangeAction';
 import { takeUntil } from 'rxjs/operators';
 
 /**

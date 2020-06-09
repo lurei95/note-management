@@ -1,4 +1,4 @@
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { LocalizationServiceMock } from '../../../services/mocks/localizationServiceMock';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { async } from 'q';

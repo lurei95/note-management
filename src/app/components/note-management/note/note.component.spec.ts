@@ -1,23 +1,23 @@
-import { DialogResult } from 'src/app/components/utiltity/dialogResult';
+import { DialogResult } from '../../../components/utiltity/dialogResult';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogMock } from '../../../services/mocks/matDialogMock';
 import { MessageDialogService } from '../../../services/message-dialog.service';
 import { LocalizationService } from '../../../services/localization.service';
-import { getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
+import { getInvalidCategoryId, getInvalidNoteId } from '../../../redux/state';
 import { StoreMock } from '../../../services/mocks/storeMock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { NoteModel } from 'src/app/models/notes/noteModel';
+import { NoteModel } from '../../../models/notes/noteModel';
 import { NoteComponent } from './note.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { MessageKind } from 'src/app/messageKind';
+import { MessageKind } from '../../../messageKind';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { NotesService } from 'src/app/services/note/notes.service';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { NotesService } from '../../../services/note/notes.service';
+import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
 
 describe('NoteComponent', () => {
   let component: NoteComponent;

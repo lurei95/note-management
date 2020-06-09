@@ -1,5 +1,5 @@
-import { getInvalidCategoryId, getInvalidNoteId } from 'src/app/redux/state';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
+import { getInvalidCategoryId, getInvalidNoteId } from '../redux/state';
+import { StoreMock } from '../services/mocks/storeMock';
 import { NoteModel } from '../models/notes/noteModel';
 import { Dictionary } from '../util/dictionary';
 import { NoteComponentBase } from './noteComponentBase';

@@ -14,17 +14,17 @@ import { MainPageComponent } from './main-page.component';
 import { HeaderBarComponent } from '../header-bar/header-bar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { NotePanelComponent } from '../note-management/note-panel/note-panel.component';
 import { NotificationListComponent } from '../utiltity/notification-list/notification-list.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { Store } from '@ngrx/store';
-import { LocalizationService } from 'src/app/services/localization.service';
-import { MessageDialogService } from 'src/app/services/message-dialog.service';
+import { LocalizationService } from '../../services/localization.service';
+import { MessageDialogService } from '../../services/message-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/services/notification/notificationService';
-import { NotesService } from 'src/app/services/note/notes.service';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { NotificationService } from '../../services/notification/notificationService';
+import { NotesService } from '../../services/note/notes.service';
+import { TranslatePipeMock } from '../../services/mocks/translatePipeMock';
 
 describe('MainPageComponent', () => 
 {

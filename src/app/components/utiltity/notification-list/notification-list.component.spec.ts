@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationListComponent } from './notification-list.component';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
-import { NotificationModel } from 'src/app/models/notifications/notificationModel';
-import { NotificationKind } from 'src/app/models/notifications/notificationKind';
-import { getNotifications } from 'src/app/redux/state';
+import { StoreMock } from '../../../services/mocks/storeMock';
+import { NotificationModel } from '../../../models/notifications/notificationModel';
+import { NotificationKind } from '../../../models/notifications/notificationKind';
+import { getNotifications } from '../../../redux/state';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationAction } from 'src/app/redux/actions/notification/notificationAction';
-import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
+import { NotificationAction } from '../../../redux/actions/notification/notificationAction';
+import { NotificationActionKind } from '../../../redux/actions/notification/notificationActionKind';
 
 describe('NotificationListComponent', () =>
 {

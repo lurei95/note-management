@@ -1,5 +1,5 @@
 import { NotificationActionKind } from './notificationActionKind';
-import { NotificationModel } from 'src/app/models/notifications/notificationModel';
+import { NotificationModel } from '../../../models/notifications/notificationModel';
 import { ActionBase } from '../actionBase';
 
 /**

@@ -1,4 +1,4 @@
-import { NotificationActionKind } from 'src/app/redux/actions/notification/notificationActionKind';
+import { NotificationActionKind } from '../../redux/actions/notification/notificationActionKind';
 import { CategoryModel } from './../../models/categories/categoryModel';
 import { SelectedCategoryChangeAction } from './../actions/category/selectedCategoryChangeAction';
 import { categoryReducer } from './categoryReducer';

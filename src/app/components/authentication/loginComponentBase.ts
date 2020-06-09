@@ -1,5 +1,5 @@
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { ComponentBase } from '../componentBase';
 

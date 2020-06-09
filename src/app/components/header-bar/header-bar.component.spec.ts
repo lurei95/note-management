@@ -1,15 +1,15 @@
 import { Subject } from 'rxjs';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
+import { StoreMock } from '../../services/mocks/storeMock';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderBarComponent } from './header-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AuthenticationServiceMock } from 'src/app/services/mocks/authenticationServiceMock';
+import { AuthenticationServiceMock } from '../../services/mocks/authenticationServiceMock';
 import { Store } from '@ngrx/store';
-import { getTitle } from 'src/app/redux/state';
+import { getTitle } from '../../redux/state';
 import { By } from '@angular/platform-browser';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { TranslatePipeMock } from '../../services/mocks/translatePipeMock';
 
 describe('HeaderBarComponent', () => 
 {

@@ -1,5 +1,5 @@
 import { MessageDialogService } from '../message-dialog.service';
-import { DialogResult } from 'src/app/components/utiltity/dialogResult';
+import { DialogResult } from '../../components/utiltity/dialogResult';
 
 /**
  * Mock service for {@link MessageDialogService}

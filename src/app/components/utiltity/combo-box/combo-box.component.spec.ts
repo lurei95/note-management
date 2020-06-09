@@ -1,5 +1,5 @@
 import { By } from '@angular/platform-browser';
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { LocalizationServiceMock } from '../../../services/mocks/localizationServiceMock';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { ComboBoxComponent } from './combo-box.component';

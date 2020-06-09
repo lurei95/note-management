@@ -1,6 +1,6 @@
 import { PriorityKind } from './priorityKind';
 import { EditableModel } from '../editableModel';
-import { clone } from 'src/app/util/utility';
+import { clone } from '../../util/utility';
 
 /**
  * Model for a note

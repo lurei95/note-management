@@ -1,6 +1,6 @@
 import { DatabaseService } from './../database.service';
 import { Injectable } from '@angular/core';
-import { UserModel } from 'src/app/models/users/userModel';
+import { UserModel } from '../../models/users/userModel';
 
 /**
  * Service for adding a new user

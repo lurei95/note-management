@@ -4,13 +4,13 @@ import { LocalizationService } from '../../../services/localization.service';
 import { DialogResult } from '../../utiltity/dialogResult';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { coalesce } from 'src/app/util/utility';
+import { coalesce } from '../../../util/utility';
 import { NoteComponentBase } from '../../noteComponentBase';
-import { MessageKind } from 'src/app/messageKind';
-import { IApplicationState } from 'src/app/redux/state';
+import { MessageKind } from '../../../messageKind';
+import { IApplicationState } from '../../../redux/state';
 import { Store } from '@ngrx/store';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { getDateDifferenceString } from 'src/app/util/dateUtility';
+import { getDateDifferenceString } from '../../../util/dateUtility';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 
 /**

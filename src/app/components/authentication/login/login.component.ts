@@ -1,9 +1,9 @@
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from '../../../services/authentication/authentication.service';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { AuthenticationErrorKind } from 'src/app/services/authentication/authenticationErrorKind';
-import { MessageKind } from 'src/app/messageKind';
-import { LocalizationService } from 'src/app/services/localization.service';
+import { AuthenticationErrorKind } from '../../../services/authentication/authenticationErrorKind';
+import { MessageKind } from '../../../messageKind';
+import { LocalizationService } from '../../../services/localization.service';
 import { Router } from '@angular/router';
 import { LoginComponentBase } from '../loginComponentBase';
 

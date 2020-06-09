@@ -1,7 +1,7 @@
 import { UserModel } from './../models/users/userModel';
 import { CategoryModel } from '../models/categories/categoryModel';
 import { categoryReducer } from './reducers/categoryReducer';
-import { NotificationModel } from 'src/app/models/notifications/notificationModel';
+import { NotificationModel } from '../models/notifications/notificationModel';
 import { notificationReducer } from './reducers/notificationReducer';
 import { noteReducer } from './reducers/noteReducer';
 import { userReducer } from './reducers/userReducer';

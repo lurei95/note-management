@@ -1,15 +1,15 @@
 import { Subject } from 'rxjs';
-import { StoreMock } from 'src/app/services/mocks/storeMock';
-import { UserModel } from 'src/app/models/users/userModel';
-import { getUser, getInvalidCategoryId, getSelectedCategory } from 'src/app/redux/state';
+import { StoreMock } from '../../services/mocks/storeMock';
+import { UserModel } from '../../models/users/userModel';
+import { getUser, getInvalidCategoryId, getSelectedCategory } from '../../redux/state';
 import { CategoriesService } from './categories.service';
-import { CategoryModel } from 'src/app/models/categories/categoryModel';
-import { CategoryValidityChangeAction } from 'src/app/redux/actions/category/categoryValidityChangeAction';
-import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
-import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
-import { MessageKind } from 'src/app/messageKind';
+import { CategoryModel } from '../../models/categories/categoryModel';
+import { CategoryValidityChangeAction } from '../../redux/actions/category/categoryValidityChangeAction';
+import { CategoryActionKind } from '../../redux/actions/category/categoryActionKind';
+import { SelectedCategoryChangeAction } from '../../redux/actions/category/selectedCategoryChangeAction';
+import { MessageKind } from '../../messageKind';
 import { QueryDocumentSnapshot, DocumentData } from '@angular/fire/firestore';
-import { NewCategoryChangeAction } from 'src/app/redux/actions/category/newCategoryChangeAction';
+import { NewCategoryChangeAction } from '../../redux/actions/category/newCategoryChangeAction';
 import { invoke } from 'q';
 
 describe('CategoriesService', () => 

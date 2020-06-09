@@ -1,4 +1,4 @@
-import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizationService } from '../../../services/localization.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ComponentBase } from '../../componentBase';
 

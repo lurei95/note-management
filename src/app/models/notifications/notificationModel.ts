@@ -1,4 +1,4 @@
-import { NotificationKind } from 'src/app/models/notifications/notificationKind';
+import { NotificationKind } from '../../models/notifications/notificationKind';
 
 /**
  * Model for a notification message

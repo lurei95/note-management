@@ -1,7 +1,7 @@
-import { LocalizationService } from 'src/app/services/localization.service';
-import { CategoriesService } from 'src/app/services/category/categories.service';
+import { LocalizationService } from '../../../services/localization.service';
+import { CategoriesService } from '../../../services/category/categories.service';
 import { MessageDialogService } from '../../../services/message-dialog.service';
-import { getInvalidCategoryId, getInvalidNoteId, getSelectedCategory } from 'src/app/redux/state';
+import { getInvalidCategoryId, getInvalidNoteId, getSelectedCategory } from '../../../redux/state';
 import { CategoryModel } from '../../../models/categories/categoryModel';
 import { StoreMock } from '../../../services/mocks/storeMock';
 import { CategoryComponent } from './category.component';
@@ -9,14 +9,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Dictionary } from 'src/app/util/dictionary';
-import { CategoryValidityChangeAction } from 'src/app/redux/actions/category/categoryValidityChangeAction';
-import { CategoryActionKind } from 'src/app/redux/actions/category/categoryActionKind';
-import { nullOrEmpty } from 'src/app/util/utility';
-import { SelectedCategoryChangeAction } from 'src/app/redux/actions/category/selectedCategoryChangeAction';
-import { MessageKind } from 'src/app/messageKind';
+import { Dictionary } from '../../../util/dictionary';
+import { CategoryValidityChangeAction } from '../../../redux/actions/category/categoryValidityChangeAction';
+import { CategoryActionKind } from '../../../redux/actions/category/categoryActionKind';
+import { nullOrEmpty } from '../../../util/utility';
+import { SelectedCategoryChangeAction } from '../../../redux/actions/category/selectedCategoryChangeAction';
+import { MessageKind } from '../../../messageKind';
 import { DialogResult } from '../../utiltity/dialogResult';
-import { TranslatePipeMock } from 'src/app/services/mocks/translatePipeMock';
+import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
 import { TranslatePipe } from '@ngx-translate/core';
 
 describe('CategoryComponent', () => 
