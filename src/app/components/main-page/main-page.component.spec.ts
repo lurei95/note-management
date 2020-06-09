@@ -1,3 +1,6 @@
+import { NoteModel } from '../../models/notes/noteModel';
+import { CategoryModel } from './../../models/categories/categoryModel';
+import { Subject } from 'rxjs';
 import { CategoriesService } from './../../services/category/categories.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { StoreMock } from './../../services/mocks/storeMock';
@@ -65,8 +68,9 @@ describe('MainPageComponent', () =>
         { provide: NotificationService, useValue: {}},
         { provide: MatDialog, useValue: {}},
         { provide: AngularFirestore, useValue: {}},
-        { provide: CategoriesService, useValue: { get() {} }},
-        { provide: NotesService, useValue: { get() {} }},
+        { provide: CategoriesService, useValue: { get() 
+          { return new Subject<CategoryModel>() } }},
+        { provide: NotesService, useValue: { get() { return new Subject<NoteModel>() } }},
         TranslatePipeMock
       ]
     }).compileComponents();
