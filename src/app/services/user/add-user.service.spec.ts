@@ -1,3 +1,4 @@
+import { CategoryModel } from '../../models/categories/categoryModel';
 import { UserModel } from './../../models/users/userModel';
 import { AddUserService } from './add-user.service';
 
@@ -22,5 +23,18 @@ describe('AddUserService', () =>
     let user = new UserModel({ uid: "1", email: "test@test.com" });
     service.execute(user);
     expect(spy).toHaveBeenCalledWith("1", "test", user);
+  });
+
+  it('the service creates a default category for the user', () => 
+  {
+    let wasCategoryCreated: boolean = false;
+    spyOn(databaseServiceMock, "updateItem").and.callFake((id, collection, model) =>
+    {
+      if (model instanceof CategoryModel)
+        wasCategoryCreated = true;
+    });
+    let user = new UserModel({ uid: "1", email: "test@test.com" });
+    service.execute(user);
+    expect(wasCategoryCreated).toBeTruthy();
   });
 });

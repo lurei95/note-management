@@ -3,7 +3,7 @@ import { DatabaseService } from './database.service';
 describe('DatabaseService', () => 
 {
   let service: DatabaseService;
-  let databaseMock = { collection(): any {}}
+  let databaseMock = { collection(route: string): any {}}
 
   beforeEach(() => service = new DatabaseService((databaseMock as any)));
 
