@@ -24,6 +24,7 @@ import { TranslatePipeMock } from '../../../services/mocks/translatePipeMock';
 
 describe('SidebarComponent', () => 
 {
+  let filterFunc;
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
   let storeMock: StoreMock;
@@ -32,19 +33,25 @@ describe('SidebarComponent', () =>
   let invalidNoteId: Subject<string>;
   let selectedCategory: Subject<CategoryModel>;
   let newCategoryId: Subject<string>;
-  let categoriesServiceMock: any = { get() {} };
+  let categories: CategoryModel[];
+  let categoriesSubject: Subject<CategoryModel[]>;
+  let categoriesServiceMock: any = { get() { } };
   let getSpy: jasmine.Spy<any>;
   let localizationSpy: jasmine.Spy<any>;
-  let categories: CategoryModel[];
 
   beforeEach(async(() => 
   {
     localizationSpy = spyOn(localizationServiceMock, "execute").and.returnValue("test");
-    getSpy = spyOn(categoriesServiceMock, "get");
     invalidCategoryId = new Subject();
     invalidNoteId = new Subject();
     selectedCategory = new Subject();
     newCategoryId = new Subject<string>();
+    categoriesSubject = new Subject<CategoryModel[]>();
+    getSpy = spyOn(categoriesServiceMock, "get").and.callFake((func) => 
+    {
+      filterFunc = func;
+      return categoriesSubject;
+    });
     storeMock = new StoreMock();
     storeMock.resultSelector = (selector) => 
     {
@@ -87,7 +94,11 @@ describe('SidebarComponent', () =>
 
   it('should create', () => expect(component).toBeTruthy());
 
-  it('listens to category changes', () => expect(getSpy).toHaveBeenCalled());
+  it('listens to category changes', () => 
+  {
+    expect(getSpy).toHaveBeenCalled();
+    expect(filterFunc).toBeTruthy();
+  });
 
   it('displays categories on categories changed', () => 
   {
@@ -116,52 +127,66 @@ describe('SidebarComponent', () =>
     expect(action.payload).toBe("test");
   });
 
-  it('handleFilterTextChanged does call the filter service', () => 
+  it('filter categories', () => 
   {
-    // (component as any).categories = categories;
-    // component.handleFilterTextChanged("filterText");
+    let func = (component as any).filterFunc;
+    (component as any).selectedCategory = categories[0];
+    component.handleFilterTextChanged("filterText");
+    //Selected category is always shown
+    let result : Boolean = func(categories[0]); 
+    expect(result).toBe(true);
 
-    // expect(filterService.filterText).toBe("filterText");
-    // expect(filterService.categories).toBe(categories);
+    //Not selected category and filter doesn't match
+    result = func(categories[1]); 
+    expect(result).toBe(false);
+
+    //Not selected category and filter matches
+    component.handleFilterTextChanged("itle2");
+    result = func(categories[1]); 
+    expect(result).toBe(true);
   });
 
   it('handleAddButtonClicked adds a new category', () => 
   {
-    // component.handleAddButtonClicked();
+    categoriesSubject.next([]);
+    component.handleAddButtonClicked();
 
-    // expect(component.filteredCategories.length).toBe(1);
-    // expect(component.filteredCategories[0].isEditing).toBe(true);
+    expect((component as any).categories.length).toBe(1);
+    expect((component as any).categories[0].isEditing).toBe(true);
   });
 
   it('does remove the new category if the new category has changed to null', () => 
   {
-    // component.handleAddButtonClicked();
-    // newCategoryId.next(null);
+    categoriesSubject.next([]);
+    component.handleAddButtonClicked();
+    newCategoryId.next(null);
 
-    // expect(component.filteredCategories.length).toBe(0);
+    expect((component as any).categories.length).toBe(0);
   });
 
   it('handleAddButtonClicked changes the new category', () => 
   {
+    categoriesSubject.next(categories);
     component.handleAddButtonClicked();
 
-    let action: NewCategoryChangeAction = storeMock.dispatchedActions[0] as NewCategoryChangeAction;
+    let action: NewCategoryChangeAction = storeMock.dispatchedActions[1] as NewCategoryChangeAction;
     expect(action.type).toBe(CategoryActionKind.NewCategoryChange);
     expect(action.payload != null).toBe(true);
   });
 
-  it('handleAddButtonClicked does not add a new category if invalid note or category exsits', () => 
+  it('handleAddButtonClicked does not add a new category if invalid note or category exists', () => 
   {
-    // invalidCategoryId.next("1");
-    // component.handleAddButtonClicked();
-    // expect(component.filteredCategories.length).toBe(0);
+    categoriesSubject.next([]);
+    invalidCategoryId.next("1");
+    component.handleAddButtonClicked();
+    expect((component as any).categories.length).toBe(0);
 
-    // invalidNoteId.next("1");
-    // component.handleAddButtonClicked();
-    // expect(component.filteredCategories.length).toBe(0);
+    invalidNoteId.next("1");
+    component.handleAddButtonClicked();
+    expect((component as any).categories.length).toBe(0);
 
-    // invalidCategoryId.next(null);
-    // component.handleAddButtonClicked();
-    // expect(component.filteredCategories.length).toBe(0);
+    invalidCategoryId.next(null);
+    component.handleAddButtonClicked();
+    expect((component as any).categories.length).toBe(0);
   });
 });
