@@ -25,15 +25,13 @@
         </button>
         <button type="button" 
           (click)="tryFacebookLogin()"
-          id="facebookButton" 
-          [translate]="loginWithFacebook">
+          id="facebookButton">
           <i class='fab fa-facebook-square' aria-hidden='true'></i>
           {{ 'LoginComponent.LoginWithFacebook' | translate }}
         </button>
         <button type="button"  
           (click)="tryGoogleLogin()"
-          id="googleButton"
-          [translate]="loginWithGoogle">
+          id="googleButton">
           <i class="fab fa-google" aria-hidden="true"></i>
           {{ 'LoginComponent.LoginWithGoogle' | translate }}
         </button>

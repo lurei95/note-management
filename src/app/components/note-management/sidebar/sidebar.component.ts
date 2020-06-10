@@ -23,7 +23,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class SidebarComponent extends ComponentBase
 {
-  private categories: CategoryModel[];
+  private _categories: CategoryModel[];
   private filterText: string  = null;
   private selectedCategory: CategoryModel = null;
   private invalidCategoryId: string = null;
@@ -38,6 +38,11 @@ export class SidebarComponent extends ComponentBase
     else
       return true;
   }
+
+  /**
+   * The categories
+   */
+  public get categories() : CategoryModel[] { return this._categories; }
 
   /**
    * Constructor
@@ -73,7 +78,7 @@ export class SidebarComponent extends ComponentBase
       let model = new CategoryModel(uuid());
       model.isEditing = true;
       this.newCategory = model;
-      this.categories = [...this.categories, this.newCategory];
+      this._categories = [...this._categories, this.newCategory];
       this.store.dispatch(new NewCategoryChangeAction(model.id));
     }     
   }
@@ -105,7 +110,7 @@ export class SidebarComponent extends ComponentBase
     if (this.newCategory != null && categoryId == null)
     {
       this.newCategory = null;
-      this.categories.splice(this.categories.length - 1, 1);
+      this._categories.splice(this._categories.length - 1, 1);
     }
   }
 
@@ -115,9 +120,9 @@ export class SidebarComponent extends ComponentBase
     if (categories.length > 0 && this.selectedCategory == null)
       this.store.dispatch(new SelectedCategoryChangeAction(categories[0]));
     if (this.newCategory != null)
-      this.categories = [...categories, this.newCategory];
+      this._categories = [...categories, this.newCategory];
     else
-      this.categories = categories;
+      this._categories = categories;
   }
 
   private updateSubscription()

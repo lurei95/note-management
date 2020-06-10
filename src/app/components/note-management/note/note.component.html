@@ -11,8 +11,7 @@
         (pointerenter)="handlePointerEnter()" 
         (pointerleave)="handlePointerLeave()"
         placeholder="{{titleError == null ? ('General.Title' | translate) : titleError}}"
-        (input)="validateModel()"  
-        (keydown.enter)="handleSaveShortcut()"
+        (keydown.enter)="handleSaveShortcut(null)"
         [(ngModel)] ="model.title" #titleInput/>
       <label id="remainingTimeLabel">{{getRemainingTime()}}</label>
       <button (click)="handleDeleteButtonClicked()" id="deleteButton">

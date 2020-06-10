@@ -5,7 +5,7 @@
     [value] ="title" 
     (focusout)=handleFocusLeaving()
     (input)="handleTitleChanged($event.target.value)" 
-    (keydown.enter)="handleSaveShortcut()"
+    (keydown.enter)="handleSaveShortcut(null)"
     (keydown.control.s)="handleSaveShortcut($event)"
     placeholder="{{titleError == null ? ('General.Title' | translate) : titleError}}"
     #titleInput>
