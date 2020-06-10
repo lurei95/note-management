@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NotesService } from '../../../services/note/notes.service';
 import { Store } from '@ngrx/store';
 import { CategoryModel } from '../../../models/categories/categoryModel';
@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ComponentBase } from '../../componentBase';
+import { HostListener, AfterViewInit } from '@angular/core';
 
 /**
  * Component of a panel for displaying notes
@@ -20,12 +21,14 @@ import { ComponentBase } from '../../componentBase';
   templateUrl: './note-panel.component.html',
   styleUrls: ['./note-panel.component.css']
 })
-export class NotePanelComponent extends ComponentBase
+export class NotePanelComponent extends ComponentBase implements AfterViewInit
 {
   private filterText: string;
   private selectedCategory: CategoryModel;
   private invalidCategoryId: string;
   private invalidNoteId: string;
+
+  @ViewChild("panel", {static: false}) private panel: ElementRef;
 
   private filterFunc = (note: NoteModel) => 
   {
@@ -69,12 +72,14 @@ export class NotePanelComponent extends ComponentBase
     this.updateSubscription();
   }
 
+  public ngAfterViewInit() { this.onResize(null); }
+
   /**
    * Event handler: filters the notes
    * 
    * @param {string} filterText The new filter text
    */
-  handleFilterTextChanged(filterText: string) 
+  public handleFilterTextChanged(filterText: string) 
   {
     if (this.filterText != filterText)
     {
@@ -86,7 +91,7 @@ export class NotePanelComponent extends ComponentBase
   /**
    * Event handler: adds a new note
    */
-  handleAddButtonClicked() 
+  public handleAddButtonClicked() 
   { 
     if (this.invalidCategoryId == null && this.invalidNoteId == null)
     {
@@ -125,5 +130,11 @@ export class NotePanelComponent extends ComponentBase
       if (this.retrievingNotes)
         setTimeout(() => this._retrievingNotes = false, 1000);
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    let notePanelHeight = window.innerHeight - 150;
+    this.panel.nativeElement.style.height = notePanelHeight + "px";
   }
 }
