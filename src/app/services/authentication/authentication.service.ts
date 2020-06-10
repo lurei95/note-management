@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { auth } from 'firebase/app';
 
 /**
  * Service for handling authentication matters
@@ -42,7 +42,7 @@ export class AuthenticationService
   {
     return new Promise<any>((resolve, reject) => 
     {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
+      auth().createUserWithEmailAndPassword(email, password)
         .then(res => resolve(res), err => reject(err));
     });
   }
@@ -58,7 +58,7 @@ export class AuthenticationService
   {
     return new Promise<any>((resolve, reject) => 
     {
-      firebase.auth().signInWithEmailAndPassword(email, password)
+      auth().signInWithEmailAndPassword(email, password)
         .then(res => resolve(res), err => reject(err));
     });
   }
@@ -72,7 +72,7 @@ export class AuthenticationService
   {
     return new Promise<any>((resolve, reject) => 
     {
-      let provider = new firebase.auth.FacebookAuthProvider();
+      let provider = new auth.FacebookAuthProvider();
       this.authentication.auth.signInWithPopup(provider)
         .then(res => resolve(res), err => reject(err));
     });
@@ -87,7 +87,7 @@ export class AuthenticationService
   {
     return new Promise<any>((resolve, reject) => 
     {
-      let provider = new firebase.auth.GoogleAuthProvider();
+      let provider = new auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
       this.authentication.auth.signInWithPopup(provider)
@@ -104,7 +104,7 @@ export class AuthenticationService
   {
     return new Promise<any>((resolve, reject) => 
     {
-      let provider = new firebase.auth.TwitterAuthProvider();
+      let provider = new auth.TwitterAuthProvider();
       this.authentication.auth.signInWithPopup(provider)
         .then(res => resolve(res), err =>  reject(err));
     });
