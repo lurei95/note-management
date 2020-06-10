@@ -31,7 +31,7 @@ hr {
   grid-auto-rows: minmax(min-content, max-content);
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   grid-row: 3;
   height: 850px;
   grid-column: 0;
