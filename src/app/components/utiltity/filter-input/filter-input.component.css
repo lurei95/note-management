@@ -31,14 +31,23 @@ div:hover, div:focus-within {
   position: relative;
   float: left;
 }
-  
-.fg--search input, .fg--search input:hover, .fg--search input:focus-within {
+
+input {
   width: calc(100% - 12px);
   padding: 5px;
   padding-top: 6px;
   padding-bottom: 4px;
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
+}
+  
+input, input:hover, input:focus-within {
+  width: calc(100% - 12px);
+  padding: 5px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  border: none !important;
+  outline: none !important;
 }
   
 .fa-search {

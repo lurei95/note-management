@@ -37,7 +37,11 @@ button {
   visibility: hidden;
 }
 
-div:hover > .editButton, div:focus-within > .editButton {
+div:hover > .editButton {
+  visibility: visible; 
+}
+
+div:focus-within > .editButton {
   visibility: visible; 
 }
 

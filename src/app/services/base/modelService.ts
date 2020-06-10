@@ -34,7 +34,12 @@ export abstract class ModelService<TModel extends EditableModel>
   constructor(protected store: Store<IApplicationState>, protected databaseService: DatabaseService) 
   { 
     store.select(getUser).subscribe((x: UserModel) => 
-    { this._userDoc = this.databaseService.getItem(x.id, this.databaseService.getCollection("users")); }); 
+    { 
+      if (x != null)
+        this._userDoc = this.databaseService.getItem(x.id, this.databaseService.getCollection("users")); 
+      else
+        this._userDoc = null;
+    }); 
   }
 
   /**
