@@ -61,6 +61,14 @@ describe('LoginComponent', () =>
     expect(authenticationService.password).toBe("test123");
   });
 
+  it("tryGuestLogin calls the authentication service", () =>
+  {
+    component.tryGuestLogin();
+
+    expect(authenticationService.email).toBe("test@test.com");
+    expect(authenticationService.password).toBe("test123");
+  });
+
   it("tryLogin sets the correct error message for invalid email", fakeAsync(() =>
   { errorMessageTestCore(AuthenticationErrorKind.InvalidEmail, MessageKind.Login_InvalidEmail); }));
 

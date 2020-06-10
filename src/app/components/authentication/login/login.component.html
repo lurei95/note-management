@@ -18,6 +18,11 @@
             </div>
           </div>
         </form>
+        <button type="button"
+          (click)="tryGuestLogin()"
+          id="guestButton">
+          {{ 'LoginComponent.LoginAsGuest' | translate }}
+        </button>
         <button type="button" 
           (click)="tryFacebookLogin()"
           id="facebookButton" 

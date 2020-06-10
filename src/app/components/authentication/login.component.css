@@ -62,6 +62,10 @@ button {
   background-color: #DB4437;
 }
 
+#guestButton {
+  background-color: var(--themeDarkGray);
+}
+
 .errorLabel {
   color: var(--themeRed);
   text-overflow: ellipsis;

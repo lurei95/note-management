@@ -29,7 +29,7 @@
   "Login_InvalidEmail": "Invalid e-mail",
   "Login_WrongPassword": "Wrong password",
   "Login_WeakPassword": "The password must be at least 6 characters long",
-  "Login_UserAlreadyExsits": "A user with the same e-mail already exists",
+  "Login_UserAlreadyExists": "A user with the same e-mail already exists",
 
   "CategoryTitle": "Category: \"{{title}}\"",
 
@@ -37,6 +37,7 @@
     "LoginWithTwitter": "Login with Twitter",
     "LoginWithFacebook": "Login with Facebook",
     "LoginWithGoogle": "Login with Google",
+    "LoginAsGuest": "Login as guest user",
     "RegisterLink": "No account yet? <a href=\"/register\">Create an account</a>"
   },
 

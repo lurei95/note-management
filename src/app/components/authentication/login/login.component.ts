@@ -34,11 +34,21 @@ export class LoginComponent extends LoginComponentBase
    * 
    * @param parameter Parameter containing email and password
    */
-  tryLogin(parameter: {email: string, password: string})
+  public tryLogin(parameter: {email: string, password: string})
   {
     this._showWaitPanel = true;
     this.authenticationService.loginWithEmail(parameter.email, parameter.password)
       .then(() => this.onSuccessfulAuthentication(), err => this.handleError(err));
+  }
+
+   /**
+    * Tries to log in as guest user
+    */
+  public tryGuestLogin()
+  {
+    let email: string = "test@test.com";
+    let password: string = "test123";
+    this.tryLogin({ email, password });
   }
 
   private handleError(error: any)

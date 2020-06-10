@@ -29,7 +29,7 @@
   "Login_InvalidEmail" : "Invalide E-Mail",
   "Login_WrongPassword" : "Fehlerhaftes Password",
   "Login_WeakPassword" : "Das Password muss mindestens 6 Zeichen lang sein",
-  "Login_UserAlreadyExsits" : "Es existiert bereits ein Nutzer mit der gleichen E-Mail-Adresse",
+  "Login_UserAlreadyExists" : "Es existiert bereits ein Nutzer mit der gleichen E-Mail-Adresse",
 
   "CategoryTitle": "Kategorie: \"{{title}}\"",
 
@@ -37,6 +37,7 @@
     "LoginWithTwitter": "Mit Twitter einlogen",
     "LoginWithFacebook": "Mit Facebook einlogen",
     "LoginWithGoogle": "Mit Google einlogen",
+    "LoginAsGuest": "Als Gastnutzer einloggen",
     "RegisterLink": "Noch kein Nutzerkonto? <a href=\"/register\">Nutzerkonto estellen</a>"
   },
 
