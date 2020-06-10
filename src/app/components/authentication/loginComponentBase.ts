@@ -55,19 +55,28 @@ export class LoginComponentBase extends ComponentBase
    * Tries to log in with facebook account
    */
   tryFacebookLogin()
-  { this.authenticationService.loginWithFacebook().then(() => this.onSuccessfulAuthentication()); }
+  { 
+    this.authenticationService.loginWithFacebook()
+      .then(() => this.onSuccessfulAuthentication(), err => this._errorMessage = err); 
+  }
 
   /**
    * Tries to log in with twitter account
    */
   tryTwitterLogin()
-  { this.authenticationService.loginWithTwitter().then(() => this.onSuccessfulAuthentication()); }
+  { 
+    this.authenticationService.loginWithTwitter()
+      .then(() => this.onSuccessfulAuthentication(), err => this._errorMessage = err); 
+  }
 
   /**
    * Tries to log in with google account
    */
   tryGoogleLogin()
-  { this.authenticationService.loginWithGoogle().then(() => this.onSuccessfulAuthentication()); }
+  { 
+    this.authenticationService.loginWithGoogle()
+      .then(() => this.onSuccessfulAuthentication(), err => this._errorMessage = err); 
+  }
 
   /**
    * Handles a successful login/registration
