@@ -9,5 +9,6 @@ export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
-  { path: 'home', component: MainPageComponent, canActivate: [ApplicationGuard] }
+  { path: 'home', component: MainPageComponent, canActivate: [ApplicationGuard] },
+  { path: '**', redirectTo: '/home', pathMatch: 'full' },
 ];
