@@ -31,7 +31,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { NotificationListComponent } from './components/utiltity/notification-list/notification-list.component';
 import { NotificationService } from './services/notification/notificationService';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { reducers } from './redux/state';
 import { TagListComponent } from './components/utiltity/tag-list/tag-list.component';
@@ -51,11 +50,25 @@ import { rootRouterConfig } from './app.routes';
 import { MatMenuModule } from '@angular/material/menu';
 import { WaitPanelComponent } from './components/utiltity/wait-panel/wait-panel.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { en } from "./translation/en"
+import { de } from "./translation/de"
+import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs';
 
-export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
+const TRANSLATIONS = {
+  en: en,
+  de: de
+};
+
+export class CustomTranslateLoader implements TranslateLoader 
+{
+  public getTranslation(lang: string): Observable<any> 
+  { return of(TRANSLATIONS[lang]); }
 }
 
+export function translateFactory() 
+{ return new CustomTranslateLoader(); }
+ 
 export var declarations = [
   LoginComponent,
   MainPageComponent,
@@ -90,7 +103,7 @@ export var imports = [
   TranslateModule.forRoot({
     loader: {
       provide: TranslateLoader,
-      useFactory: HttpLoaderFactory,
+      useFactory: translateFactory,
       deps: [HttpClient]
     }
   }),

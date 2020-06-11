@@ -1,4 +1,4 @@
-{
+export const de = {
   "DeleteNoteDialogTitle" : "Notiz löschen?",
   "DeleteNoteDialogText" : "Sind Sie sicher, dass sie die Notiz \"{{title}}\" löschen möchten?",
 
@@ -64,4 +64,4 @@
     "Title": "Titel",
     "NewTag": "Neuer Tag"
   }
-}
+};

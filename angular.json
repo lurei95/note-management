@@ -31,14 +31,14 @@
           "configurations": {
             "de": { 
               "aot": true,      
-              "i18nFile": "src/translate/messages.de.xlf", 
+              "i18nFile": "/messages.de.xlf", 
               "i18nFormat": "xlf",      
               "i18nLocale": "de",      
               "i18nMissingTranslation": "error"    
             },
             "en": { 
               "aot": true,      
-              "i18nFile": "src/translate/messages.en.xlf", 
+              "i18nFile": "/messages.en.xlf", 
               "i18nFormat": "xlf",      
               "i18nLocale": "en",      
               "i18nMissingTranslation": "error"    
